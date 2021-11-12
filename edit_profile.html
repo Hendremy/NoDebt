@@ -24,9 +24,22 @@
 				</section>
 			</header>
 			<main>
-				<article>
-					<p>Gérez vos dépenses de groupe facilement</p>
-				</article>
+				<h1>Profil</h1>
+				<form>
+					<label>Adresse e-mail	<input type="email" name="userEmail" id="userEmail"/></label>
+					
+					<label>Prénom	<input type="text" name="firstName"/></label>
+					<label>Nom	<input type="text" name="lastName"/></label>
+					<input type="submit" name="sendbutton" value="Valider modifications">
+				</form>
+				<form>
+					<label>Nouveau mot de passe	<input type="password" name="newUserPassword" id="newUserPassword"/></label>
+					<label>Répetez le mot de passe	<input type="password" name="newUserPasswordRep" id="newUserPasswordRep"/></label>
+					<input type="submit" name="sendbutton" value="Valider modifications">
+				</form>
+				<form>
+					<button type="button" class="delete" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
+				</form>
 			</main>
 			<footer>
 			</footer>

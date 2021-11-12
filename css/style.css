@@ -1,9 +1,57 @@
 @font-face{
 	font-family: OpenDyslexic;
-	src: url(OpenDyslexic-Regular.otf);
+	src: url(../fonts/OpenDyslexic-Regular.otf);
 }
 
+@font-face{
+	font-family: Impact;
+	src: url(../fonts/impact.ttf);
+}
+/*
+Color palette:
+#05386B bleu navy
+#379683 vert foncé
+#5CDB95 vert clair
+#8EE4AF vert fade
+#EDF5E1 vert pale
+*/
 body{
 	font-family: OpenDyslexic;
-	background-color: green;
+	color: #EDF5E1;
+	background-color: #5CDB95;
+	margin-top: 0px;
+}
+
+.nodebt{
+	display: inline;
+	color: #05386B;
+	font-size: 6rem;
+	font-family: Impact;
+	text-decoration: none;
+	
+}
+
+main, footer{
+	background-color: #05386B;
+	margin-left:3%;
+	margin-right:3%;
+}
+
+form{
+	display: block;
+}
+
+body header{
+	height: 20%;
+	width: 100%;
+	box-shadow: 10px black;
+}
+
+main{
+	height: 500px;
+}
+
+
+a{
+	color: #FFFFFF;
 }
