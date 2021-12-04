@@ -2,37 +2,42 @@
         <html lang="fr">
         <head>
             <meta charset="utf-8">
-            <title>No Debt</title>
+            <title>No Debt - Inscription</title>
             <link rel="stylesheet" href="css/style.css">
 			<link rel="icon" sizes="16x16" href="img/icon.png">
             <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe" >
          </head>
          <body>
 			<header>
-				<section>
-					<a href="index.html" class="nodebt">NO D€BT</a>
-				</section>
-				<nav>
-					<a href="index.html">Accueil</a>
-					<a href="contact_anonym.html">Contact</a>
+				<a href="index.html" class="nodebt">NO D€BT</a>
+				<nav class="website-nav">
+					<ul class="nav-links">
+						<li><a href="index.html">Accueil</a></li>
+						<li><a href="contactAnonym.html">Contact</a></li>
+					</ul>
 				</nav>
-				<section>
-					<a href="login.html">Se connecter</a>
-					<a href="signin.html">S'inscrire</a>
-				</section>
+				<nav class="authentication-nav">
+					<ul class="nav-links">
+						<li><a href="login.html">Se connecter</a></li>
+						<li><a href="signin.html">S'inscrire</a></li>
+					</ul>
+				</nav>
 			</header>
 			<main>
 				<h1>Inscription</h1>
-				<form>
-					<label>Adresse e-mail	<input type="email" name="userEmail" id="userEmail" required/></label>
-					<label>Mot de passe	<input type="password" name="userPassword" id="userPassword" required/></label>
-					<label>Répetez le mot de passe	<input type="password" name="userPasswordRep" id="userPasswordRep" required/></label>
-					<label>Prénom	<input type="text" name="firstName" required/></label>
-					<label>Nom	<input type="text" name="lastName" required/></label>
-					<input type="submit" name="sendbutton" value="S'inscrire">
+				<form action="myGroups.html">
+					<label for="userEmail">Adresse e-mail</label>
+					<input type="email" name="userEmail" id="userEmail" required/>
+					<label for="userPassword">Mot de passe</label>
+					<input type="password" name="userPassword" id="userPassword" required/>
+					<label for="userPasswordRep">Répetez le mot de passe</label>
+					<input type="password" name="userPasswordRep" id="userPasswordRep" required/>
+					<label for="firstName">Prénom</label>
+					<input type="text" name="firstName" id="firstName" required/>
+					<label for="lastName">Nom</label>
+					<input type="text" name="lastName" id="lastName" required/>
+					<input type="submit" class="submit" name="sendbutton" value="S'inscrire">
 				</form>
 			</main>
-			<footer>
-			</footer>
          </body>
         </html>
