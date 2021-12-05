@@ -13,7 +13,7 @@
 				<nav class="website-nav">
 					<ul class="nav-links">
 						<li><a href="myGroups.html">Mes groupes</a></li>
-						<li><a href="create_group.html">Créer un groupe</a></li>
+						<li><a href="createGroup.html">Créer un groupe</a></li>
 						<li><a href="contact.html">Contact</a></li>
 					</ul>
 				</nav>
@@ -29,11 +29,11 @@
 				<h1>Modifier le profil</h1>
 				<form>
 					<label for="userEmail">Adresse e-mail</label>
-					<input type="email" name="userEmail" id="userEmail"/>
+					<input type="email" name="userEmail" id="userEmail" value="machin@bidule.com"/>
 					<label for="firstName">Prénom</label>
-					<input type="text" name="firstName" id="firstName"/>
+					<input type="text" name="firstName" id="firstName" value="Machin"/>
 					<label for="lastName">Nom</label>
-					<input type="text" name="lastName" id="lastName"/>
+					<input type="text" name="lastName" id="lastName" value="Bidule"/>
 					<input type="submit" class="submit" name="sendbutton" value="Valider modifications">
 				</form>
 				<form>
@@ -43,7 +43,7 @@
 					<input type="password" name="newUserPasswordRep" id="newUserPasswordRep"/>
 					<input type="submit" class="submit" name="sendbutton" value="Valider modifications">
 				</form>
-				<form>
+				<form action="index.html">
 					<button type="button" class="delete" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
 				</form>
 			</main>

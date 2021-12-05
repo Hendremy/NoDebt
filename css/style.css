@@ -12,7 +12,7 @@ body{
 	font-family: OpenDyslexic;
 	color: #ffffff;
 	background-color: #1b1d26;
-	margin:0px;;
+	margin:0;
 }
 
 .nodebt{
@@ -37,10 +37,18 @@ form{
 	display: inline-block;
 }
 
+a{
+	color: #fa359d;
+}
+
+textarea{
+	resize: none;
+}
+
 header{
 	height: 20%;
 	width: 100%;
-	margin: 0px;
+	margin: 0;
 	border-bottom: 2px solid rgb(151, 109, 230);
 	display: flex;
 	flex-direction: row;
@@ -49,14 +57,14 @@ header{
 
 body>header{
 	border: none;
-	margin: 0px;
+	margin: 0;
 
 	box-shadow: 0 10px 10px 0 rgba(193, 13, 255, 0.31);
 }
 
 main section{
 	padding: 2px ;
-	margin: 10px 10% 10px 10%;
+	margin: 10px 10% 0 10%;
 }
 
 section.groupList h1{
@@ -88,11 +96,21 @@ article.groupPreview{
 	margin-bottom: 8px;
 }
 
+article.invitation article.groupPreview{
+	border: none;
+}
+
+article.groupPreview h3{
+	font-size: 1rem;
+	margin: 5px 0 5px 0;
+	text-align: center;
+}
+
 ul.invitationChoice{
 	display: flex;
 	justify-items: flex-end;
 	list-style: none;
-	margin: 0px;
+	margin: 0;
 }
 
 button.accept{
@@ -115,17 +133,10 @@ button.decline{
 	margin-right: 5px;
 }
 
-h3{
-	font-size: 1rem;
-	margin: 5px 0 5px 0;
-	text-align: center;
-}
-
 table.expenses-table-view{
 	width:95%;
 	text-align: center;
 }
-
 
 .website-nav{
 	display: flex;
@@ -142,13 +153,26 @@ table.expenses-table-view{
 }
 
 .nav-links li{
-	margin: 0px 10px 0px 10px;;
+	margin: 0 10px 0 10px;;
 }
 
-a{
-	color: #fa359d;
+.participants-list{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	flex-wrap: wrap;
+
+	list-style-type: none;
+}
+.participants-list li{
+	border: 2px solid rgb(151, 109, 230);
+	width: 22%;
+	margin: 4px;
+	padding: 8px;
 }
 
-textarea{
-	resize: none;
+.expenses-total{
+	display: flex;
+	justify-content: space-around;
+	font-size: 2em;
 }
