@@ -174,5 +174,10 @@ table.expenses-table-view{
 .expenses-total{
 	display: flex;
 	justify-content: space-around;
+	align-content: space-between;
 	font-size: 2em;
+}
+
+.expenses-total p{
+	margin: 0;
 }
