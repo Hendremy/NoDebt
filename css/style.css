@@ -34,11 +34,15 @@ main{
 }
 
 form{
-	display: inline-block;
+	display: block;
 }
 
 a{
-	color: #fa359d;
+	color: #ff00e9;
+}
+
+h1{
+	margin: 10px 0 10px 0;
 }
 
 textarea{
