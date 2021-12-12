@@ -16,7 +16,8 @@ body{
 }
 
 .nodebt{
-	display: inline;
+	display: flex;
+	align-items: center;
 	color: #ffffff;
 	font-size: 6rem;
 	font-family: Impact;
@@ -38,7 +39,7 @@ form{
 }
 
 a{
-	color: #ff00e9;
+	color: #ff00f2;
 }
 
 h1{
@@ -61,6 +62,7 @@ header{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
+	align-items: center;
 }
 
 body>header{
@@ -146,22 +148,37 @@ table.expenses-table-view{
 	text-align: center;
 }
 
-.website-nav{
+nav.website-nav{
 	display: flex;
 	flex-direction: column-reverse;
 }
 
-.nav-links{
+nav.website-nav a{
+	text-decoration: none;
+	font-size: 1.5em;
+	transition: all 0.25s ease 0s;
+	border: 1px solid;
+	padding: 4px;
+}
+
+ul.nav-links{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	justify-items: flex-end;
-	list-style-type: none;
-	top: auto;
 }
 
 .nav-links li{
-	margin: 0 10px 0 10px;;
+	margin: 0 10px 0 10px;
+	list-style-type: none;
+}
+
+a{
+	transition: all 0.25s ease 0s;
+}
+
+a:hover{
+	color: #ffde00;
 }
 
 .participants-list{
@@ -169,7 +186,6 @@ table.expenses-table-view{
 	flex-direction: row;
 	justify-content: space-around;
 	flex-wrap: wrap;
-
 	list-style-type: none;
 }
 .participants-list li{
