@@ -45,6 +45,10 @@ h1{
 	margin: 10px 0 10px 0;
 }
 
+summary{
+	border-bottom: 2px solid rgb(151, 109, 230);
+}
+
 textarea{
 	resize: none;
 }

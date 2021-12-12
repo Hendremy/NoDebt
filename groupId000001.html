@@ -30,7 +30,28 @@
         <p>Groupe créé par Machin Bidule</p>
         <a href="editGroupId000001.html">Editer le groupe</a>
         <section class="groupPreview">
-            <header><h2>Dépenses</h2></header>
+            <header>
+                <h2>Dépenses</h2>
+                <form name="search-expense">
+                    <label for="search">Rechercher une dépense</label>
+                    <input type="text" id="search" name="search" placeholder="Rechercher..."/>
+                </form>
+                <details>
+                    <summary>Recherche avancée</summary>
+                    <form>
+                        <label for="name">Libellé</label>
+                        <input type="text" name="name" id="name">
+                        <label for="minAmount">Montant (€): Entre</label>
+                        <input type="number" name="minAmount" id="minAmount"/>
+                        <label for="maxAmount"> et </label>
+                        <input type="number" name="maxAmount" id="maxAmount"/>
+                        <label for="startDate">Date: Entre</label>
+                        <input type="date" name="startDate" id="startDate"/>
+                        <label for="endDate"> et </label>
+                        <input type="date" name="endDate" id="endDate"/>
+                    </form>
+                </details>
+            </header>
             <table class="expenses-table-view all-expenses">
                 <thead>
                 <tr><th>Participant</th><th>Libellé</th><th>Montant</th><th>Date</th><th>Facture</th></tr>
@@ -46,6 +67,7 @@
                 <p>Moyenne : 62,5€</p>
             </section>
             <a href="addExpenseId000001.html">Ajouter une dépense</a>
+
         </section>
         <section class="participants">
             <h2>Participants (4)</h2>
