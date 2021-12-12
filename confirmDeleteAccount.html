@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>No Debt - Modifier le profil</title>
+    <title>No Debt - Supprimer le profil</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" sizes="16x16" href="img/icon.png">
-    <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe" >
+    <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
 <header>
@@ -26,25 +26,13 @@
     </nav>
 </header>
 <main>
-    <h1>Modifier le profil</h1>
-    <form>
-        <label for="userEmail">Adresse e-mail</label>
-        <input type="email" name="userEmail" id="userEmail" value="machin@bidule.com"/>
-        <label for="firstName">Prénom</label>
-        <input type="text" name="firstName" id="firstName" value="Machin"/>
-        <label for="lastName">Nom</label>
-        <input type="text" name="lastName" id="lastName" value="Bidule"/>
-        <input type="submit" class="submit" name="sendbutton" value="Valider modifications">
+    <h1>Supprimer le profil</h1>
+    <p>Confirmez-vous la suppression de votre compte ?</p>
+    <form action="index.html">
+        <button type="submit" class="accept" name="confirmDeleteAccount" id="confirmDeleteAccount">Oui</button>
     </form>
-    <form>
-        <label for="newUserPassword">Nouveau mot de passe</label>
-        <input type="password" name="newUserPassword" id="newUserPassword"/>
-        <label for="newUserPasswordRep">Répetez le mot de passe</label>
-        <input type="password" name="newUserPasswordRep" id="newUserPasswordRep"/>
-        <input type="submit" class="submit" name="sendbutton" value="Valider modifications">
-    </form>
-    <form action="confirmDeleteAccount.html">
-        <button type="button" class="delete" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
+    <form action="editProfile.html">
+        <button type="submit" class="decline" name="confirmDeleteAccount" id="cancelDeleteAccount">Non</button>
     </form>
 </main>
 </body>
