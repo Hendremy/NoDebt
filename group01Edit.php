@@ -8,26 +8,12 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="myGroups.html" class="nodebt">NO D€BT</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="myGroups.html">Mes groupes</a></li>
-            <li><a href="createGroup.html">Créer un groupe</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="profile-nav">
-        <span>Machin Bidule</span>
-        <ul class="nav-links">
-            <li><a href="editProfile.html">Modifier le profil</a></li>
-            <li><a href="index.html">Se déconnecter</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/header.inc.php");
+?>
 <main>
     <h1>Editer le groupe Roadtrip Allemagne</h1>
-    <form action="group01.html">
+    <form action="group01.php">
         <label for="name">Nom du groupe</label>
         <input type="text" name="name" id="name" value="Roadtrip Allemagne" required/>
         <label for="devise">Devise</label>

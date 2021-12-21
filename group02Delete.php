@@ -8,33 +8,19 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="myGroups.html" class="nodebt">NO D€BT</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="myGroups.html">Mes groupes</a></li>
-            <li><a href="createGroup.html">Créer un groupe</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="profile-nav">
-        <span>Machin Bidule</span>
-        <ul class="nav-links">
-            <li><a href="editProfile.html">Modifier le profil</a></li>
-            <li><a href="index.html">Se déconnecter</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/header.inc.php");
+?>
 <main>
     <header>
         <h1>Supprimer le groupe Anniversaire de Carlo</h1>
     </header>
     <p>Tous les virements ont été effectués, confirmez-vous la suppression du groupe ?</p>
     <section class="choices deleteChoices">
-        <form action="myGroups.html" class="accept-delete">
+        <form action="myGroups.php" class="accept-delete">
             <button type="submit" class="accept">Confirmer</button>
         </form>
-        <form action="group01Settled.html" class="decline-delete">
+        <form action="group02Settled.php" class="decline-delete">
             <button type="submit" class="decline">Annuler</button>
         </form>
     </section>

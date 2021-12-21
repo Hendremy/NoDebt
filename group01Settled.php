@@ -8,28 +8,14 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="myGroups.html" class="nodebt"><img id="logo" src="img/icon.png" alt="Logo No Debt"/>No D€bt</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="myGroups.html">Mes groupes</a></li>
-            <li><a href="createGroup.html">Créer un groupe</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="profile-nav">
-        <span>Machin Bidule</span>
-        <ul class="nav-links">
-            <li><a href="editProfile.html">Modifier le profil</a></li>
-            <li><a href="index.html">Se déconnecter</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/header.inc.php");
+?>
 <main>
     <header>
     <h1>Roadtrip Allemagne créé par Machin Bidule</h1>
-    <a href="group01Delete.html">Supprimer le groupe</a>
-    <a href="group01Settling.html">Annuler solde</a>
+    <!--<a href="group01Delete.php">Supprimer le groupe</a> actif si tous les virements ont été confirmés-->
+    <a href="group01Settling.php">Annuler solde</a><!-- actif car tous les virements n'ont pas été confirmés-->
     </header>
     <section class="groupPreview payments">
         <header>
@@ -49,19 +35,19 @@
                 <td>Helmut Fritz</td>
                 <td>12,5€</td>
                 <td>Machin Bidule</td>
-                <td><form class="choices" action="group01Settled.html"><button type="submit" class="accept">Confirmer</button></form></td>
+                <td><form class="choices" action="group01Settled.php"><button type="submit" class="accept">Confirmer</button></form></td>
             </tr>
             <tr>
                 <td>Hans Zwei</td>
                 <td>2,5€</td>
                 <td>Machin Bidule</td>
-                <td><form class="choices" action="group01Settled.html"><button type="submit" class="accept">Confirmer</button></form></td>
+                <td><form class="choices" action="group01Settled.php"><button type="submit" class="accept">Confirmer</button></form></td>
             </tr>
             <tr>
                 <td>Jean Néplin</td>
                 <td>62,5€</td>
                 <td>Machin Bidule</td>
-                <td><form class="choices" action="group01Settled.html"><button type="submit" class="accept">Confirmer</button></form></td>
+                <td><form class="choices" action="group01Settled.php"><button type="submit" class="accept">Confirmer</button></form></td>
             </tr>
             </tbody>
         </table>
@@ -102,43 +88,18 @@
             </ul>
         </header>
         <table class="expenses-table-view all-expenses">
-            <thead>
-            <tr>
-                <th>Participant</th>
-                <th>Libellé</th>
-                <th>Montant</th>
-                <th>Date</th>
-                <th>Facture</th>
-            </tr>
-            </thead>
+            <?php
+            include("inc/expensesTableHead.inc.php");
+            ?>
             <tbody>
-            <tr>
-                <td>Machin Bidule</td>
-                <td>Hotel</td>
-                <td>150€</td>
-                <td>05/05/2021</td>
-                <td>/</td>
-            </tr>
-            <tr>
-                <td>Hans Zwei</td>
-                <td>Choucroute</td>
-                <td>50€</td>
-                <td>04/05/2021</td>
-                <td>/</td>
-            </tr>
-            <tr>
-                <td>Helmut Frites</td>
-                <td>Plein d'essence</td>
-                <td>60€</td>
-                <td>01/05/2021</td>
-                <td>/</td>
-            </tr>
+            <?php
+            include("inc/group01LastThreeExpenses.inc.php");
+            ?>
             </tbody>
         </table>
-        <section class="expenses-total">
-            <p>Montant total : 250€</p>
-            <p>Moyenne : 62,5€</p>
-        </section>
+        <?php
+        include("inc/group01ExpensesTotal.inc.php");
+        ?>
     </section>
     <section class="participants">
         <h2>Participants (4)</h2>
@@ -147,28 +108,9 @@
             <input type="email" name="participantEmail" id="participantEmail"/>
             <button type="submit" name="inviteParticipant" id="inviteParticipant">Inviter</button>
         </form>
-        <ul class="participants-list">
-            <li class="participant">
-                <span>Machin Bidule</span>
-                <p>Dépense totale : <span>150€</span></p>
-                <p>Différence à la moyenne : <span>+87,5€</span></p>
-            </li>
-            <li class="participant">
-                <span>Helmut Frites</span>
-                <p>Dépense totale : <span>50€</span></p>
-                <p>Différence à la moyenne : <span>-12,5€</span></p>
-            </li>
-            <li class="participant">
-                <span>Hans Zwei</span>
-                <p>Dépense totale : <span>60€</span></p>
-                <p>Différence à la moyenne : <span>-2,5€</span></p>
-            </li>
-            <li class="participant">
-                <span>Jean Néplin</span>
-                <p>Dépense totale : <span>0€</span></p>
-                <p>Différence à la moyenne : <span>-62,5€</span></p>
-            </li>
-        </ul>
+        <?php
+        include("inc/group01Participants.inc.php");
+        ?>
     </section>
 </main>
 </body>

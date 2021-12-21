@@ -8,36 +8,23 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe" >
 </head>
 <body>
-    <header>
-        <a href="myGroups.html" class="nodebt">NO D€BT</a>
-        <nav class="website-nav">
-            <ul class="nav-links">
-                <li><a href="myGroups.html">Mes groupes</a></li>
-                <li><a href="createGroup.html">Créer un groupe</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <nav class="profile-nav">
-            <span>Machin Bidule</span>
-            <ul class="nav-links">
-                <li><a href="editProfile.html">Modifier le profil</a></li>
-                <li><a href="index.html">Se déconnecter</a></li>
-            </ul>
-        </nav>
-    </header>
+<?php
+include("inc/header.inc.php");
+?>
     <main>
         <h1>Ajouter une dépense au groupe Anniversaire de Carlo</h1>
-        <form action="group02.html">
+        <form action="group02.php">
             <label for="participant">Participant</label>
             <select name="participant" id="participant" required>
                 <option value="participant1" selected>Machin Bidule</option>
-                <option value="participant2">Helmut Frites</option>
-                <option value="participant3">Hans Zwei</option>
-                <option value="participant4">Jean Néplin</option>
+                <option value="participant2">Bob Eponge</option>
+                <option value="participant3">Patrick Etoile</option>
+                <option value="participant4">Eugene Krabs</option>
+                <option value="participant5">SandySquirrel</option>
             </select>
             <label for="expenseDate">Date</label>
             <input type="date" name="date" id="expenseDate" required/>
-            <label for="amount">Montant en euros (€)</label>
+            <label for="amount">Montant en dollars ($)</label>
             <input type="number" name="amount" id="amount" required/>
             <label for="name">Libellé</label>
             <input type="text" name="name" id="name" required/>

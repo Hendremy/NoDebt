@@ -8,30 +8,16 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="myGroups.html" class="nodebt">NO D€BT</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="myGroups.html">Mes groupes</a></li>
-            <li><a href="createGroup.html">Créer un groupe</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="profile-nav">
-        <span>Machin Bidule</span>
-        <ul class="nav-links">
-            <li><a href="editProfile.html">Modifier le profil</a></li>
-            <li><a href="index.html">Se déconnecter</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/header.inc.php");
+?>
 <main>
     <h1>Supprimer le profil</h1>
     <p>Confirmez-vous la suppression de votre compte ?</p>
-    <form action="index.html">
+    <form action="index.php">
         <button type="submit" class="accept" name="confirmDeleteAccount" id="confirmDeleteAccount">Oui</button>
     </form>
-    <form action="editProfile.html">
+    <form action="editProfile.php">
         <button type="submit" class="decline" name="confirmDeleteAccount" id="cancelDeleteAccount">Non</button>
     </form>
 </main>

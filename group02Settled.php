@@ -8,27 +8,14 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="myGroups.html" class="nodebt"><img id="logo" src="img/icon.png" alt="Logo No Debt"/>No D€bt</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="myGroups.html">Mes groupes</a></li>
-            <li><a href="createGroup.html">Créer un groupe</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="profile-nav">
-        <span>Machin Bidule</span>
-        <ul class="nav-links">
-            <li><a href="editProfile.html">Modifier le profil</a></li>
-            <li><a href="index.html">Se déconnecter</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/header.inc.php");
+?>
 <main>
     <header>
-    <h1>Anniversaire de Carlo créé par Bob Eponge</h1>
-    <a href="group02Delete.html">Supprimer le groupe</a>
+        <h1>Anniversaire de Carlo créé par Bob Eponge</h1>
+        <a href="group02Delete.php">Supprimer le groupe</a>
+        <!--<a href="group02Settling.php">Annuler solde</a> inactif car au moins un virement a été effectué-->
     </header>
     <section class="groupPreview payments">
         <header>
@@ -88,7 +75,7 @@
                             <label for="name">Libellé</label>
                             <input type="text" name="name" id="name"/>
                             <fieldset name="amountSpan">
-                                <label for="minAmount">Montant (€): Entre</label>
+                                <label for="minAmount">Montant ($): Entre</label>
                                 <input type="number" name="minAmount" id="minAmount"/>
                                 <label for="maxAmount"> et </label>
                                 <input type="number" name="maxAmount" id="maxAmount"/>
@@ -106,81 +93,18 @@
                 </li>
             </ul>
         </header>
-        <table class="expenses-table-view all-expenses">
-            <thead>
-            <tr>
-                <th>Participant</th>
-                <th>Libellé</th>
-                <th>Montant</th>
-                <th>Date</th>
-                <th>Facture</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Bob Eponge</td>
-                <td>Nouvelle Clarinette</td>
-                <td>$300</td>
-                <td>26/06/2021</td>
-                <td>/</td>
-            </tr>
-            <tr>
-                <td>Patrick Etoile</td>
-                <td>Paté de crabe</td>
-                <td>$50</td>
-                <td>26/06/2021</td>
-                <td>/</td>
-            </tr>
-            <tr>
-                <td>Eugene Krabs</td>
-                <td>Resto</td>
-                <td>$5</td>
-                <td>25/06/2021</td>
-                <td>/</td>
-            </tr>
-            <tr>
-                <td>Sandy Squirrel</td>
-                <td>Equipement karaté</td>
-                <td>$95</td>
-                <td>25/06/2021</td>
-                <td>/</td>
-            </tr>
-            </tbody>
-        </table>
-        <section class="expenses-total">
-            <p>Montant total : $450</p>
-            <p>Moyenne : $90</p>
-        </section>
+        <?php
+        include("inc/group02Expenses.inc.php");
+        ?>
+        <?php
+        include("inc/group02ExpensesTotal.inc.php");
+        ?>
     </section>
     <section class="participants">
         <h2>Participants (5)</h2>
-        <ul class="participants-list">
-            <li class="participant">
-                <span>Bob Eponge</span>
-                <p>Dépense totale : <span>$300</span></p>
-                <p>Différence à la moyenne : <span>+$210</span></p>
-            </li>
-            <li class="participant">
-                <span>Sandy Squirrel</span>
-                <p>Dépense totale : <span>$95</span></p>
-                <p>Différence à la moyenne : <span>+$5</span></p>
-            </li>
-            <li class="participant">
-                <span>Patrick Etoile</span>
-                <p>Dépense totale : <span>$50</span></p>
-                <p>Différence à la moyenne : <span>-$40</span></p>
-            </li>
-            <li class="participant">
-                <span>Eugene Krabs</span>
-                <p>Dépense totale : <span>$5</span></p>
-                <p>Différence à la moyenne : <span>-$85</span></p>
-            </li>
-            <li class="participant">
-                <span>Machin Bidule</span>
-                <p>Dépense totale : <span>$0</span></p>
-                <p>Différence à la moyenne : <span>-$90</span></p>
-            </li>
-        </ul>
+        <?php
+        include("inc/group02Participants.inc.php");
+        ?>
     </section>
 </main>
 </body>

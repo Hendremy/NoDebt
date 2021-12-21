@@ -8,24 +8,12 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="index.html" class="nodebt">NO D€BT</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="contactAnonym.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="authentication-nav">
-        <ul class="nav-links">
-            <li><a href="index.html">Se connecter</a></li>
-            <li><a href="signin.html">S'inscrire</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/headerAnonym.inc.php");
+?>
 <main>
     <h1>Mot de passe oublié</h1>
-    <form action="index.html">
+    <form action="index.php">
         <label for="userEmail">Encodez votre adresse e-mail pour recevoir un nouveau mot de passe</label>
         <input type="email" name="userEmail" id="userEmail" required/>
         <button type="submit" name="resetUserPassword">Envoyer</button>

@@ -8,26 +8,14 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="index.html" class="nodebt">NO D€BT</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="contactAnonym.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="authentication-nav">
-        <ul class="nav-links">
-            <li><a href="index.html">Se connecter</a></li>
-            <li><a href="signin.html">S'inscrire</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/header.inc.php");
+?>
 <main>
     <h1>Nous contacter</h1>
     <form>
         <label for="userEmail">Adresse e-mail</label>
-        <input type="email" name="userEmail" id="userEmail" required/>
+        <input type="email" name="userEmail" id="userEmail" required readonly value="machin@bidule.com"/>
         <label for="mailTopic">Sujet</label>
         <input type="text" name="mailTopic" id="mailTopic" required/>
         <label for="mailMessage">Message</label>

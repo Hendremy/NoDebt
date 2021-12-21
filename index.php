@@ -8,32 +8,20 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<header>
-    <a href="index.html" class="nodebt">NO D€BT</a>
-    <nav class="website-nav">
-        <ul class="nav-links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="contactAnonym.html">Contact</a></li>
-        </ul>
-    </nav>
-    <nav class="authentication-nav">
-        <ul class="nav-links">
-            <li><a href="index.html">Se connecter</a></li>
-            <li><a href="signin.html">S'inscrire</a></li>
-        </ul>
-    </nav>
-</header>
+<?php
+include("inc/headerAnonym.inc.php");
+?>
 <main>
     <h1>Connexion</h1>
-    <form class="login-form auth" action="myGroups.html">
+    <form class="login-form auth" action="myGroups.php">
         <label for="userEmail">Adresse e-mail</label>
         <input type="email" name="userEmail" id="userEmail" required/>
         <label for="userPassword">Mot de passe</label>
         <input type="password" name="userPassword" id="userPassword" required/>
         <button type="submit" name="sendbutton">Se connecter</button>
     </form>
-    <a href="forgottenPassword.html">Mot de passe oublié ?</a>
-    <a href="signin.html">Inscrivez-vous !</a>
+    <a href="forgottenPassword.php">Mot de passe oublié ?</a>
+    <a href="signin.php">Inscrivez-vous !</a>
 </main>
 </body>
 </html>
