@@ -29,6 +29,10 @@ body {
     text-decoration: none;
 }
 
+#logo{
+    height: 100px;
+}
+
 main {
     margin-left: 3%;
     margin-right: 3%;
@@ -39,8 +43,15 @@ main {
     flex-direction: column;
 }
 
-form {
-    display: block;
+form{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: flex-start;
+}
+fieldset{
+    border: none;
+    padding: 0;
 }
 
 input, select, textarea{
@@ -48,6 +59,7 @@ input, select, textarea{
     background-color: #1b1d26;
     color: #fa8fdc;
     transition: all 0.4s ease 0s;
+    margin: 8px;
 }
 
 
@@ -136,11 +148,22 @@ article.groupPreview h3 {
     text-align: center;
 }
 
-ul.invitationChoice {
+section.groupView > header{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.choices{
     display: flex;
     justify-items: flex-end;
+    justify-content: space-around;
     list-style: none;
     margin: 0;
+}
+
+.settleChoices, .deleteChoices{
+    font-size: 3em;
 }
 
 button{
@@ -192,14 +215,18 @@ nav.website-nav a {
     margin: 8px;
 }
 
-ul.nav-links {
+ul.nav-links, ul.search{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    justify-items: flex-end;
+    justify-items: center;
 }
 
-.nav-links li {
+ul.search{
+    width: 100%;
+}
+
+li {
     margin: 0 10px 0 10px;
     list-style-type: none;
 }

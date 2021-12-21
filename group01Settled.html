@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>No Debt - Roadtrip Allemagne</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" sizes="16x16" href="img/icon.png">
+    <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
+</head>
+<body>
+<header>
+    <a href="myGroups.html" class="nodebt"><img id="logo" src="img/icon.png" alt="Logo No Debt"/>No D€bt</a>
+    <nav class="website-nav">
+        <ul class="nav-links">
+            <li><a href="myGroups.html">Mes groupes</a></li>
+            <li><a href="createGroup.html">Créer un groupe</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <nav class="profile-nav">
+        <span>Machin Bidule</span>
+        <ul class="nav-links">
+            <li><a href="editProfile.html">Modifier le profil</a></li>
+            <li><a href="index.html">Se déconnecter</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <header>
+    <h1>Roadtrip Allemagne créé par Machin Bidule</h1>
+    <a href="group01Delete.html">Supprimer le groupe</a>
+    <a href="group01Settling.html">Annuler solde</a>
+    </header>
+    <section class="groupPreview payments">
+        <header>
+            <h2>Virements</h2>
+        </header>
+        <table class="expenses-table-view all-expenses">
+            <thead>
+            <tr>
+                <th>Emetteur</th>
+                <th>Montant</th>
+                <th>Receveur</th>
+                <th>Confirmation</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Helmut Fritz</td>
+                <td>12,5€</td>
+                <td>Machin Bidule</td>
+                <td><form class="choices" action="group01Settled.html"><button type="submit" class="accept">Confirmer</button></form></td>
+            </tr>
+            <tr>
+                <td>Hans Zwei</td>
+                <td>2,5€</td>
+                <td>Machin Bidule</td>
+                <td><form class="choices" action="group01Settled.html"><button type="submit" class="accept">Confirmer</button></form></td>
+            </tr>
+            <tr>
+                <td>Jean Néplin</td>
+                <td>62,5€</td>
+                <td>Machin Bidule</td>
+                <td><form class="choices" action="group01Settled.html"><button type="submit" class="accept">Confirmer</button></form></td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="groupPreview groupView">
+        <header class="expenses">
+            <h2>Dépenses</h2>
+            <ul class="search">
+                <li>
+                    <form name="simple-search-expense" class="search">
+                        <label for="search">Rechercher une dépense </label>
+                        <input type="text" id="search" name="search" placeholder="Rechercher..."/>
+                    </form>
+                </li>
+                <li>
+                    <details>
+                        <summary>Recherche avancée</summary>
+                        <form name="advanced-search-expense" class="search">
+                            <label for="name">Libellé</label>
+                            <input type="text" name="name" id="name"/>
+                            <fieldset name="amountSpan">
+                                <label for="minAmount">Montant (€): Entre</label>
+                                <input type="number" name="minAmount" id="minAmount"/>
+                                <label for="maxAmount"> et </label>
+                                <input type="number" name="maxAmount" id="maxAmount"/>
+                            </fieldset>
+                            <fieldset name="dateSpan">
+                                <label for="startDate">Date: Entre</label>
+                                <input type="date" name="startDate" id="startDate"/>
+                                <label for="endDate"> et </label>
+                                <input type="date" name="endDate" id="endDate"/>
+                            </fieldset>
+                            <label for="tags">Tags :</label>
+                            <input type="text" name="tags" id="tags"/>
+                        </form>
+                    </details>
+                </li>
+            </ul>
+        </header>
+        <table class="expenses-table-view all-expenses">
+            <thead>
+            <tr>
+                <th>Participant</th>
+                <th>Libellé</th>
+                <th>Montant</th>
+                <th>Date</th>
+                <th>Facture</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Machin Bidule</td>
+                <td>Hotel</td>
+                <td>150€</td>
+                <td>05/05/2021</td>
+                <td>/</td>
+            </tr>
+            <tr>
+                <td>Hans Zwei</td>
+                <td>Choucroute</td>
+                <td>50€</td>
+                <td>04/05/2021</td>
+                <td>/</td>
+            </tr>
+            <tr>
+                <td>Helmut Frites</td>
+                <td>Plein d'essence</td>
+                <td>60€</td>
+                <td>01/05/2021</td>
+                <td>/</td>
+            </tr>
+            </tbody>
+        </table>
+        <section class="expenses-total">
+            <p>Montant total : 250€</p>
+            <p>Moyenne : 62,5€</p>
+        </section>
+    </section>
+    <section class="participants">
+        <h2>Participants (4)</h2>
+        <form name="invite-participant">
+            <label for="participantEmail">Inviter un participant par e-mail</label>
+            <input type="email" name="participantEmail" id="participantEmail"/>
+            <button type="submit" name="inviteParticipant" id="inviteParticipant">Inviter</button>
+        </form>
+        <ul class="participants-list">
+            <li class="participant">
+                <span>Machin Bidule</span>
+                <p>Dépense totale : <span>150€</span></p>
+                <p>Différence à la moyenne : <span>+87,5€</span></p>
+            </li>
+            <li class="participant">
+                <span>Helmut Frites</span>
+                <p>Dépense totale : <span>50€</span></p>
+                <p>Différence à la moyenne : <span>-12,5€</span></p>
+            </li>
+            <li class="participant">
+                <span>Hans Zwei</span>
+                <p>Dépense totale : <span>60€</span></p>
+                <p>Différence à la moyenne : <span>-2,5€</span></p>
+            </li>
+            <li class="participant">
+                <span>Jean Néplin</span>
+                <p>Dépense totale : <span>0€</span></p>
+                <p>Différence à la moyenne : <span>-62,5€</span></p>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
+</html>

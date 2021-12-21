@@ -18,15 +18,22 @@
     </nav>
     <nav class="authentication-nav">
         <ul class="nav-links">
-            <li><a href="login.html">Se connecter</a></li>
+            <li><a href="index.html">Se connecter</a></li>
             <li><a href="signin.html">S'inscrire</a></li>
         </ul>
     </nav>
 </header>
 <main>
-    <article>
-        <p>Gérez vos dépenses de groupe facilement</p>
-    </article>
+    <h1>Connexion</h1>
+    <form class="login-form auth" action="myGroups.html">
+        <label for="userEmail">Adresse e-mail</label>
+        <input type="email" name="userEmail" id="userEmail" required/>
+        <label for="userPassword">Mot de passe</label>
+        <input type="password" name="userPassword" id="userPassword" required/>
+        <button type="submit" name="sendbutton">Se connecter</button>
+    </form>
+    <a href="forgottenPassword.html">Mot de passe oublié ?</a>
+    <a href="signin.html">Inscrivez-vous !</a>
 </main>
 </body>
 </html>
