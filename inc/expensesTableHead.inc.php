@@ -4,6 +4,6 @@
     <th>Libellé</th>
     <th>Montant</th>
     <th>Date</th>
-    <th>Facture</th>
+    <th>Factures</th>
 </tr>
 </thead>

@@ -8,10 +8,10 @@
     ?>
     <tr>
         <td>Sandy Squirrel</td>
-        <td><a href="group02EditExpense1.php">Equipement karaté</a></td>
+        <td><a href="group02Expense1Edit.php">Equipement karaté</a></td>
         <td>$95</td>
         <td>25/06/2021</td>
-        <td>/</td>
+        <td><a href="group02Expense1Bills.php">Voir</a></td>
     </tr>
     </tbody>
 </table>

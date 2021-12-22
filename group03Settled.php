@@ -41,7 +41,7 @@ include("inc/header.inc.php");
                 <td>Machin Bidule</td>
                 <td>50€</td>
                 <td>Nono Debt</td>
-                <td><form class="choices" action="group03Settled.php"><button type="submit" class="accept">Confirmer</button></form></td>
+                <td>En attente</td>
             </tr>
             </tbody>
         </table>

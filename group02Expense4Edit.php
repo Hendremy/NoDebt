@@ -24,7 +24,7 @@ include("inc/header.inc.php");
         </select>
         <label for="expenseDate">Date</label>
         <input type="date" name="date" id="expenseDate" value="2021-06-26" readonly required/>
-        <label for="amount">Montant en euros ($)</label>
+        <label for="amount">Montant en dollars américains ($)</label>
         <input type="number" name="amount" id="amount" value="300" required/>
         <label for="name">Libellé</label>
         <input type="text" name="name" id="name" value="Nouvelle clarinette" required/>

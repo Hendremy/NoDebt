@@ -18,10 +18,10 @@ include("inc/header.inc.php");
         <input type="text" name="name" id="name" value="Soirée jeux de société" required/>
         <label for="devise">Devise</label>
         <select name="devise" id="devise" required>
-            <option value="EUR" selected>&euro;</option>
-            <option value="USD">&dollar;</option>
-            <option value="JPY">&yen;</option>
-            <option value="GBP">&pound;</option>
+            <option value="EUR" selected>Euros - &euro;</option>
+            <option value="USD">Dollars - &dollar;</option>
+            <option value="JPY">Yen - &yen;</option>
+            <option value="GBP">Livres Sterling - &pound;</option>
         </select>
         <button type="submit" class="submit" name="sendbutton">Valider modifications</button>
     </form>
