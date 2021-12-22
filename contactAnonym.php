@@ -13,14 +13,14 @@ include("inc/headerAnonym.inc.php");
 ?>
 <main>
     <h1>Nous contacter</h1>
-    <form>
+    <form class="field-list">
         <label for="userEmail">Adresse e-mail</label>
         <input type="email" name="userEmail" id="userEmail" required/>
         <label for="mailTopic">Sujet</label>
         <input type="text" name="mailTopic" id="mailTopic" required/>
         <label for="mailMessage">Message</label>
         <textarea name="mailMessage" id="mailMessage" rows="20" cols="50" required></textarea>
-        <button type="submit" class="submit" name="sendbutton">Valider</button>
+        <button type="submit" class="submit" name="sendbutton">Envoyer</button>
     </form>
 </main>
 </body>

@@ -7,7 +7,7 @@
     <li class="participant">
         <span>Sarah Croche</span>
         <p>Dépense totale : <span>0€</span></p>
-        <p>Différence à la moyenne : <span>-50€€</span></p>
+        <p>Différence à la moyenne : <span>-50€</span></p>
     </li>
     <li class="participant">
         <span>Machin Bidule</span>

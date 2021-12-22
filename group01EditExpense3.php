@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>No Debt - Ajouter une dépense au groupe Roadtrip Allemagne</title>
+    <title>No Debt - Editer dépense Hotel</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" sizes="16x16" href="img/icon.png">
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
@@ -12,7 +12,7 @@
 include("inc/header.inc.php");
 ?>
 <main>
-    <h1>Ajouter une dépense au groupe Roadtrip Allemagne</h1>
+    <h1>Hotel - Editer dépense</h1>
     <form class="field-list" action="group01.php">
         <label for="participant">Participant</label>
         <select name="participant" id="participant" required>
@@ -22,16 +22,14 @@ include("inc/header.inc.php");
             <option value="participant4">Jean Néplin</option>
         </select>
         <label for="expenseDate">Date</label>
-        <input type="date" name="date" id="expenseDate" required/>
+        <input type="date" name="date" id="expenseDate" value="2021-05-05" readonly required/>
         <label for="amount">Montant en euros (€)</label>
-        <input type="number" name="amount" id="amount" required/>
+        <input type="number" name="amount" id="amount" value="150" required/>
         <label for="name">Libellé</label>
-        <input type="text" name="name" id="name" required/>
-        <label for="bill">Facture</label>
-        <input type="file" name="bill" id="bill" accept=".pdf,.jpg,.png"/>
+        <input type="text" name="name" id="name" value="Hotel" required/>
         <label for="tags">Tags (séparés par une virgule ",")</label>
         <input type="text" id="tags" name="tags"/>
-        <button type="submit" class="submit" name="sendbutton">Ajouter la dépense</button>
+        <button type="submit" class="submit" name="sendbutton">Enregistrer les modifications</button>
     </form>
 </main>
 </body>

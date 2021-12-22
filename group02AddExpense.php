@@ -13,7 +13,7 @@ include("inc/header.inc.php");
 ?>
     <main>
         <h1>Ajouter une dépense au groupe Anniversaire de Carlo</h1>
-        <form action="group02.php">
+        <form class="field-list" action="group02.php">
             <label for="participant">Participant</label>
             <select name="participant" id="participant" required>
                 <option value="participant1" selected>Machin Bidule</option>

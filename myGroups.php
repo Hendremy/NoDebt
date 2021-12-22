@@ -41,7 +41,7 @@ include("inc/header.inc.php");
                     ?>
                     <tbody>
                     <?php
-                    include("inc/group03LastThreeExpenses.inc.php");
+                    include("inc/group03LastThreeExpensesPeek.inc.php");
                     ?>
                     </tbody>
                 </table>

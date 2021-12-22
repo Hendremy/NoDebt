@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>No Debt - Anniversaire de Carlo</title>
+    <title>No Debt - Soirée jeux de société</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" sizes="16x16" href="img/icon.png">
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
@@ -11,11 +11,20 @@
 <?php
 include("inc/header.inc.php");
 ?>
+<div class="confirm-invite-peek">
+    <p>Êtes vous sûr de vouloir refuser l'invitation ?</p>
+    <section class="choices">
+            <form action="group03.php" class="accept-invite">
+                <button type="submit" class="accept">Rejoindre le groupe</button>
+            </form>
+            <form action="myGroups.php" class="decline-invite">
+                <button type="submit" class="decline">Supprimer l'invitation</button>
+            </form>
+    </section>
+</div>
 <main>
     <header>
-        <h1>Anniversaire de Carlo créé par Bob Eponge</h1>
-        <a href="group02Edit.php">Editer le groupe</a>
-        <a href="group02Settling.php">Solder le groupe</a>
+        <h1>Soirée jeux de société créé par Nono Debt</h1>
     </header>
     <section class="groupPreview groupView">
         <header class="expenses">
@@ -34,7 +43,7 @@ include("inc/header.inc.php");
                             <label for="name">Libellé</label>
                             <input type="text" name="name" id="name"/>
                             <fieldset name="amountSpan">
-                                <label for="minAmount">Montant ($): Entre</label>
+                                <label for="minAmount">Montant (€): Entre</label>
                                 <input type="number" name="minAmount" id="minAmount"/>
                                 <label for="maxAmount"> et </label>
                                 <input type="number" name="maxAmount" id="maxAmount"/>
@@ -52,24 +61,35 @@ include("inc/header.inc.php");
                 </li>
             </ul>
         </header>
-        <?php
-        include("inc/group02Expenses.inc.php");
-        ?>
-        <a href="group02AddExpense.php">+ Ajouter une dépense</a>
-        <?php
-        include("inc/group02ExpensesTotal.inc.php");
-        ?>
+        <table class="expenses-table-view all-expenses">
+            <?php
+            include("inc/expensesTableHead.inc.php");
+            ?>
+            <tbody>
+            <?php
+            include("inc/group03LastThreeExpensesPeek.inc.php");
+            ?>
+            </tbody>
+        </table>
+        <section class="expenses-total">
+            <p>Montant total : 150€</p>
+            <p>Moyenne : 75€</p>
+        </section>
     </section>
     <section class="participants">
-        <h2>Participants (5)</h2>
-        <form name="invite-participant">
-            <label for="participantEmail">Inviter un participant par e-mail</label>
-            <input type="email" name="participantEmail" id="participantEmail"/>
-            <button type="submit" name="inviteParticipant" id="inviteParticipant">Inviter</button>
-        </form>
-        <?php
-        include("inc/group02Participants.inc.php");
-        ?>
+        <h2>Participants (2)</h2>
+        <ul class="participants-list">
+            <li class="participant">
+                <span>Nono Debt</span>
+                <p>Dépense totale : <span>150€</span></p>
+                <p>Différence à la moyenne : <span>+75€</span></p>
+            </li>
+            <li class="participant">
+                <span>Sarah Croche</span>
+                <p>Dépense totale : <span>0€</span></p>
+                <p>Différence à la moyenne : <span>-75€</span></p>
+            </li>
+        </ul>
     </section>
 </main>
 </body>

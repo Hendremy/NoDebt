@@ -41,14 +41,25 @@ main {
 
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 
-form{
+.field-list{
     display: flex;
+    flex-direction: column;
+    align-content: flex-start;
     flex-wrap: wrap;
-    align-content: center;
-    align-items: flex-start;
 }
+
+.field-list input, .field-list select, .field-list button{
+    height: 2em;
+    width: 35%;
+}
+
+.field-list textarea{
+    width: 80%;
+}
+
 fieldset{
     border: none;
     padding: 0;
@@ -113,6 +124,39 @@ section.groupList h1 {
     margin: 8px;
 }
 
+div.confirm-invite-peek{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #DE3BB2;
+}
+
+div.confirm-invite-peek button{
+    color: #DE3BB2;
+    background-color: white;
+    border-color:white;
+}
+
+div.confirm-invite-peek button:hover{
+    color: #DE3BB2;
+    background-color: #1b1d26;
+    border-color:#1b1d26;
+    box-shadow: none;
+}
+
+div.confirm-invite-peek button.decline{
+    color: white;
+    background-color: #DE3BB2;
+    border-color:white;
+}
+
+div.confirm-invite-peek button.decline:hover{
+    color: #1b1d26;
+    background-color: #DE3BB2;
+    border-color:#1b1d26;
+    box-shadow: none;
+}
+
 article.invitation {
     border: 2px solid rgb(151, 109, 230);
     border-radius: 25px;
@@ -156,7 +200,6 @@ section.groupView > header{
 
 .choices{
     display: flex;
-    justify-items: flex-end;
     justify-content: space-around;
     list-style: none;
     margin: 0;

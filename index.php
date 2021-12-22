@@ -13,7 +13,7 @@ include("inc/headerAnonym.inc.php");
 ?>
 <main>
     <h1>Connexion</h1>
-    <form class="login-form auth" action="myGroups.php">
+    <form class="field-list" action="myGroups.php">
         <label for="userEmail">Adresse e-mail</label>
         <input type="email" name="userEmail" id="userEmail" required/>
         <label for="userPassword">Mot de passe</label>

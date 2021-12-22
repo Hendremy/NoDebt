@@ -55,10 +55,10 @@ include("inc/header.inc.php");
         <?php
         include("inc/group03Expenses.inc.php");
         ?>
+        <a href="group03AddExpense.php">+ Ajouter une dépense</a>
         <?php
         include("inc/group03ExpensesTotal.inc.php");
         ?>
-        <a href="group03AddExpense.php">Ajouter une dépense</a>
     </section>
     <section class="participants">
         <h2>Participants (3)</h2>

@@ -11,9 +11,9 @@
 <?php
 include("inc/header.inc.php");
 ?>
-<main>
+<main class="form-list">
     <h1>Modifier le profil</h1>
-    <form>
+    <form class="field-list">
         <label for="userEmail">Adresse e-mail</label>
         <input type="email" name="userEmail" id="userEmail" value="machin@bidule.com"/>
         <label for="firstName">Prénom</label>
@@ -22,7 +22,7 @@ include("inc/header.inc.php");
         <input type="text" name="lastName" id="lastName" value="Bidule"/>
         <button type="submit" class="submit" name="sendbutton">Valider modifications</button>
     </form>
-    <form>
+    <form class="field-list">
         <label for="newUserPassword">Nouveau mot de passe</label>
         <input type="password" name="newUserPassword" id="newUserPassword"/>
         <label for="newUserPasswordRep">Répetez le mot de passe</label>
@@ -30,7 +30,7 @@ include("inc/header.inc.php");
         <button type="submit" class="submit" name="sendbutton">Valider modifications</button>
     </form>
     <form action="confirmDeleteAccount.php">
-        <button type="submit" class="delete" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
+        <button type="submit" class="delete decline" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
     </form>
 </main>
 </body>

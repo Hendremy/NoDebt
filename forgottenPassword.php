@@ -13,7 +13,7 @@ include("inc/headerAnonym.inc.php");
 ?>
 <main>
     <h1>Mot de passe oublié</h1>
-    <form action="index.php">
+    <form class="field-list" action="index.php">
         <label for="userEmail">Encodez votre adresse e-mail pour recevoir un nouveau mot de passe</label>
         <input type="email" name="userEmail" id="userEmail" required/>
         <button type="submit" name="resetUserPassword">Envoyer</button>

@@ -13,7 +13,7 @@ include("inc/header.inc.php");
 ?>
 <main>
     <h1>Editer le groupe Soirée jeux de société</h1>
-    <form action="group03.php">
+    <form class="field-list" action="group03.php">
         <label for="name">Nom du groupe</label>
         <input type="text" name="name" id="name" value="Soirée jeux de société" required/>
         <label for="devise">Devise</label>

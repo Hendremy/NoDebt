@@ -13,7 +13,7 @@ include("inc/header.inc.php");
 ?>
 <main>
     <h1>Créer un groupe</h1>
-    <form action="">
+    <form class="field-list" action="">
         <label for="name">Nom du groupe</label>
         <input type="text" name="name" id="name" required/>
         <label for="devise">Devise</label>
