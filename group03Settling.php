@@ -55,7 +55,7 @@ include("inc/header.inc.php");
     <section class="participants">
         <h2>Participants (3)</h2>
         <?php
-        include("inc/group02Participants.inc.php");
+        include("inc/group03Participants.inc.php");
         ?>
     </section>
 </main>
