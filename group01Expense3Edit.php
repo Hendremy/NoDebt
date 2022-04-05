@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>No Debt - Editer dépense Hotel</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" sizes="16x16" href="img/icon.png">
+    <link rel="icon" sizes="16x16" href="images/icon.png">
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
