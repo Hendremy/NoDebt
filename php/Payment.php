@@ -10,11 +10,11 @@ class Payment
     private $date;
     private $isConfirmed;
 
-    public function __constructor($sender, $receiver, $amount){
+    public function __constructor($sender, $receiver, $amount, $date = null, $isConfirmed = false){
         $this->sender = $sender;
         $this->receiver = $receiver;
         $this->amount = $amount;
-        $this->date = null;
-        $this->isConfirmed = false;
+        $this->date = $date;
+        $this->isConfirmed = $isConfirmed;
     }
 }
