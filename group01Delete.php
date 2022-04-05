@@ -8,22 +8,22 @@
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<?php
-include("inc/header.inc.php");
-?>
-<main>
-    <header>
-        <h1>Supprimer le groupe Roadtrip Allemagne</h1>
-    </header>
-    <p>Tous les virements ont été effectués, confirmez-vous la suppression du groupe ?</p>
-    <section class="choices deleteChoices">
-        <form action="myGroups.php" class="accept-delete">
-            <button type="submit" class="accept">Confirmer</button>
-        </form>
-        <form action="group01Settled.php" class="decline-delete">
-            <button type="submit" class="decline">Annuler</button>
-        </form>
-    </section>
-</main>
+    <?php
+    include("inc/header.inc.php");
+    ?>
+    <main>
+        <header>
+            <h1>Supprimer le groupe Roadtrip Allemagne</h1>
+        </header>
+        <p>Tous les virements ont été effectués, confirmez-vous la suppression du groupe ?</p>
+        <section class="choices deleteChoices">
+            <form action="myGroups.php" class="accept-delete">
+                <button type="submit" class="accept">Confirmer</button>
+            </form>
+            <form action="group01Settled.php" class="decline-delete">
+                <button type="submit" class="decline">Annuler</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>
