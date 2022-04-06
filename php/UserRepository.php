@@ -18,5 +18,7 @@ class UserRepository
 
     }
 
-    public function
+    public function selectUserById($id){
+
+    }
 }
