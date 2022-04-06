@@ -89,7 +89,7 @@
             </header>
             <table class="expenses-table-view all-expenses">
                 <?php
-                include("inc/expensesTableHead.inc.php");
+                include("inc/expensesHead.inc.php");
                 ?>
                 <tbody>
                 <?php

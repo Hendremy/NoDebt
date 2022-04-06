@@ -35,43 +35,23 @@
                     <header><span>Soirée jeux de société | Créé par: Nono Debt | Montant total des dépenses : 150 €</span>
                     </header>
                     <h3>Dernières dépenses</h3>
-                    <table class="expenses-table-view">
+                    <ul class="choices">
                         <?php
-                        include("inc/expensesTableHead.inc.php");
+                        include("inc/expensesHead.inc.php");
                         ?>
-                        <tbody>
-                        <?php
-                        include("inc/group03LastThreeExpensesPeek.inc.php");
-                        ?>
-                        </tbody>
-                    </table>
+                    </ul>
                 </article>
             </article>
         </section>
         <section class="groupList">
             <h2>Mes groupes</h2>
             <article class="groupPreview">
-                <header><span><a href="group02.php">Anniversaire de Carlo</a> | Créé par: Bob Eponge | Montant total des dépenses : $450</span>
-                </header>
-                <h3>Dernières dépenses</h3>
-                <table class="expenses-table-view">
-                    <?php
-                    include("inc/expensesTableHead.inc.php");
-                    ?>
-                    <tbody>
-                    <?php
-                    include ("inc/group02LastThreeExpenses.inc.php");
-                    ?>
-                    </tbody>
-                </table>
-            </article>
-            <article class="groupPreview">
                 <header><span><a href="group01.php">Roadtrip Allemagne</a> | Créé par: Machin Bidule | Montant total des dépenses : 210 €</span>
                 </header>
                 <h3>Dernières dépenses</h3>
                 <table class="expenses-table-view">
                     <?php
-                    include("inc/expensesTableHead.inc.php");
+                    include("inc/expensesHead.inc.php");
                     ?>
                     <tbody>
                     <?php

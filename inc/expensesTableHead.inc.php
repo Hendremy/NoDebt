@@ -1,9 +1,0 @@
-<thead>
-<tr>
-    <th>Participant</th>
-    <th>Libellé</th>
-    <th>Montant</th>
-    <th>Date</th>
-    <th>Factures</th>
-</tr>
-</thead>
