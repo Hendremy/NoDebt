@@ -1,6 +1,6 @@
 <?php
 namespace DB;
-require 'config.inc.php';
+require 'db_config.php';
 use PDO;
 use PDOException;
 

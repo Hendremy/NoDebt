@@ -4,23 +4,23 @@ namespace NoDebt;
 
 class User
 {
-    private $id;
+    private $uid;
     private $email;
-    private $firstName;
-    private $lastName;
-    private $hashPass;
-    private $isActive;
+    private $firstname;
+    private $lastname;
 
-    public function __construct($email, $firstName, $lastName, $hashPass, $isActive = true, $id = 0){
-        $this->id = $id;
+    public function __construct($id, $email, $firstname, $lastname){
+        $this->uid = $id;
         $this->email = $email;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->hashPass = $hashPass;
-        $this->isActive = $isActive;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
     }
 
     public function __set($prop, $value){
         $this->$prop = $value;
+    }
+
+    public function __get($prop){
+        return $this->$prop;
     }
 }
