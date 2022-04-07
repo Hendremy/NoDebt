@@ -1,3 +1,22 @@
+<?php
+require ('php\UserRepository.php');
+use NoDebt\UserRepository;
+
+if(isset($_POST['sendbutton'])){
+    $userEmail = isset($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
+    $userPassword = isset($_POST['userPassword']) ? htmlentities($_POST['userPassword']) : '';
+    $userPasswordRep = isset($_POST['userPasswordRep']) ? htmlentities($_POST['userPasswordRep']) : '';
+    $firstName = isset($_POST['firstName']) ? htmlentities($_POST['firstName']) : '';
+    $lastName = isset($_POST['lastName']) ? htmlentities($_POST['lastName']) : '';
+    $message = '';
+
+    $userRepo = new UserRepository();
+    if($userPassword === $userPasswordRep && $userRepo->alreadyExists($userEmail)){
+        $userRepo->insert($userEmail, $lastName, $firstName, $userPassword, $message);
+    }
+
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,7 +32,7 @@
     ?>
     <main>
         <h1>Inscription</h1>
-        <form class="field-list" action="myGroups.php">
+        <form class="field-list" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
             <label for="firstName">Prénom *</label>
             <input type="text" name="firstName" id="firstName" required/>
             <label for="lastName">Nom *</label>

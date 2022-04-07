@@ -1,3 +1,26 @@
+<?php
+require ('php\UserRepository.php');
+use NoDebt\UserRepository;
+
+if(isset($_POST['loginBtn'])){
+    $userEmail = isset($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
+    $userPassword = isset($_POST['userPassword']) ? htmlentities($_POST['userPassword']) : '';
+    $message = '';
+
+    $userRepo = new UserRepository();
+    $user = $userRepo->getUser($userEmail, $userPassword, $message);
+    if($user != null){
+        session_start();
+        $_SESSION['userId'] = $user->uid;
+        $_SESSION['firstName'] = $user->firstname;
+        $_SESSION['lastName'] = $user->lastname;
+        $_SESSION['email'] = $user->email;
+        header("location: mygroups.php");
+    }else{
+        $message .= 'Connexion échouée - Email ou mot de passe incorrect';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,28 +35,6 @@
     include("inc/header.inc.php");
     ?>
     <main>
-        <?php
-        require ('php\UserRepository.php');
-        use NoDebt\UserRepository;
-
-        if(isset($_POST['loginBtn'])){
-            $userEmail = isset($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
-            $userPassword = isset($_POST['userPassword']) ? htmlentities($_POST['userPassword']) : '';
-            $message = '';
-
-            $userRepo = new UserRepository();
-            $user = $userRepo->getUser($userEmail, $userPassword, $message);
-            if($user != null){
-                $_SESSION['userId'] = $user->id;
-                $_SESSION['firstName'] = $user->firstName;
-                $_SESSION['lastName'] = $user->lastName;
-                $_SESSION['email'] = $user->email;
-                header("location: mygroups.php");
-            }else{
-                $message = 'Connexion échouée - Email ou mot de passe incorrect';
-            }
-        }
-        ?>
         <h1>Connexion</h1>
         <form class="field-list" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'])?>">
             <label for="userEmail">Adresse e-mail *</label>

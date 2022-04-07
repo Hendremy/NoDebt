@@ -12,13 +12,48 @@ class UserRepository
 {
     const TABLE_NAME = 'nodebt_utilisateur';
 
-    public function exists($user){
+    public function alreadyExists($email){
         $message = '';
-        DBLink::connect2db($message);
+        $exists = true;
+        try {
+            $bd = DBLink::connectToDb($message);
+            $stmt = $bd->prepare ("SELECT uid FROM ". self::TABLE_NAME
+                ." WHERE email = :email");
+            $stmt->bindValue(":email", $email);
+            if($stmt->execute() && $stmt->rowCount() === 0) {
+                $exists = false;
+            }
+        }catch(Exception $e){
+            $message = 'Erreur';
+        }finally{
+            DBLink::disconnect($db);
+            return $exists;
+        }
     }
 
-    public function insert($user){
-
+    public function insert($email, $lastname, $firstname, $password, &$message){
+        $insertOk = false;
+        $password = $this->hashPassword($password);
+        try{
+            $bd = DBLink::connectToDb($message);
+            $stmt = $bd->prepare("INSERT INTO ".self::TABLE_NAME."(email, lastname, firstname, hashpass)
+            VALUES (:email, :lastname, :firstname, :hashpass);");
+            $stmt->bindValue(":email", $email);
+            $stmt->bindValue(":lastname", $lastname);
+            $stmt->bindValue(":firstname", $firstname);
+            $stmt->bindValue(":password", $password);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $insertOk = true;
+                $message .= 'Compte créé avec succès';
+            }else{
+                $message .= 'Erreur lors de la création du compte';
+            }
+        }catch(Exception $e){
+            $message.= 'Error in DB :' . $e->getMessage();
+        }finally{
+            DBLink::disconnect($bd);
+            return $insertOk;
+        }
     }
 
     public function update($user){
@@ -26,20 +61,22 @@ class UserRepository
     }
 
     public function getUser($userEmail, $userPassword, &$message){
+        $user = null;
         $userPassword = $this->hashPassword($userPassword);
         try{
-            $bd = DBLink::connect2db($message);
-            $stmt = $bd->query("SELECT uid, email, firstname, lastname FROM nodebt_utilisateur WHERE email = :email AND hashpass = :hashpass;");
+            $bd = DBLink::connectToDb($message);
+            $stmt = $bd->prepare ("SELECT uid, email, firstname, lastname FROM ". self::TABLE_NAME
+                ." WHERE email = :email AND hashpass = :hashpass");
             $stmt->bindValue(':email', $userEmail);
             $stmt->bindValue(':hashpass', $userPassword);
-            if($stmt->execute() && $stmt->rowCount() == 1){
-                return $stmt->fetch(PDO::FETCH_CLASS, "NoDebt\User");
-            }else{
-                return null;
+            if($stmt->execute()){
+                $user = $stmt->fetchObject("NoDebt\User");
             }
         }catch(Exception $e){
             $message = "Erreur: " . $e->getMessage();
-            return null;
+        }finally{
+            DBLink::disconnect($bd);
+            return $user;
         }
     }
 

@@ -16,7 +16,7 @@ class DBLink {
      * @var string $message ensemble des messages à retourner à l'utilisateur, séparés par un saut de ligne
      * @return PDO|false Objet de liaison à la base de données ou false si erreur
      */
-    public static function connect2db(&$message){
+    public static function connectToDb(&$message){
         try {
             $link = new PDO('mysql:host=' . MYHOST . ';dbname=' . MYDB . ';charset=UTF8', MYUSER, MYPASS);
             $link->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);

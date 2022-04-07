@@ -1,3 +1,6 @@
+<?php
+include('inc\session.inc.php');
+?>
 <!DOCTYPE html>
 <?php
 use NoDebt\MailSender;

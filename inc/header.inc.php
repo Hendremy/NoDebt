@@ -1,9 +1,6 @@
-<?php
-include('session.inc.php');
-?>
 <?php if(isset($userId)) : ?>
 <header>
-    <a href="myGroups.php/?userId=<?php echo $userId ?>" class="nodebt"><img id="logo" src="images/icon.png" alt="logo"/>No D€bt</a>
+    <a href="myGroups.php" class="nodebt"><img id="logo" src="images/icon.png" alt="logo"/>No D€bt</a>
     <nav class="website-nav">
         <ul class="nav-links">
             <li><a href="myGroups.php">Mes groupes</a></li>
@@ -14,7 +11,7 @@ include('session.inc.php');
     <nav class="profile-nav">
         <ul class="nav-links">
             <li><a href="editProfile.php">Machin Bidule</a></li>
-            <li><a href="index.php">Se déconnecter</a></li>
+            <li><a href="disconnect.php">Se déconnecter</a></li>
         </ul>
     </nav>
 </header>
