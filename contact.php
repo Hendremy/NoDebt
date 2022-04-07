@@ -10,6 +10,7 @@ $fromEmail = !empty($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '
 $mailTopic = !empty($_POST['mailTopic']) ? htmlentities($_POST['mailTopic']) : '';
 $mailMessage = !empty($_POST['mailMessage']) ? htmlentities($_POST['mailMessage']) : '';
 
+
 if (isset($_POST["sendbutton"])) {
     $resultMsg = '';
     $mailSender = new MailSender();

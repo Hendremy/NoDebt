@@ -9,7 +9,7 @@
 </head>
 <body>
     <?php
-    include("inc/headerAnonym.inc.php");
+    include("inc/header.inc.php");
     ?>
     <main>
         <h1>Mot de passe oublié</h1>

@@ -9,14 +9,14 @@
 </head>
 <body>
     <?php
-    include("inc/headerAnonym.inc.php");
+    include("inc/header.inc.php");
     ?>
     <main>
         <h1>Connexion</h1>
-        <form class="field-list" action="myGroups.php">
-            <label for="userEmail">Adresse e-mail</label>
+        <form class="field-list" method="post" action="myGroups.php">
+            <label for="userEmail">Adresse e-mail *</label>
             <input type="email" name="userEmail" id="userEmail" required/>
-            <label for="userPassword">Mot de passe</label>
+            <label for="userPassword">Mot de passe *</label>
             <input type="password" name="userPassword" id="userPassword" required/>
             <button type="submit" name="sendbutton">Se connecter</button>
         </form>
