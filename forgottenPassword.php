@@ -1,4 +1,6 @@
 <?php
+require('php/UserRepository.php');
+require('php/MailSender.php');
 use NoDebt\UserRepository;
 use NoDebt\PasswordUtils;
 use NoDebt\MailSender;
@@ -15,9 +17,8 @@ if(isset($_POST['resetPassBtn'])){
         $message = '';
         $mailSender = new MailSender();
         $mailTopic = 'Nodebt - Réinitialisation de mot de passe';
-        $mailBody = "Voici votre nouveau mot de passe suite à votre demande de réinitalisation \n"
-            .$password;
-        $sendOk = $mailSender->sendMail(noreply, $userEmail, $mailSender, $mailBody, $message);
+        $mailBody = "Voici votre nouveau mot de passe suite à votre demande de réinitalisation :\n\n $password";
+        $sendOk = $mailSender->sendMail(noreply, $userEmail, $mailTopic, $mailBody, $message);
         if($sendOk){
             $userRepo->updatePasswordForEmail($userEmail, $password, $message);
         }
@@ -41,10 +42,11 @@ if(isset($_POST['resetPassBtn'])){
     ?>
     <main>
         <h1>Mot de passe oublié</h1>
-        <form class="field-list" action="index.php" method="post">
+        <form class="field-list" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
             <label for="userEmail">Encodez votre adresse e-mail pour recevoir un nouveau mot de passe</label>
             <input type="email" name="userEmail" id="userEmail" required value="<?php if(isset($userEmail)) echo $userEmail?>"/>
             <button type="submit" name="resetPassBtn">Envoyer</button>
+            <?php if (isset($message)) echo $message?>
         </form>
     </main>
 </body>

@@ -3,7 +3,7 @@ require ('php\UserRepository.php');
 use NoDebt\UserRepository;
 
 if(isset($_POST['sendbutton'])){
-    $userEmail = isset($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
+    $userEmail = isset($_POST['userEmail']) ? htmlspecialchars($_POST['userEmail']) : '';
     $userPassword = isset($_POST['userPassword']) ? htmlspecialchars($_POST['userPassword']) : '';
     $userPasswordRep = isset($_POST['userPasswordRep']) ? htmlspecialchars($_POST['userPasswordRep']) : '';
     $firstName = isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : '';
