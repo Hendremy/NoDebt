@@ -1,11 +1,12 @@
 <?php
-require ('php\UserRepository.php');
+require 'php/UserRepository.php';
 use NoDebt\UserRepository;
+const MAX_CHAR = 50;
 
 if(isset($_POST['sendbutton'])){
-    $userEmail = isset($_POST['userEmail']) ? htmlspecialchars($_POST['userEmail']) : '';
-    $userPassword = isset($_POST['userPassword']) ? htmlspecialchars($_POST['userPassword']) : '';
-    $userPasswordRep = isset($_POST['userPasswordRep']) ? htmlspecialchars($_POST['userPasswordRep']) : '';
+    $userEmail = isset($_POST['userEmail']) ? substr(htmlspecialchars($_POST['userEmail']),0,MAX_CHAR) : '';
+    $userPassword = isset($_POST['userPassword']) ? substr(htmlspecialchars($_POST['userPassword']),0, MAX_CHAR) : '';
+    $userPasswordRep = isset($_POST['userPasswordRep']) ? substr(htmlspecialchars($_POST['userPasswordRep']),0, MAX_CHAR) : '';
     $firstName = isset($_POST['firstName']) ? htmlspecialchars($_POST['firstName']) : '';
     $lastName = isset($_POST['lastName']) ? htmlspecialchars($_POST['lastName']) : '';
 
@@ -21,8 +22,14 @@ if(isset($_POST['sendbutton'])){
         $emailMessage = 'Cette adresse e-mail est déjà utilisée';
         $validForm = false;
     }
+    if(!filter_var($userEmail, FILTER_VALIDATE_EMAIL)){
+        $emailMessage = 'Adresse e-mail invalide';
+        $validForm = false;
+    }
     if($validForm){
-        $userRepo->insert($userEmail, $lastName, $firstName, $userPassword, $message);
+        if($userRepo->insert($userEmail, $lastName, $firstName, $userPassword, $message)){
+            $uid = $userRepo->getLastInsertId();
+        }
     }
 }
 ?>

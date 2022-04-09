@@ -99,6 +99,19 @@ class UserRepository
         return $user;
     }
 
+    public function getLastInsertId(){
+        $uid = 0;
+        $message='';
+        try{
+            $bd = DBLink::connectToDb($message);
+            $uid = $bd->lastInsertId();
+        }catch(Exception $e){
+            $uid = -1;
+        }
+        DBLink::disconnect($bd);
+        return $uid;
+    }
+
     private function hashPassword($password){
         return PasswordUtils::hashPassword($password);
     }

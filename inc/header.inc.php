@@ -27,7 +27,7 @@
     <nav class="authentication-nav">
         <ul class="nav-links">
             <li><a href="index.php">Se connecter</a></li>
-            <li><a href="signin.php">S'inscrire</a></li>
+            <li><a href="signup.php">S'inscrire</a></li>
         </ul>
     </nav>
 </header>

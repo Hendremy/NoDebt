@@ -1,5 +1,5 @@
 <?php
-include('inc\session.inc.php');
+include('inc/session.inc.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">

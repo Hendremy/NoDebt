@@ -8,22 +8,25 @@ use NoDebt\MailSender;
 const noreply = 'noreply@helmo.be';
 
 if(isset($_POST['resetPassBtn'])){
-    $userEmail = isset($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
+    $userEmail = !empty($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
 
     $userRepo = new UserRepository();
-
-    if($userRepo->alreadyExists($userEmail)){
-        $password = PasswordUtils::generatePassword();
-        $message = '';
-        $mailSender = new MailSender();
-        $mailTopic = 'Nodebt - Réinitialisation de mot de passe';
-        $mailBody = "Voici votre nouveau mot de passe suite à votre demande de réinitalisation :\n\n $password";
-        $sendOk = $mailSender->sendMail(noreply, $userEmail, $mailTopic, $mailBody, $message);
-        if($sendOk){
-            $userRepo->updatePasswordForEmail($userEmail, $password, $message);
+    if(filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
+        if ($userRepo->alreadyExists($userEmail)) {
+            $password = PasswordUtils::generatePassword();
+            $message = '';
+            $mailSender = new MailSender();
+            $mailTopic = 'Nodebt - Réinitialisation de mot de passe';
+            $mailBody = "Voici votre nouveau mot de passe suite à votre demande de réinitalisation :\n\n$password";
+            $sendOk = $mailSender->sendMail(noreply, $userEmail, $mailTopic, $mailBody, $message);
+            if ($sendOk) {
+                $userRepo->updatePasswordForEmail($userEmail, $password, $message);
+            }
+        } else {
+            $message = 'L\'adresse e-mail n\'est liée à aucun compte';
         }
     }else{
-        $message = 'L\'adresse e-mail n\'est liée à aucun compte';
+        $message = 'Adresse e-mail invalide';
     }
 }
 ?>
