@@ -20,6 +20,12 @@ if (isset($_POST["sendbutton"])) {
     $sendOk = $mailSender->sendMail($fromEmail, admin, $mailTopic, $mailMessage, $resultMsg);
 }
 
+if($sendOk){
+    $fromEmail = null;
+    $mailTopic = null;
+    $mailMessage = null;
+}
+
 ?>
 <html lang="fr">
 <head>
@@ -39,9 +45,9 @@ if (isset($_POST["sendbutton"])) {
             <label for="userEmail" hidden>Adresse e-mail *</label>
             <input type="email" name="userEmail" id="userEmail" value="machin@bidule.be" hidden readonly required/>
             <label for="mailTopic">Sujet *</label>
-            <input type="text" name="mailTopic" id="mailTopic" required value="<?php if(!$sendOk && isset($mailTopic)) echo $mailTopic?>"/>
+            <input type="text" name="mailTopic" id="mailTopic" required value="<?php if(isset($mailTopic)) echo $mailTopic?>"/>
             <label for="mailMessage">Message *</label>
-            <textarea name="mailMessage" id="mailMessage" rows="20" cols="50" required><?php if(!$sendOk && isset($mailMessage)) echo $mailMessage?></textarea>
+            <textarea name="mailMessage" id="mailMessage" rows="20" cols="50" required><?php if(isset($mailMessage)) echo $mailMessage?></textarea>
             <button type="submit" class="submit" name="sendbutton">Envoyer</button>
             <?php if(isset($resultMsg)) echo "<span>$resultMsg</span>";?>
         </form>

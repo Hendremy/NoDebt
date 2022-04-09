@@ -1,3 +1,31 @@
+<?php
+use NoDebt\UserRepository;
+use NoDebt\PasswordUtils;
+use NoDebt\MailSender;
+
+const noreply = 'noreply@helmo.be';
+
+if(isset($_POST['resetPassBtn'])){
+    $userEmail = isset($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
+
+    $userRepo = new UserRepository();
+
+    if($userRepo->alreadyExists($userEmail)){
+        $password = PasswordUtils::generatePassword();
+        $message = '';
+        $mailSender = new MailSender();
+        $mailTopic = 'Nodebt - Réinitialisation de mot de passe';
+        $mailBody = "Voici votre nouveau mot de passe suite à votre demande de réinitalisation \n"
+            .$password;
+        $sendOk = $mailSender->sendMail(noreply, $userEmail, $mailSender, $mailBody, $message);
+        if($sendOk){
+            $userRepo->updatePasswordForEmail($userEmail, $password, $message);
+        }
+    }else{
+        $message = 'L\'adresse e-mail n\'est liée à aucun compte';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,10 +41,10 @@
     ?>
     <main>
         <h1>Mot de passe oublié</h1>
-        <form class="field-list" action="index.php">
+        <form class="field-list" action="index.php" method="post">
             <label for="userEmail">Encodez votre adresse e-mail pour recevoir un nouveau mot de passe</label>
-            <input type="email" name="userEmail" id="userEmail" required/>
-            <button type="submit" name="resetUserPassword">Envoyer</button>
+            <input type="email" name="userEmail" id="userEmail" required value="<?php if(isset($userEmail)) echo $userEmail?>"/>
+            <button type="submit" name="resetPassBtn">Envoyer</button>
         </form>
     </main>
 </body>

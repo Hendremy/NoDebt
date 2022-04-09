@@ -7,6 +7,7 @@ use Exception;
 use PDO;
 require ('DBLink.php');
 require ('User.php');
+require('PasswordUtils.php');
 
 class UserRepository
 {
@@ -25,10 +26,10 @@ class UserRepository
             }
         }catch(Exception $e){
             $message = 'Erreur';
-        }finally{
-            DBLink::disconnect($db);
-            return $exists;
         }
+        DBLink::disconnect($db);
+        return $exists;
+
     }
 
     public function insert($email, $lastname, $firstname, $password, &$message){
@@ -36,12 +37,12 @@ class UserRepository
         $password = $this->hashPassword($password);
         try{
             $bd = DBLink::connectToDb($message);
-            $stmt = $bd->prepare("INSERT INTO ".self::TABLE_NAME."(email, lastname, firstname, hashpass)
+            $stmt = $bd->prepare("INSERT INTO ".self::TABLE_NAME." (email, lastname, firstname, hashpass)
             VALUES (:email, :lastname, :firstname, :hashpass);");
             $stmt->bindValue(":email", $email);
             $stmt->bindValue(":lastname", $lastname);
             $stmt->bindValue(":firstname", $firstname);
-            $stmt->bindValue(":password", $password);
+            $stmt->bindValue(":hashpass", $password);
             if($stmt->execute() && $stmt->rowCount() == 1){
                 $insertOk = true;
                 $message .= 'Compte créé avec succès';
@@ -50,14 +51,33 @@ class UserRepository
             }
         }catch(Exception $e){
             $message.= 'Error in DB :' . $e->getMessage();
-        }finally{
-            DBLink::disconnect($bd);
-            return $insertOk;
         }
+        DBLink::disconnect($bd);
+        return $insertOk;
     }
 
-    public function update($user){
-
+    public function updatePasswordForEmail($email, $password, &$message){
+        $db = null;
+        $updateOk = false;
+        $password = $this->hashPassword($password);
+        try{
+            $bd = DBLink::connectToDb($message);
+            $stmt = $bd->prepare(
+                "UPDATE ". self::TABLE_NAME
+                ." SET hashpass = :hashpass WHERE email = :email;");
+            $stmt->bindValue(':hashpass', $password);
+            $stmt->bindValue(':email', $email);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $updateOk = true;
+                $message .= 'Mot de passe modifié avec succès';
+            }else{
+                $message .= 'Erreur dans l\'update';
+            }
+        }catch(Exception $e){
+            $message .= 'Error in DB: '.$e->getMessage();
+        }
+        DBLink::disconnect($db);
+        return $updateOk;
     }
 
     public function getUser($userEmail, $userPassword, &$message){
@@ -74,13 +94,14 @@ class UserRepository
             }
         }catch(Exception $e){
             $message = "Erreur: " . $e->getMessage();
-        }finally{
-            DBLink::disconnect($bd);
-            return $user;
         }
+        DBLink::disconnect($bd);
+        return $user;
     }
 
     private function hashPassword($password){
-        return hash("sha512",$password);
+        return PasswordUtils::hashPassword($password);
     }
+
+
 }
