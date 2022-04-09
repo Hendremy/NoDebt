@@ -29,6 +29,12 @@ if(isset($_POST['sendbutton'])){
     if($validForm){
         if($userRepo->insert($userEmail, $lastName, $firstName, $userPassword, $message)){
             $uid = $userRepo->getLastInsertId();
+            session_start();
+            $_SESSION['userId'] = $uid;
+            $_SESSION['firstName'] = $firstName;
+            $_SESSION['lastName'] = $lastName;
+            $_SESSION['email'] = $userEmail;
+            header("location: myGroups.php");
         }
     }
 }
