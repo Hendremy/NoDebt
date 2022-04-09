@@ -10,7 +10,7 @@
     </nav>
     <nav class="profile-nav">
         <ul class="nav-links">
-            <li><a href="editProfile.php">Machin Bidule</a></li>
+            <li><a href="editProfile.php"><?php echo isset($lastName) && isset ($firstName) ? $firstName.' '.$lastName : 'Profil' ?></a></li>
             <li><a href="disconnect.php">Se déconnecter</a></li>
         </ul>
     </nav>
