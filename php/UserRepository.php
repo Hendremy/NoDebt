@@ -29,7 +29,9 @@ class UserRepository
         }
         DBLink::disconnect($db);
         return $exists;
+    }
 
+    public function ($uid){
     }
 
     public function insert($email, $lastname, $firstname, $password, &$message){
