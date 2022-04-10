@@ -31,9 +31,6 @@ class UserRepository
         return $exists;
     }
 
-    public function ($uid){
-    }
-
     public function insert($email, $lastname, $firstname, $password, &$message){
         $insertedId = 0;
         $password = $this->hashPassword($password);
@@ -89,8 +86,8 @@ class UserRepository
         try{
             $bd = DBLink::connectToDb($message);
             $stmt = $bd->prepare(
-                "UPDATE ". self::TABLE_NAME
-                ." SET firstname = :firstname, lastname = :lastname, email = :email WHERE uid = :uid;");
+                'UPDATE '. self::TABLE_NAME
+                .' SET firstname = :firstname, lastname = :lastname, email = :email WHERE uid = :uid;');
             $stmt->bindValue(':firstname', $firstname);
             $stmt->bindValue(':lastname', $lastname);
             $stmt->bindValue(':email', $email);
@@ -125,6 +122,24 @@ class UserRepository
         }
         DBLink::disconnect($bd);
         return $user;
+    }
+
+    public function deleteUser($uid, &$message){
+        $bd = null;
+        $deleteOk = false;
+        try{
+            $bd = DBLink::connectToDb($message);
+            $stmt = $bd->prepare('DELETE FROM '. self::TABLE_NAME .
+                ' WHERE uid = :uid;' );
+            $stmt->bindValue(':uid', $uid);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $deleteOk = true;
+            }
+        }catch(Exception $e){
+            $message = 'Erreur: '. $e->getMessage();
+        }
+        DBLink::disconnect($bd);
+        return $deleteOk;
     }
 
     private function hashPassword($password){

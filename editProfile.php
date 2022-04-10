@@ -3,9 +3,11 @@ include('inc\session.inc.php');
 ?>
 <?php
 require_once 'php/UserRepository.php';
+require_once 'php/ParticipationRepository.php';
 require_once 'php/ValidationUtils.php';
 require_once 'php/PasswordUtils.php';
 
+use NoDebt\ParticipationRepository;
 use NoDebt\UserRepository;
 use NoDebt\ValidationUtils;
 $validator = new ValidationUtils();
@@ -60,6 +62,14 @@ if(isset($_POST['infoBtn'])){
         $passUpdateOk = $userRepo->updatePasswordForEmail($ses_email, $password, $message);
         $passUpdateMessage = $passUpdateOk ? 'Mot de passe modifié avec succès !' : 'Erreur lors de la modification du mot de passe: '.$message;
     }
+}else if(isset($_POST['deleteAccount'])){
+    $message ='';
+    $participRepo = new ParticipationRepository();
+    if(isset($ses_uid) && !($participRepo->userHasActiveParticipations($ses_uid, $message))){
+        header('location: confirmDeleteAccount.php');
+    }else{
+        $alertDelete = empty($message) ? 'Impossible de supprimer le compte: vous avez des participations en cours' : $message;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -99,7 +109,7 @@ if(isset($_POST['infoBtn'])){
             <button type="submit" class="submit" name="passwordBtn">Valider modifications</button>
             <?php if(isset($passUpdateMessage)) echo $passUpdateMessage ?>
         </form>
-        <form action="confirmDeleteAccount.php">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
             <button type="submit" class="delete decline" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
         </form>
     </main>
