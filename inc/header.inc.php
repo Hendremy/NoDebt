@@ -1,4 +1,4 @@
-<?php if(isset($userId)) : ?>
+<?php if(isset($ses_uid)) : ?>
 <header>
     <a href="myGroups.php" class="nodebt"><img id="logo" src="images/icon.png" alt="logo"/>No D€bt</a>
     <nav class="website-nav">
@@ -10,7 +10,7 @@
     </nav>
     <nav class="profile-nav">
         <ul class="nav-links">
-            <li><a href="editProfile.php"><?php echo isset($lastName) && isset ($firstName) ? $firstName.' '.$lastName : 'Profil' ?></a></li>
+            <li><a href="editProfile.php"><?php echo isset($ses_lastName) && isset ($ses_firstName) ? $ses_firstName.' '.$ses_lastName : 'Profil' ?></a></li>
             <li><a href="disconnect.php">Se déconnecter</a></li>
         </ul>
     </nav>

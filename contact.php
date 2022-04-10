@@ -41,9 +41,9 @@ if($sendOk){
     <main>
         <h1>Nous contacter</h1>
         <form class="field-list" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
-            <?php if(isset($userId)): ?>
+            <?php if(isset($ses_uid)): ?>
                 <label for="userEmail" hidden>Adresse e-mail *</label>
-                <input type="email" name="userEmail" id="userEmail" value="<?php if(isset($_SESSION['email'])) echo $_SESSION['email']?>" hidden readonly required/>
+                <input type="email" name="userEmail" id="userEmail" value="<?php if(isset($ses_email)) echo $ses_email?>" hidden readonly required/>
             <?php else:?>
                 <label for="userEmail">Adresse e-mail *</label>
                 <input type="email" name="userEmail" id="userEmail" value="<?php if(isset($fromEmail)) echo $fromEmail?>" required/>

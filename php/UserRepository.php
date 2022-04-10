@@ -33,7 +33,7 @@ class UserRepository
     }
 
     public function insert($email, $lastname, $firstname, $password, &$message){
-        $insertOk = false;
+        $insertedId = 0;
         $password = $this->hashPassword($password);
         try{
             $bd = DBLink::connectToDb($message);
@@ -44,16 +44,17 @@ class UserRepository
             $stmt->bindValue(":firstname", $firstname);
             $stmt->bindValue(":hashpass", $password);
             if($stmt->execute() && $stmt->rowCount() == 1){
-                $insertOk = true;
+                $insertedId = $bd->lastInsertId();
                 $message .= 'Compte créé avec succès';
             }else{
                 $message .= 'Erreur lors de la création du compte';
             }
         }catch(Exception $e){
+            $insertedId = -1;
             $message.= 'Error in DB :' . $e->getMessage();
         }
         DBLink::disconnect($bd);
-        return $insertOk;
+        return $insertedId;
     }
 
     public function updatePasswordForEmail($email, $password, &$message){
@@ -72,6 +73,31 @@ class UserRepository
                 $message .= 'Mot de passe modifié avec succès';
             }else{
                 $message .= 'Erreur dans l\'update';
+            }
+        }catch(Exception $e){
+            $message .= 'Error in DB: '.$e->getMessage();
+        }
+        DBLink::disconnect($db);
+        return $updateOk;
+    }
+
+    public function updateUserInfo($uid, $email, $lastname, $firstname, &$message){
+        $db = null;
+        $updateOk = false;
+        try{
+            $bd = DBLink::connectToDb($message);
+            $stmt = $bd->prepare(
+                "UPDATE ". self::TABLE_NAME
+                ." SET firstname = :firstname, lastname = :lastname, email = :email WHERE uid = :uid;");
+            $stmt->bindValue(':firstname', $firstname);
+            $stmt->bindValue(':lastname', $lastname);
+            $stmt->bindValue(':email', $email);
+            $stmt->bindValue(':uid', $uid);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $updateOk = true;
+                $message .= 'Utilisateur modifié avec succès';
+            }else{
+                $message .= 'Erreur dans la mise à jour d\'information';
             }
         }catch(Exception $e){
             $message .= 'Error in DB: '.$e->getMessage();
@@ -99,21 +125,9 @@ class UserRepository
         return $user;
     }
 
-    public function getLastInsertId(){
-        $uid = 0;
-        $message='';
-        try{
-            $bd = DBLink::connectToDb($message);
-            $uid = $bd->lastInsertId();
-        }catch(Exception $e){
-            $uid = -1;
-        }
-        DBLink::disconnect($bd);
-        return $uid;
-    }
-
     private function hashPassword($password){
-        return PasswordUtils::hashPassword($password);
+        $passUtils = new PasswordUtils();
+        return $passUtils->hashPassword($password);
     }
 
 

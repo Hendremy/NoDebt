@@ -13,7 +13,8 @@ if(isset($_POST['resetPassBtn'])){
     $userRepo = new UserRepository();
     if(filter_var($userEmail, FILTER_VALIDATE_EMAIL)) {
         if ($userRepo->alreadyExists($userEmail)) {
-            $password = PasswordUtils::generatePassword();
+            $passUtils = new PasswordUtils();
+            $password = $passUtils->generatePassword();
             $message = '';
             $mailSender = new MailSender();
             $mailTopic = 'Nodebt - Réinitialisation de mot de passe';

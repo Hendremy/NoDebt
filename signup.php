@@ -27,10 +27,10 @@ if(isset($_POST['sendbutton'])){
         $validForm = false;
     }
     if($validForm){
-        if($userRepo->insert($userEmail, $lastName, $firstName, $userPassword, $message)){
-            $uid = $userRepo->getLastInsertId();
+        $insertedUid = $userRepo->insert($userEmail, $lastName, $firstName, $userPassword, $message);
+        if($insertedUid > 0){
             session_start();
-            $_SESSION['userId'] = $uid;
+            $_SESSION['userId'] = $insertedUid;
             $_SESSION['firstName'] = $firstName;
             $_SESSION['lastName'] = $lastName;
             $_SESSION['email'] = $userEmail;
