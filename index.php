@@ -11,14 +11,16 @@ if(isset($_POST['loginBtn'])){
     $userRepo = new UserRepository();
     $user = $userRepo->getUser($userEmail, $userPassword, $message);
     $participRepo = new ParticipationRepository();
-    $user->groups = $participRepo->getUserGroups($user->uid);
+    $groups = $participRepo->getUserGroups($user->uid);
+    $invites = $participRepo->getUserInvitations($user->uid);
     if($user != null){
         session_start();
         $_SESSION['userId'] = $user->uid;
         $_SESSION['firstName'] = $user->firstname;
         $_SESSION['lastName'] = $user->lastname;
         $_SESSION['email'] = $user->email;
-        $_SESSION['groups'] = $user->groups;
+        $_SESSION['groups'] = $groups;
+        $_SESSION['invites'] = $invites;
         header("location: myGroups.php");
     }else{
         $message = 'Connexion échouée - Email ou mot de passe incorrect';

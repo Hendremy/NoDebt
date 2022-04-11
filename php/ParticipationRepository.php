@@ -3,7 +3,6 @@
 namespace NoDebt;
 
 use DB\DBLink;
-use Exception;
 use PDOException;
 
 class ParticipationRepository
@@ -26,6 +25,7 @@ class ParticipationRepository
         }catch(PDOException $e){
             $message = self::DB_ERROR_MESSAGE;
         }
+        DBLink::disconnect($db);
         return $hasActiveParticipations;
     }
 
@@ -49,8 +49,9 @@ class ParticipationRepository
                 }
             }
         }catch(PDOException $e){
-            $groupIds = null;
+            //TODO: Message d'erreur
         }
+        DBLink::disconnect($bd);
         return $groupIds;
     }
 }

@@ -8,5 +8,4 @@ class User
     public $email;
     public $firstname;
     public $lastname;
-    public $groups;
 }
