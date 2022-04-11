@@ -52,7 +52,7 @@
                 <form action="group01Settled.php">
                     <button class="accept" name="confirmSettle" id="confirmSettle" type="submit">Confirmer solde</button>
                 </form>
-                <form action="group01.php">
+                <form action="group.php">
                     <button class="decline" name="cancelSettle" id="cancelSettle" type="submit">Annuler solde</button>
                 </form>
             </footer>

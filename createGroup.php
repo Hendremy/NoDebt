@@ -23,7 +23,14 @@ if(isset($_POST['createBtn'])){
     }
 
     if($fieldsOk && isset($ses_uid)){
-        $groupRepo = new \NoDebt\GroupRepository();
+        $groupRepo = new GroupRepository();
+        $message = '';
+        if($gid = $groupRepo->insert($groupName, $currency, $ses_uid,$message)){
+            $_SESSION['groups'] [] = $gid;
+            header("location: group.php/?gid=$gid");
+        }else{
+            $alertInsert = $message;
+        }
     }
 }
 ?>
@@ -44,17 +51,18 @@ if(isset($_POST['createBtn'])){
         <h1>Créer un groupe</h1>
         <form class="field-list" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
             <label for="name">Nom du groupe</label>
-            <input type="text" name="name" id="name" required/>
+            <input type="text" name="name" id="name" required value="<?php if(isset($groupName)) echo $groupName?>"/>
             <?php if(isset($alertName)) echo "<span class='alert'>$alertName</span>"?>
             <label for="currency">Devise</label>
             <select name="currency" id="currency" required>
-                <option value="EUR" selected>Euros - &euro;</option>
-                <option value="USD">Dollars - &dollar;</option>
-                <option value="JPY">Yen - &yen;</option>
-                <option value="GBP">Livres Sterling - &pound;</option>
+                <option value="EUR" <?php echo isset($currency) ? $currency == 'EUR' ? 'selected':'' : 'selected' ?>>Euros - &euro;</option>
+                <option value="USD" <?php if(isset($currency) && $currency =='USD') echo 'selected' ?>>Dollars - &dollar;</option>
+                <option value="JPY" <?php if(isset($currency) && $currency =='JPY') echo 'selected' ?>>Yen - &yen;</option>
+                <option value="GBP" <?php if(isset($currency) && $currency =='GBP') echo 'selected' ?>>Livres Sterling - &pound;</option>
             </select>
             <?php if(isset($alertCurrency)) echo "<span class='alert'>$alertCurrency</span>"?>
             <button type="submit" class="submit" name="createBtn">Créer groupe</button>
+            <?php if(isset($alertInsert)) echo "<span class='alert'>$alertInsert</span>"?>
         </form>
     </main>
 </body>

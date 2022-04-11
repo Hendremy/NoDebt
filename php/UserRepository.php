@@ -5,6 +5,8 @@ namespace NoDebt;
 use DB\DBLink;
 use Exception;
 use PDO;
+use PDOException;
+
 require ('DBLink.php');
 require ('User.php');
 require('PasswordUtils.php');
@@ -12,12 +14,13 @@ require('PasswordUtils.php');
 class UserRepository
 {
     const TABLE_NAME = 'nodebt_utilisateur';
+    const DB_ERROR_MESSAGE = 'Erreur: Veuillez réessayer ultérieurement';
 
     public function alreadyExists($email){
         $message = '';
         $exists = true;
         try {
-            $bd = DBLink::connectToDb($message);
+            $bd = DBLink::connectToDb();
             $stmt = $bd->prepare ("SELECT uid FROM ". self::TABLE_NAME
                 ." WHERE email = :email");
             $stmt->bindValue(":email", $email);
@@ -35,7 +38,7 @@ class UserRepository
         $insertedId = 0;
         $password = $this->hashPassword($password);
         try{
-            $bd = DBLink::connectToDb($message);
+            $bd = DBLink::connectToDb();
             $stmt = $bd->prepare("INSERT INTO ".self::TABLE_NAME." (email, lastname, firstname, hashpass)
             VALUES (:email, :lastname, :firstname, :hashpass);");
             $stmt->bindValue(":email", $email);
@@ -48,9 +51,9 @@ class UserRepository
             }else{
                 $message .= 'Erreur lors de la création du compte';
             }
-        }catch(Exception $e){
+        }catch(PDOException $e){
             $insertedId = -1;
-            $message.= 'Error in DB :' . $e->getMessage();
+            $message.= self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($bd);
         return $insertedId;
@@ -61,7 +64,7 @@ class UserRepository
         $updateOk = false;
         $password = $this->hashPassword($password);
         try{
-            $bd = DBLink::connectToDb($message);
+            $bd = DBLink::connectToDb();
             $stmt = $bd->prepare(
                 "UPDATE ". self::TABLE_NAME
                 ." SET hashpass = :hashpass WHERE email = :email;");
@@ -73,8 +76,8 @@ class UserRepository
             }else{
                 $message .= 'Erreur dans l\'update';
             }
-        }catch(Exception $e){
-            $message .= 'Error in DB: '.$e->getMessage();
+        }catch(PDOException $e){
+            $message .= self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($db);
         return $updateOk;
@@ -84,7 +87,7 @@ class UserRepository
         $db = null;
         $updateOk = false;
         try{
-            $bd = DBLink::connectToDb($message);
+            $bd = DBLink::connectToDb();
             $stmt = $bd->prepare(
                 'UPDATE '. self::TABLE_NAME
                 .' SET firstname = :firstname, lastname = :lastname, email = :email WHERE uid = :uid;');
@@ -98,8 +101,8 @@ class UserRepository
             }else{
                 $message .= 'Erreur dans la mise à jour d\'information';
             }
-        }catch(Exception $e){
-            $message .= 'Error in DB: '.$e->getMessage();
+        }catch(PDOException $e){
+            $message .= self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($db);
         return $updateOk;
@@ -109,7 +112,7 @@ class UserRepository
         $user = null;
         $userPassword = $this->hashPassword($userPassword);
         try{
-            $bd = DBLink::connectToDb($message);
+            $bd = DBLink::connectToDb();
             $stmt = $bd->prepare ("SELECT uid, email, firstname, lastname FROM ". self::TABLE_NAME
                 ." WHERE email = :email AND hashpass = :hashpass");
             $stmt->bindValue(':email', $userEmail);
@@ -118,7 +121,7 @@ class UserRepository
                 $user = $stmt->fetchObject("NoDebt\User");
             }
         }catch(Exception $e){
-            $message = "Erreur: " . $e->getMessage();
+            $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($bd);
         return $user;
@@ -128,7 +131,7 @@ class UserRepository
         $bd = null;
         $deleteOk = false;
         try{
-            $bd = DBLink::connectToDb($message);
+            $bd = DBLink::connectToDb();
             $stmt = $bd->prepare('DELETE FROM '. self::TABLE_NAME .
                 ' WHERE uid = :uid;' );
             $stmt->bindValue(':uid', $uid);
@@ -136,7 +139,7 @@ class UserRepository
                 $deleteOk = true;
             }
         }catch(Exception $e){
-            $message = 'Erreur: '. $e->getMessage();
+            $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($bd);
         return $deleteOk;

@@ -13,7 +13,7 @@
     ?>
     <main>
         <h1>Ajouter une dépense au groupe Roadtrip Allemagne</h1>
-        <form class="field-list" action="group01.php">
+        <form class="field-list" action="group.php">
             <label for="participant">Participant</label>
             <select name="participant" id="participant" required>
                 <option value="participant1" selected>Machin Bidule</option>

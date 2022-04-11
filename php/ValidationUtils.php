@@ -26,7 +26,7 @@ class ValidationUtils
     }
 
     private function currencyIsSupported($currency){
-        return in_array($currency,array('EUR','USD','JYP','GBP'), true);
+        return in_array($currency,array('EUR','USD','JPY','GBP'), true);
     }
 
 

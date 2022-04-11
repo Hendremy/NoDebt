@@ -13,7 +13,7 @@
     ?>
     <main>
         <h1>Choucroute - Editer dépense</h1>
-        <form class="field-list" action="group01.php">
+        <form class="field-list" action="group.php">
             <label for="participant">Participant</label>
             <select name="participant" id="participant" required>
                 <option value="participant1">Machin Bidule</option>

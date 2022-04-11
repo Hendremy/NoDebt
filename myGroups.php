@@ -49,7 +49,7 @@ include('inc/session.inc.php');
         <section class="groupList">
             <h2>Mes groupes</h2>
             <article class="groupPreview">
-                <header><span><a href="group01.php">Roadtrip Allemagne</a> | Créé par: Machin Bidule | Montant total des dépenses : 210 €</span>
+                <header><span><a href="group.php">Roadtrip Allemagne</a> | Créé par: Machin Bidule | Montant total des dépenses : 210 €</span>
                 </header>
                 <h3>Dernières dépenses</h3>
                 <table class="expenses-table-view">

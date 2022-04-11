@@ -13,7 +13,7 @@
     ?>
     <main>
         <h1>Editer le groupe Roadtrip Allemagne</h1>
-        <form class="field-list" action="group01.php">
+        <form class="field-list" action="group.php">
             <label for="name">Nom du groupe</label>
             <input type="text" name="name" id="name" value="Roadtrip Allemagne" required/>
             <label for="devise">Devise</label>
