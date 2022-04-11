@@ -20,4 +20,15 @@ class ValidationUtils
         return htmlspecialchars($string);
     }
 
+    public function currencyIsValid($currency){
+        $pattern = "/[A-Z]{3}/";
+        return !empty($currency) && preg_match($pattern, $currency) && $this->currencyIsSupported($currency);
+    }
+
+    private function currencyIsSupported($currency){
+        return in_array($currency,array('EUR','USD','JYP','GBP'), true);
+    }
+
+
+
 }
