@@ -1,4 +1,11 @@
 <?php
+include 'inc/session.inc.php';
+
+if(isset($_SESSION['userId'])){
+    header('location: myGroups.php');
+}
+?>
+<?php
 require_once ('./php/UserRepository.php');
 require_once ('./php/ParticipationRepository.php');
 use NoDebt\UserRepository;

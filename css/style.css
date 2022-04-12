@@ -24,13 +24,13 @@ body {
     display: flex;
     align-items: center;
     color: #ffffff;
-    font-size: 4rem;
+    font-size: 3rem;
     font-family: BebasNeue-Regular;
     text-decoration: none;
 }
 
 #logo{
-    height: 100px;
+    height: 1em;
 }
 
 main {
@@ -175,24 +175,24 @@ header.invitationChoice {
     margin-bottom: 5px;
 }
 
-article.groupPreview {
+.groupPreview {
     border: 2px solid rgb(151, 109, 230);
     padding: 5px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-article.invitation article.groupPreview {
+.invitation .groupPreview {
     border: none;
 }
 
-article.groupPreview h3 {
+.groupPreview h3 {
     font-size: 1rem;
-    margin: 5px 0 5px 0;
+    margin: 10px 0 10px 0;
     text-align: center;
 }
 
-section.groupView > header{
+.groupView > header{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;

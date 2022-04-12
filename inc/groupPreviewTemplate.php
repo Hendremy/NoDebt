@@ -11,7 +11,7 @@ if(isset($_GET['groupId'])){
     $expenseRepo = new ExpenseRepository();
 
     $group = $groupRepo->getGeneralInfo($groupId);
-    //$expensesPreview = $expenseRepo->getExpenses($groupId,3);
+    $expensesPreview = $expenseRepo->getExpenses($groupId,3);
 }
 ?>
 <li class="groupPreview">
@@ -20,9 +20,17 @@ if(isset($_GET['groupId'])){
             | Créé par: <?php echo $group->owner_name ?>
             | Montant total des dépenses : <?php echo $group->formatAmount($group->total,$group->currency)?></span>
     </header>
-    <h3>Dernières dépenses</h3>
-    <ul class="expenses-table-view">
+    <?php if(isset($expensesPreview) && count($expensesPreview) > 0) :?>
+            <h3>Dernières dépenses</h3>
+            <ul class="expenses-table-view">
+                <?php
+                foreach($expensesPreview as $expense){
 
-    </ul>
+                }
+                ?>
+            </ul>
+    <?php else:?>
+        <h3>Aucune dépense</h3>
+    <?php endif?>
     <?php endif?>
 </li>

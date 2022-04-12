@@ -16,19 +16,19 @@ include('inc/session.inc.php');
     ?>
     <main>
         <h1>Mes groupes</h1>
+        <?php if(isset($ses_invites) && count($ses_invites) > 0) :?>
         <section class="invitationList">
             <h2>Mes invitations</h2>
             <ul id="invites">
                 <?php
-                if(isset($ses_invites)){
-                    foreach($ses_invites as $inviteId){
-                        $_GET['inviteId'] = $inviteId;
-                        include("inc/groupInviteTemplate.php");
-                    }
+                foreach($ses_invites as $inviteId){
+                    $_GET['inviteId'] = $inviteId;
+                    include("inc/groupInviteTemplate.php");
                 }
                 ?>
             </ul>
         </section>
+        <?php endif ?>
         <section class="groupList">
             <h2>Mes groupes</h2>
             <ul id="groups">
