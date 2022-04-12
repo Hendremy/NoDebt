@@ -108,15 +108,13 @@ class UserRepository
         return $updateOk;
     }
 
-    public function getUser($userEmail, $userPassword, &$message){
+    public function getUserInfo($uid, &$message = ''){
         $user = null;
-        $userPassword = $this->hashPassword($userPassword);
         try{
             $bd = DBLink::connectToDb();
             $stmt = $bd->prepare ("SELECT uid, email, firstname, lastname FROM ". self::TABLE_NAME
-                ." WHERE email = :email AND hashpass = :hashpass");
-            $stmt->bindValue(':email', $userEmail);
-            $stmt->bindValue(':hashpass', $userPassword);
+                ." WHERE uid = :uid");
+            $stmt->bindValue(':uid', $uid);
             if($stmt->execute()){
                 $user = $stmt->fetchObject("NoDebt\User");
             }
@@ -125,6 +123,25 @@ class UserRepository
         }
         DBLink::disconnect($bd);
         return $user;
+    }
+
+    public function getUserID($userEmail, $userPassword, &$message = ''){
+        $userId = 0;
+        $userPassword = $this->hashPassword($userPassword);
+        try{
+            $bd = DBLink::connectToDb();
+            $stmt = $bd->prepare ("SELECT uid FROM ". self::TABLE_NAME
+                ." WHERE email = :email AND hashpass = :hashpass");
+            $stmt->bindValue(':email', $userEmail);
+            $stmt->bindValue(':hashpass', $userPassword);
+            if($stmt->execute()){
+                $userId = $stmt->fetch();
+            }
+        }catch(Exception $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($bd);
+        return $userId;
     }
 
     public function deleteUser($uid, &$message){

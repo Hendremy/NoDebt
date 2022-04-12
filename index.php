@@ -1,26 +1,18 @@
 <?php
-require ('./php/UserRepository.php');
-require ('./php/ParticipationRepository.php');
+require_once ('./php/UserRepository.php');
+require_once ('./php/ParticipationRepository.php');
 use NoDebt\UserRepository;
-use NoDebt\ParticipationRepository;
 
 if(isset($_POST['loginBtn'])){
     $userEmail = !empty($_POST['userEmail']) ? htmlspecialchars($_POST['userEmail']) : '';
     $userPassword = !empty($_POST['userPassword']) ? htmlspecialchars($_POST['userPassword']) : '';
 
     $userRepo = new UserRepository();
-    $user = $userRepo->getUser($userEmail, $userPassword, $message);
-    $participRepo = new ParticipationRepository();
-    $groups = $participRepo->getUserGroups($user->uid);
-    $invites = $participRepo->getUserInvitations($user->uid);
+    $user = $userRepo->getUserId($userEmail, $userPassword);
+
     if($user != null){
         session_start();
         $_SESSION['userId'] = $user->uid;
-        $_SESSION['firstName'] = $user->firstname;
-        $_SESSION['lastName'] = $user->lastname;
-        $_SESSION['email'] = $user->email;
-        $_SESSION['groups'] = $groups;
-        $_SESSION['invites'] = $invites;
         header("location: myGroups.php");
     }else{
         $message = 'Connexion échouée - Email ou mot de passe incorrect';

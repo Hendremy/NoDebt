@@ -1,11 +1,9 @@
 <?php
 include('inc/session.inc.php');
-require('php/GroupRepository.php');
-require('php/TemplateCreator.php');
-require('php/ExpenseRepository.php');
-use NoDebt\TemplateCreator;
-use NoDebt\GroupRepository;
-use NoDebt\ExpenseRepository;
+?>
+<?php
+require_once('php/GroupRepository.php');
+require_once('php/ExpenseRepository.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -28,7 +26,8 @@ use NoDebt\ExpenseRepository;
                 <?php
                 if(isset($ses_invites)){
                     foreach($ses_invites as $inviteId){
-
+                        $_GET['inviteId'] = $inviteId;
+                        include("inc/groupInviteTemplate.php");
                     }
                 }
                 ?>
@@ -39,15 +38,9 @@ use NoDebt\ExpenseRepository;
             <ul id="groups">
                 <?php
                 if(isset($ses_groups)){
-                    $templateCreator = new TemplateCreator();
-                    $groupRepo = new GroupRepository();
-                    $expenseRepo = new ExpenseRepository();
                     foreach($ses_groups as $groupId){
-                        $group = $groupRepo->getGeneralInfo($groupId);
-                        $expensesPreview = $expenseRepo->getExpenses($groupId,3);
-                        if(isset($group) && isset($expensesPreview)){
-                            $templateCreator->echoGroupPreview($group, $expensesPreview);
-                        }
+                        $_GET['groupId'] = $groupId;
+                        include("inc/groupPreviewTemplate.php");
                     }
                 }
                 ?>

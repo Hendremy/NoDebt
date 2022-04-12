@@ -2,6 +2,8 @@
 
 namespace NoDebt;
 
+require 'CurrencyFormatter.php';
+
 class Group
 {
     public $gid;
@@ -10,4 +12,13 @@ class Group
     public $currency;
     public $total;
 
+    public function getCurrencySymbol(){
+        $fmt = new CurrencyFormatter();
+        return $fmt->getCurrencySymbol($this->currency);
+    }
+
+    public function formatAmount($amount){
+        $fmt = new CurrencyFormatter();
+        return $fmt->formatCurrency($amount, $this->currency);
+    }
 }
