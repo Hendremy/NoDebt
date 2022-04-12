@@ -1,5 +1,7 @@
 <?php
 
+require_once 'php/GroupRepository.php';
+require_once 'php/ExpenseRepository.php';
 use NoDebt\ExpenseRepository;
 use NoDebt\GroupRepository;
 

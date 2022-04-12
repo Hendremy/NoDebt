@@ -2,8 +2,8 @@
 include('inc/session.inc.php');
 ?>
 <?php
-require 'php/ValidationUtils.php';
-require 'php/GroupRepository.php';
+require_once 'php/ValidationUtils.php';
+require_once 'php/GroupRepository.php';
 use NoDebt\GroupRepository;
 use NoDebt\ValidationUtils;
 if(isset($_POST['createBtn'])){

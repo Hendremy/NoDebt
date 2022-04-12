@@ -1,10 +1,6 @@
 <?php
 include('inc/session.inc.php');
 ?>
-<?php
-require_once('php/GroupRepository.php');
-require_once('php/ExpenseRepository.php');
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>

@@ -1,7 +1,7 @@
 <?php
 
-require 'php/ParticipationRepository.php';
-require 'php/UserRepository.php';
+require_once 'php/ParticipationRepository.php';
+require_once 'php/UserRepository.php';
 
 use NoDebt\ParticipationRepository;
 use NoDebt\UserRepository;

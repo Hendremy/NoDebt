@@ -42,11 +42,8 @@ if(isset($_POST['infoBtn'])){
         $updateOk = $userRepo->updateUserInfo($ses_uid, $email, $lastName, $firstName, $message);
         $updateResult = $updateOk ? 'Modification enregistrées !' : 'Erreur lors de l\'enregistrement des données';
         if($updateOk){
-            $_SESSION['email'] = $email;
             $ses_email = $email;
-            $_SESSION['firstName'] = $firstName;
             $ses_firstName = $firstName;
-            $_SESSION['lastName'] = $lastName;
             $ses_lastName = $lastName;
         }
     }

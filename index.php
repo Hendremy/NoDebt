@@ -8,14 +8,15 @@ if(isset($_POST['loginBtn'])){
     $userPassword = !empty($_POST['userPassword']) ? htmlspecialchars($_POST['userPassword']) : '';
 
     $userRepo = new UserRepository();
-    $user = $userRepo->getUserId($userEmail, $userPassword);
+    $message = '';
+    $userId = $userRepo->getUserId($userEmail, $userPassword, $message);
 
-    if($user != null){
+    if(isset($userId) && $userId > 0){
         session_start();
-        $_SESSION['userId'] = $user->uid;
+        $_SESSION['userId'] = $userId;
         header("location: myGroups.php");
     }else{
-        $message = 'Connexion échouée - Email ou mot de passe incorrect';
+        if(empty($message))$message = 'Connexion échouée - Email ou mot de passe incorrect';
     }
 }
 ?>

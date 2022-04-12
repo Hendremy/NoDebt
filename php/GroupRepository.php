@@ -6,9 +6,9 @@ use DB\DBLink;
 use PDO;
 use PDOException;
 
-require 'ParticipationRepository.php';
-require 'DBLink.php';
-require 'Group.php';
+require_once 'ParticipationRepository.php';
+require_once 'DBLink.php';
+require_once 'Group.php';
 
 class GroupRepository
 {

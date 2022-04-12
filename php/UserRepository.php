@@ -4,7 +4,6 @@ namespace NoDebt;
 
 use DB\DBLink;
 use Exception;
-use PDO;
 use PDOException;
 
 require ('DBLink.php');
@@ -125,7 +124,7 @@ class UserRepository
         return $user;
     }
 
-    public function getUserID($userEmail, $userPassword, &$message = ''){
+    public function getUserId($userEmail, $userPassword, &$message = ''){
         $userId = 0;
         $userPassword = $this->hashPassword($userPassword);
         try{
@@ -135,7 +134,7 @@ class UserRepository
             $stmt->bindValue(':email', $userEmail);
             $stmt->bindValue(':hashpass', $userPassword);
             if($stmt->execute()){
-                $userId = $stmt->fetch();
+                $userId = $stmt->fetch()[0];
             }
         }catch(Exception $e){
             $message = self::DB_ERROR_MESSAGE;
