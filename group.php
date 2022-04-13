@@ -1,6 +1,5 @@
 <?php
 include('inc/session.inc.php');
-//setcookie('lastVisitedGroup')
 ?>
 <?php
 require_once 'php/GroupRepository.php';
@@ -18,11 +17,14 @@ use NoDebt\PasswordUtils;
 use NoDebt\UserRepository;
 use NoDebt\ValidationUtils;
 
-if(isset($_GET['gid'])){
-    $gid = intval($_GET['gid']);
+if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
+    $gid = isset($_GET['gid']) ? intval($_GET['gid']) : $_COOKIE['gid'];
     if(isset($ses_groups) && !in_array($gid, $ses_groups)){//Si accès illégal à un groupe, retour à page des groupes
         header('location: myGroups.php');
     }
+    setcookie('gid',$gid, time() + (3600*24*30));//refresh du cookie + modification si param GET différent
+    $actionSelf = htmlspecialchars($_SERVER['PHP_SELF']);
+
     $groupRepo = new GroupRepository();
     $expenseRepo = new ExpenseRepository();
     $participRepo = new ParticipationRepository();
@@ -30,7 +32,6 @@ if(isset($_GET['gid'])){
     $expenses = $expenseRepo->getExpenses($gid);
     $participants = $participRepo->getParticipantsTotals($gid);
     $averageExp = count($participants) != 0 ? $group->total / count($participants) : $group->total;
-    $actionSelf = htmlspecialchars($_SERVER['PHP_SELF'])."?gid=$gid";
 
     if(isset($_POST['inviteBtn'])){
         $validator = new ValidationUtils();
@@ -129,7 +130,9 @@ if(isset($_GET['gid'])){
                 }
                 ?>
             </ul>
-            <a href="group01AddExpense.php">+ Ajouter une dépense</a>
+            <form method="post" action="addExpense.php">
+                <button type="submit" >+ Ajouter une dépense</button>
+            </form>
             <section class="expenses-total">
                 <p>Total : <?php echo $group->formatTotal() ?></p>
                 <p>Moyenne : <?php echo $group->formatAmount($averageExp)?></p>

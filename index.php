@@ -21,7 +21,12 @@ if(isset($_POST['loginBtn'])){
     if(isset($userId) && $userId > 0){
         session_start();
         $_SESSION['userId'] = $userId;
-        header("location: myGroups.php");
+        if(isset($_COOKIE['gid'])){
+            $gid = $_COOKIE['gid'];
+            header("location: group.php?gid=$gid");
+        }else {
+            header("location: myGroups.php");
+        }
     }else{
         if(empty($message))$message = 'Connexion échouée - Email ou mot de passe incorrect';
     }
