@@ -2,13 +2,27 @@
 include('inc/session.inc.php');
 ?>
 <?php
+require_once 'php/GroupRepository.php';
+require_once 'php/ExpenseRepository.php';
+use NoDebt\GroupRepository;
+use NoDebt\ExpenseRepository;
 
+if(isset($_GET['gid'])){
+    $gid = intval($_GET['gid']);
+    if(isset($ses_groups) && !in_array($gid, $ses_groups)){//Si accès illégal à un groupe, retour à page des groupes
+        header('location: myGroups.php');
+    }
+    $groupRepo = new GroupRepository();
+    $expenseRepo = new ExpenseRepository();
+    $group = $groupRepo->getGeneralInfo($gid);
+    $expenses = $expenseRepo->getExpenses($gid);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>No Debt - Roadtrip Allemagne</title>
+    <title>No Debt - <?php echo $group->name ?></title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" sizes="16x16" href="images/icon.png">
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
@@ -19,11 +33,11 @@ include('inc/session.inc.php');
     ?>
     <main>
         <header>
-            <h1>Roadtrip Allemagne créé par Machin Bidule</h1>
+            <h1><?php echo "$group->name créé par $group->owner_name"?></h1>
             <a href="group01Edit.php">Editer le groupe</a>
             <a href="group01Settling.php">Solder le groupe</a>
         </header>
-        <section class="groupPreview groupView">
+        <section class="groupView">
             <header class="expenses">
                 <h2>Dépenses</h2>
                 <ul class="search">
@@ -58,9 +72,18 @@ include('inc/session.inc.php');
                     </li>
                 </ul>
             </header>
-            <?php
-            include("inc/group01Expenses.inc.php");
-            ?>
+            <ul class="expenses-table-view">
+                <?php
+                foreach($expenses as $expense){
+                    $_GET['expenseId'] = $expense->did;
+                    $_GET['amount'] = $group->formatAmount($expense->montant);
+                    $_GET['date'] = $expense->paydate;
+                    $_GET['label'] = $expense->libelle;
+                    $_GET['spender'] = $expense->spender;
+                    include('inc/expense.inc.php');
+                }
+                ?>
+            </ul>
             <a href="group01AddExpense.php">+ Ajouter une dépense</a>
             <?php
             include("inc/group01ExpensesTotal.inc.php");

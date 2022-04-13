@@ -19,8 +19,9 @@ class ExpenseRepository
         $expenses = array();
         try{
             $db = DBLink::connectToDb();
-            $stmt = $db->prepare("SELECT * FROM ". self::TABLE_NAME .
-            " WHERE gid = :gid ORDER BY dateHeure DESC ". $limit);
+            $stmt = $db->prepare("SELECT did,  montant, DATE_FORMAT(dateHeure,'%Y-%m-%d') AS paydate, libelle, uid, gid
+            FROM ". self::TABLE_NAME .
+            " WHERE gid = :gid ORDER BY dateheure DESC ". $limit);
             $stmt->bindValue(':gid', $gid);
             if($stmt->execute() && $stmt->rowCount() > 0){
                 $expenses = $stmt->fetchAll(PDO::FETCH_CLASS,"NoDebt\Expense");

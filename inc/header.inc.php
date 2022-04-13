@@ -1,5 +1,5 @@
 <?php if(isset($ses_uid)) : ?>
-<header>
+<header class="nav-header">
     <a href="myGroups.php" class="nodebt"><img id="logo" src="images/icon.png" alt="logo"/>No D€bt</a>
     <nav class="website-nav">
         <ul class="nav-links">
@@ -16,7 +16,7 @@
     </nav>
 </header>
 <?php else : ?>
-<header>
+<header class="nav-header">
     <a href="index.php" class="nodebt"><img id="logo" src="images/icon.png" alt="Logo No Debt"/>No D€bt</a>
     <nav class="website-nav">
         <ul class="nav-links">

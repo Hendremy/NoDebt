@@ -6,7 +6,7 @@ class Expense
 {
     public $did;
     public $montant;
-    public $dateHeure;
+    public $paydate;
     public $libelle;
     public $uid;
     public $gid;
