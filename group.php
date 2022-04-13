@@ -1,11 +1,22 @@
 <?php
 include('inc/session.inc.php');
+//setcookie('lastVisitedGroup')
 ?>
 <?php
 require_once 'php/GroupRepository.php';
+require_once 'php/UserRepository.php';
 require_once 'php/ExpenseRepository.php';
+require_once 'php/ParticipationRepository.php';
+require_once 'php/ValidationUtils.php';
+require_once 'php/MailSender.php';
+require_once 'php/PasswordUtils.php';
 use NoDebt\GroupRepository;
 use NoDebt\ExpenseRepository;
+use NoDebt\MailSender;
+use NoDebt\ParticipationRepository;
+use NoDebt\PasswordUtils;
+use NoDebt\UserRepository;
+use NoDebt\ValidationUtils;
 
 if(isset($_GET['gid'])){
     $gid = intval($_GET['gid']);
@@ -14,8 +25,42 @@ if(isset($_GET['gid'])){
     }
     $groupRepo = new GroupRepository();
     $expenseRepo = new ExpenseRepository();
+    $participRepo = new ParticipationRepository();
     $group = $groupRepo->getGeneralInfo($gid);
     $expenses = $expenseRepo->getExpenses($gid);
+    $participants = $participRepo->getParticipantsTotals($gid);
+    $averageExp = count($participants) != 0 ? $group->total / count($participants) : $group->total;
+    $actionSelf = htmlspecialchars($_SERVER['PHP_SELF'])."?gid=$gid";
+
+    if(isset($_POST['inviteBtn'])){
+        $validator = new ValidationUtils();
+        $inviteEmail = $validator->validateString($_POST['inviteEmail']);
+        if($validator->emailIsValid($inviteEmail)){
+            $mailer = new MailSender();
+            $mailTopic = 'NoDebt - Invitation à rejoindre un groupe';
+            $inviterName = isset($ses_lastname) && isset($ses_firstName) ? "$ses_firstName $ses_lastname" : 'un ami';
+
+            $userRepo = new UserRepository();
+            if($exists = $userRepo->alreadyExists($inviteEmail)){
+                $mailBody = "Vous avez été invité à rejoindre le groupe $group->name par $inviterName"
+                    ."\nConnectez-vous pour accepter l'invitation !";
+            }else{
+                $passwordUtils = new PasswordUtils();
+                $password = $passwordUtils->generatePassword();
+                $mailBody = "Bonjour et bienvenu à Nodebt !"
+                    ."\nVous avez été invité à rejoindre le groupe $group->name par $inviterName"
+                    ."\nUn compte a été créé pour vous:"
+                    ."\n\n login: $inviteEmail"."\n password: $password"
+                    ."\n\nConnectez-vous pour accepter l'invitation !";
+            }
+            $alertEmail = '';
+            if($mailer->sendMail(MailSender::noreply, $inviteEmail,$mailTopic,$mailBody,$alertEmail)){
+                if(!$exists) $userRepo->generateUser($inviteEmail, $password);
+                $participRepo->insertInvitation($gid,$inviteEmail);
+                $inviteEmail = '';
+            }
+        }
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -72,7 +117,7 @@ if(isset($_GET['gid'])){
                     </li>
                 </ul>
             </header>
-            <ul class="expenses-table-view">
+            <ul class="expense-list">
                 <?php
                 foreach($expenses as $expense){
                     $_GET['expenseId'] = $expense->did;
@@ -85,20 +130,26 @@ if(isset($_GET['gid'])){
                 ?>
             </ul>
             <a href="group01AddExpense.php">+ Ajouter une dépense</a>
-            <?php
-            include("inc/group01ExpensesTotal.inc.php");
-            ?>
+            <section class="expenses-total">
+                <p>Total : <?php echo $group->formatTotal() ?></p>
+                <p>Moyenne : <?php echo $group->formatAmount($averageExp)?></p>
+            </section>
         </section>
         <section class="participants">
-            <h2>Participants (4)</h2>
-            <form name="invite-participant">
-                <label for="participantEmail">Inviter un participant par e-mail</label>
-                <input type="email" name="participantEmail" id="participantEmail"/>
-                <button type="submit" name="inviteParticipant" id="inviteParticipant">Inviter</button>
+            <h2>Participants (<?php echo count($participants)?>)</h2>
+            <form name="invite-participant" method="post" action="<?php echo $actionSelf?>">
+                <label for="inviteEmail">Inviter un participant par e-mail</label>
+                <input type="email" name="inviteEmail" id="inviteEmail" value="<?php if(isset($inviteEmail)) echo $inviteEmail ?>"/>
+                <button type="submit" name="inviteBtn" id="inviteBtn">Inviter</button>
+                <?php if(isset($alertEmail)) echo $alertEmail?>
             </form>
-            <?php
-            include("inc/group01Participants.inc.php");
-            ?>
+            <ul class="participants-list">
+                <?php
+                foreach ($participants as $participant){
+                    include('inc/participantTemplate.php');
+                }
+                ?>
+            </ul>
         </section>
     </main>
 </body>

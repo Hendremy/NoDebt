@@ -15,8 +15,7 @@ class UserRepository
     const TABLE_NAME = 'nodebt_utilisateur';
     const DB_ERROR_MESSAGE = 'Erreur: Veuillez réessayer ultérieurement';
 
-    public function alreadyExists($email){
-        $message = '';
+    public function alreadyExists($email,&$message=''){
         $exists = true;
         try {
             $bd = DBLink::connectToDb();
@@ -26,14 +25,14 @@ class UserRepository
             if($stmt->execute() && $stmt->rowCount() === 0) {
                 $exists = false;
             }
-        }catch(Exception $e){
-            $message = 'Erreur';
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($db);
         return $exists;
     }
 
-    public function insert($email, $lastname, $firstname, $password, &$message){
+    public function insert($email, $lastname, $firstname, $password, &$message=''){
         $insertedId = 0;
         $password = $this->hashPassword($password);
         try{
@@ -58,7 +57,7 @@ class UserRepository
         return $insertedId;
     }
 
-    public function updatePasswordForEmail($email, $password, &$message){
+    public function updatePasswordForEmail($email, $password, &$message=''){
         $db = null;
         $updateOk = false;
         $password = $this->hashPassword($password);
@@ -82,7 +81,7 @@ class UserRepository
         return $updateOk;
     }
 
-    public function updateUserInfo($uid, $email, $lastname, $firstname, &$message){
+    public function updateUserInfo($uid, $email, $lastname, $firstname, &$message=''){
         $db = null;
         $updateOk = false;
         try{
@@ -143,7 +142,7 @@ class UserRepository
         return $userId;
     }
 
-    public function deleteUser($uid, &$message){
+    public function deleteUser($uid, &$message=''){
         $bd = null;
         $deleteOk = false;
         try{
@@ -159,6 +158,10 @@ class UserRepository
         }
         DBLink::disconnect($bd);
         return $deleteOk;
+    }
+
+    public function generateUser($email,$password, &$message = ''){
+        return $this->insert($email,'Compte','Mon',$password,$message);
     }
 
     private function hashPassword($password){

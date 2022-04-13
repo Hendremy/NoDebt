@@ -110,7 +110,7 @@ header.nav-header {
     height: 20%;
     width: 100%;
     margin: 0;
-    border-bottom: 2px solid rgb(151, 109, 230);
+    border-bottom: 1px solid rgb(151, 109, 230);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -225,12 +225,6 @@ header.invitationChoice {
     font-size: 3em;
 }
 
-.expense{
-    display: flex;
-    justify-content: space-around;
-    align-self: center;
-}
-
 button{
     border: 2px solid #DE3BB2;
     font-size: 1em;
@@ -262,9 +256,17 @@ button.decline:hover{
     box-shadow: 0 10px 25px 0 rgba(255, 213, 0, 0.29);
 }
 
-table.expenses-table-view {
-    width: 95%;
-    text-align: center;
+.expense{
+    display: flex;
+    justify-content: space-around;
+    align-self: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.expense-list{
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 nav.website-nav {
@@ -291,7 +293,6 @@ ul.search{
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-items: flex-start;
 }
 
 ul.bills-list{
@@ -308,13 +309,14 @@ li {
 .participants-list {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-wrap: wrap;
     list-style-type: none;
 }
 
 .participants-list li {
     border: 2px solid rgb(151, 109, 230);
+    border-radius: 20px;
     width: 22%;
     margin: 4px;
     padding: 8px;

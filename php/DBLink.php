@@ -9,6 +9,10 @@ use PDO;
  * @version 2.0
  */
 class DBLink {
+
+    //TODO: Remplacer les constantes des repository du même nom
+    const DB_ERROR_MESSAGE ='Erreur: Veuillez réessayer ultérieurement';
+
     public static function connectToDb(){
         $link = new PDO('mysql:host=' . MYHOST . ';dbname=' . MYDB . ';charset=UTF8', MYUSER, MYPASS);
         $link->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);

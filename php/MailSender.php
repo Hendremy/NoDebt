@@ -11,7 +11,7 @@ class MailSender{
 
     const noreply = 'no-reply@helmo.be';
 
-    public function sendMail($from, $to, $subject, $body, &$resultMsg)
+    public function sendMail($from, $to, $subject, $body, &$resultMsg='')
     {
         $mail = new PHPMailer(true);
         try {

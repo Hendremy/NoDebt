@@ -11,6 +11,7 @@ use PDOException;
 class ExpenseRepository
 {
     const TABLE_NAME = 'nodebt_depense';
+    const DB_ERROR_MESSAGE ='Erreur: Veuillez réessayer ultérieurement';
 
     public function getExpenses($gid, $top = 0){
         $top = intval($top);
@@ -19,15 +20,14 @@ class ExpenseRepository
         $expenses = array();
         try{
             $db = DBLink::connectToDb();
-            $stmt = $db->prepare("SELECT did,  montant, DATE_FORMAT(dateHeure,'%Y-%m-%d') AS paydate, libelle, uid, gid
-            FROM ". self::TABLE_NAME .
-            " WHERE gid = :gid ORDER BY dateheure DESC ". $limit);
+            $stmt = $db->prepare("SELECT exp.did,  exp.montant, DATE_FORMAT(exp.dateHeure,'%Y-%m-%d') AS paydate, exp.libelle, exp.uid, exp.gid,
+            CONCAT(us.firstname,' ', us.lastname) AS spender FROM ". self::TABLE_NAME ." exp "
+                ." JOIN ". UserRepository::TABLE_NAME ." us ON exp.uid = us.uid"
+                ." WHERE gid = :gid"
+                ." ORDER BY dateheure DESC " . $limit);
             $stmt->bindValue(':gid', $gid);
             if($stmt->execute() && $stmt->rowCount() > 0){
                 $expenses = $stmt->fetchAll(PDO::FETCH_CLASS,"NoDebt\Expense");
-                foreach ($expenses as $expense){
-                    $expense->spender = $this->getSpender($db, $expense->uid);
-                }
             }
         }catch(PDOException $e){
 
@@ -46,4 +46,6 @@ class ExpenseRepository
         }
         return $spenderName;
     }
+
+
 }

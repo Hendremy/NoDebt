@@ -21,4 +21,8 @@ class Group
         $fmt = new CurrencyFormatter();
         return $fmt->formatCurrency($amount, $this->currency);
     }
+
+    public function formatTotal(){
+        return $this->formatAmount($this->total);
+    }
 }
