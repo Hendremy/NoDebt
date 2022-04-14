@@ -17,10 +17,11 @@ use NoDebt\ValidationUtils;
 
 $actionSelf = htmlspecialchars($_SERVER['PHP_SELF']);
 
-if(isset($_POST['addExpenseBtn']) || isset($_POST['confirmAddBtn'])){
+if(isset($_POST['addExpenseBtn']) || isset($_POST['confirmBtn']) || isset($_GET['did'])){
     $validator = new ValidationUtils();
     $currFmt = new CurrencyFormatter();
     $participRepo = new ParticipationRepository();
+
 
     $gid = intval($_POST['gid']);
     $groupName = $validator->validateString($_POST['groupName']);
@@ -35,7 +36,7 @@ if(isset($_POST['addExpenseBtn']) || isset($_POST['confirmAddBtn'])){
     if(isset($ses_uid) && !isset($_POST['participant'])) $expense->uid = $ses_uid;
     if(!isset($_POST['date'])) $expense->paydate = date('Y-m-d',time());
 
-    if(isset($_POST['confirmAddBtn'])) {
+    if(isset($_POST['confirmBtn'])) {
         //Validation des champs
         $fieldsOk = true;
 
@@ -134,10 +135,10 @@ if(isset($_POST['addExpenseBtn']) || isset($_POST['confirmAddBtn'])){
             <label for="tags">Tags (séparés par une virgule ",")</label>
             <input type="text" id="tags" name="tags" value="<?php if(isset($expense->tagsString)) echo $expense->tagsString?>"/>
             <?php if(isset($alertTags)) echo "<span class='alert'>$alertTags</span>"?>
-            <input type="hidden" name="gid" value="<?php echo $gid ?>">
-            <input type="hidden" name="groupName" value="<?php echo $groupName?>">
-            <input type="hidden" name="groupCurr" value="<?php echo $currency?>">
-            <button type="submit" class="submit" name="confirmAddBtn">Ajouter la dépense</button>
+            <input type="hidden" name="gid" value="<?php echo $gid ?>" readonly>
+            <input type="hidden" name="groupName" value="<?php echo $groupName?>" readonly>
+            <input type="hidden" name="groupCurr" value="<?php echo $currency?>" readonly>
+            <button type="submit" class="submit" name="confirmBtn">Ajouter la dépense</button>
             <?php if(isset($alertInsert)) echo "<span class='alert'>$alertInsert</span>"?>
         </form>
     </main>

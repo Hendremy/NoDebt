@@ -35,7 +35,6 @@ include('inc/session.inc.php');
                 <?php
                 if(isset($ses_groups)){
                     foreach($ses_groups as $groupId){
-                        $_GET['groupId'] = $groupId;
                         include("inc/groupPreviewTemplate.php");
                     }
                 }

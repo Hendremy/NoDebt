@@ -258,10 +258,16 @@ button.decline:hover{
 
 .expense{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-self: center;
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+.expense-detail{
+    width: 20%;
+    margin-right:10px;
+    overflow: hidden;
 }
 
 .expense-list{
@@ -355,4 +361,12 @@ li {
     content:url("../images/warning.png");
     margin-right: 10px;
     margin-top: 15px;
+}
+
+.iconx32{
+    height: 32px;
+}
+
+.iconx24{
+    height: 24px;
 }

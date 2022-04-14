@@ -5,8 +5,8 @@ require_once 'php/repository/ExpenseRepository.php';
 use NoDebt\ExpenseRepository;
 use NoDebt\GroupRepository;
 
-if(isset($_GET['groupId'])){
-    $groupId = intval($_GET['groupId']);
+if(isset($groupId)){
+    $groupId = intval($groupId);
     $groupRepo = new GroupRepository();
     $expenseRepo = new ExpenseRepository();
 
@@ -25,11 +25,7 @@ if(isset($_GET['groupId'])){
             <ul class="expenses-table-view">
                 <?php
                 foreach($expensesPreview as $expense){
-                    $_GET['expenseId'] = $expense->did;
-                    $_GET['amount'] = $group->formatAmount($expense->montant);
-                    $_GET['date'] = $expense->paydate;
-                    $_GET['label'] = $expense->libelle;
-                    $_GET['spender'] = $expense->spender;
+                    $expense->montant = $group->formatAmount($expense->montant);
                     include('inc/expense.inc.php');
                 }
                 ?>

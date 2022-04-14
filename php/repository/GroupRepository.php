@@ -8,7 +8,7 @@ use PDOException;
 
 require_once 'ParticipationRepository.php';
 require_once 'DBLink.php';
-require_once '../domain/Group.php';
+require_once 'php/domain/Group.php';
 
 class GroupRepository
 {

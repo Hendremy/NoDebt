@@ -7,8 +7,8 @@ use Exception;
 use PDOException;
 
 require('DBLink.php');
-require('../domain/User.php');
-require('../utils/PasswordUtils.php');
+require('php/domain/User.php');
+require('php/utils/PasswordUtils.php');
 
 class UserRepository
 {

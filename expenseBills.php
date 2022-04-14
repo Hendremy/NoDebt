@@ -14,7 +14,7 @@
     <main>
         <h1>Dépense Plein d'essence - Factures</h1>
         <h2>Ajouter une facture</h2>
-        <form class="field-list" action="group01Expense1Bills.php">
+        <form class="field-list" action="expenseBills.php">
             <label for="bill">Scan de facture</label>
             <input type="file" name="bill" id="bill" accept=".pdf,.jpg,.png"/>
             <button type="submit" class="submit" name="sendbutton">Ajouter une facture</button>

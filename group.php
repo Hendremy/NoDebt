@@ -95,6 +95,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                         <form name="simple-search-expense" class="search">
                             <label for="search">Rechercher une dépense </label>
                             <input type="text" id="search" name="search" placeholder="Rechercher..."/>
+                            <button type="submit" name="searchBtn"><img class="iconx24" src="images/search.png" alt="Rechercher"/></button>
                         </form>
                     </li>
                     <li>
@@ -117,6 +118,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                                 </fieldset>
                                 <label for="tags">Tags :</label>
                                 <input type="text" name="tags" id="tags"/>
+                                <button type="submit" name="advSearchBtn"><img class="iconx24" src="images/search.png" alt="Rechercher"/></button>
                             </form>
                         </details>
                     </li>
@@ -125,16 +127,12 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
             <ul class="expense-list">
                 <?php
                 foreach($expenses as $expense){
-                    $_GET['expenseId'] = $expense->did;
-                    $_GET['amount'] = $group->formatAmount($expense->montant);
-                    $_GET['date'] = $expense->paydate;
-                    $_GET['label'] = $expense->libelle;
-                    $_GET['spender'] = $expense->spender;
+                    $expense->montant = $group->formatAmount($expense->montant);
                     include('inc/expense.inc.php');
                 }
                 ?>
             </ul>
-            <form method="post" action="addExpense.php">
+            <form method="post" action="expense.php">
                 <input type="hidden" name="gid" value="<?php echo $gid ?>"/>
                 <input type="hidden" name="groupName" value="<?php echo $group->name ?>"/>
                 <input type="hidden" name="groupCurr" value="<?php echo $group->currency ?>"/>
