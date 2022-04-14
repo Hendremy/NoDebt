@@ -78,5 +78,61 @@ class ExpenseRepository
         return $insertOk;
     }
 
+    public function getExpenseById($did, &$message=''){
+        $db = null;
+        $expense = null;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("SELECT did, montant, DATE_FORMAT(dateHeure,'%Y-%m-%d') AS paydate, libelle, uid, gid"
+                ." FROM ". self::TABLE_NAME
+                ." WHERE did = :did");
+            $stmt->bindValue(':did',$did);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $expense = $stmt->fetchObject("NoDebt\Expense");
+                $tagsRepo = new TagRepository();
+                $expense->tagsTab = $tagsRepo->getTagsForId($db, $did);
+                $expense->tagsString = $expense->implodeTags();
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $expense;
+    }
+
+    public function update($expense, &$message=''){
+        $db = null;
+        $updateOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $db->beginTransaction();
+            $stmt = $db->prepare("UPDATE ". self::TABLE_NAME
+                . " SET dateHeure = :paydate, montant = :montant, libelle = :libelle, uid = :uid"
+                ." WHERE did = :did");
+            $stmt->bindValue(':paydate', $expense->paydate);
+            $stmt->bindValue(':montant', $expense->montant);
+            $stmt->bindValue(':libelle', $expense->libelle);
+            $stmt->bindValue(':uid', $expense->uid);
+            $stmt->bindValue(':did', $expense->did);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $tagsRepo = new TagRepository();
+                if(!$tagsRepo->resetTagsForExpense($db, $expense->did)) throw new PDOException();
+                foreach ($expense->tagsTab as $tag){
+                    if($tagsRepo->tagExists($db, $tag)){
+                        if(!$tagsRepo->associateTag($db, $expense->did, $expense->gid, $tag)) throw new PDOException();
+                    }else{
+                        if(!$tagsRepo->insertTag($db, $tag)) throw new PDOException();
+                    }
+                }
+            }
+            if($db->commit()) $updateOk = true;
+        }catch(PDOException $e){
+            $message .= self::DB_ERROR_MESSAGE;
+            if(isset($db)) $db->rollBack();
+        }
+        DBLink::disconnect($db);
+        return $updateOk;
+    }
+
 
 }
