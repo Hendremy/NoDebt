@@ -370,3 +370,12 @@ li {
 .iconx24{
     height: 24px;
 }
+
+.addButton{
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.biggerBtn{
+    font-size: 1.5em;
+}

@@ -132,11 +132,11 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 }
                 ?>
             </ul>
-            <form method="post" action="expense.php">
+            <form class="addButton" method="post" action="expense.php">
                 <input type="hidden" name="gid" value="<?php echo $gid ?>"/>
                 <input type="hidden" name="groupName" value="<?php echo $group->name ?>"/>
                 <input type="hidden" name="groupCurr" value="<?php echo $group->currency ?>"/>
-                <button type="submit" name="addExpenseBtn" id="addExpenseBtn">+ Ajouter une dépense</button>
+                <button class="biggerBtn" type="submit" name="addExpenseBtn" id="addExpenseBtn">+ Ajouter une dépense</button>
             </form>
             <section class="expenses-total">
                 <p>Total : <?php echo $group->formatTotal() ?></p>
