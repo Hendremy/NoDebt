@@ -188,14 +188,13 @@ header.invitationChoice {
 .groupPreview {
     border: 2px solid rgb(151, 109, 230);
     border-radius: 25px;
-    padding: 5px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .groupPreview > header{
     background-color: #333542;
-    border-radius: 20px 20px 0 0;
+    border-radius: 23px 23px 0 0;
 }
 
 .invitation .groupPreview {
@@ -332,4 +331,24 @@ li {
 
 .expenses-total p {
     margin: 0;
+}
+
+.auth-links{
+    width: 30%;
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.alert{
+    background-color: #ffde00;
+    color: #1b1d26;
+    font-family: Arial;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+
+.alert::before{
+    content:url("../images/warning.png");
 }

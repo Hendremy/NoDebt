@@ -57,27 +57,30 @@ class ParticipationRepository
         return $groupIds;
     }
 
-    //TODO: Supprimer si pas utilisé
-    /*public function getGroupParticipants($gid, &$message =''){
+    public function getParticipants($gid, &$message =''){
         $db = null;
-        $participantIds = array();
+        $participantMap = array();
         try{
             $db = DBLink::connectToDb();
-            $stmt = $db->prepare("SELECT uid FROM ". self::TABLE_NAME .
-            " WHERE gid = :gid AND estConfirme = TRUE");
+            $stmt = $db->prepare("SELECT par.uid, CONCAT(us.firstname,' ', us.lastname) AS name"
+                . " FROM ". self::TABLE_NAME." par "
+                . " JOIN " . UserRepository::TABLE_NAME ." us ON us.uid = par.uid"
+                . " WHERE gid = :gid AND estConfirme = TRUE;");
             $stmt->bindValue(':gid',$gid);
             if($stmt->execute() && $stmt->rowCount() > 0){
                 $participants = $stmt->fetchAll();
-                foreach($participants as $participantId){
-                    $participantIds[] = $participantId[0];
+                foreach($participants as $participant){
+                    $partId = $participant['uid'];
+                    $partName = $participant['name'];
+                    $participantMap[$partId] = $partName;
                 }
             }
         }catch(PDOException $e){
             $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($db);
-        return $participantIds;
-    }*/
+        return $participantMap;
+    }
 
     public function getParticipantsTotals($gid, &$message=''){
         $db = null;

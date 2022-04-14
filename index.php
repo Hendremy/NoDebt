@@ -55,8 +55,10 @@ if(isset($_POST['loginBtn'])){
             <button type="submit" name="loginBtn">Se connecter</button>
             <?php if(isset($message)) echo "<span>$message</span>" ?>
         </form>
-        <a href="forgottenPassword.php">Mot de passe oublié ?</a>
-        <a href="signup.php">Inscrivez-vous !</a>
+        <section class="auth-links">
+            <a href="forgottenPassword.php">Mot de passe oublié ?</a>
+            <a href="signup.php">Inscrivez-vous !</a>
+        </section>
     </main>
 </body>
 </html>

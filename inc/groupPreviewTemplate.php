@@ -18,7 +18,7 @@ if(isset($_GET['groupId'])){
     <?php if(isset($groupId) && isset($group->name) && isset($group->owner_name) && isset($group->total) && isset($group->currency)):?>
     <header><span><a href="group.php?gid=<?php echo $groupId?>"><?php echo $group->name ?></a>
             | Créé par: <?php echo $group->owner_name ?>
-            | Montant total des dépenses : <?php echo $group->formatAmount($group->total,$group->currency)?></span>
+            | Total : <?php echo $group->formatAmount($group->total,$group->currency)?></span>
     </header>
     <?php if(isset($expensesPreview) && count($expensesPreview) > 0) :?>
             <h3>Dernières dépenses</h3>
