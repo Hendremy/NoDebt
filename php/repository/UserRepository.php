@@ -6,9 +6,9 @@ use DB\DBLink;
 use Exception;
 use PDOException;
 
-require ('DBLink.php');
-require ('User.php');
-require('PasswordUtils.php');
+require('DBLink.php');
+require('../domain/User.php');
+require('../utils/PasswordUtils.php');
 
 class UserRepository
 {
@@ -132,7 +132,7 @@ class UserRepository
                 ." WHERE email = :email AND hashpass = :hashpass");
             $stmt->bindValue(':email', $userEmail);
             $stmt->bindValue(':hashpass', $userPassword);
-            if($stmt->execute()){
+            if($stmt->execute() && $stmt->rowCount() == 1){
                 $userId = $stmt->fetch()[0];
             }
         }catch(Exception $e){

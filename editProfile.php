@@ -2,10 +2,10 @@
 include('inc\session.inc.php');
 ?>
 <?php
-require_once 'php/UserRepository.php';
-require_once 'php/ParticipationRepository.php';
-require_once 'php/ValidationUtils.php';
-require_once 'php/PasswordUtils.php';
+require_once 'php/repository/UserRepository.php';
+require_once 'php/repository/ParticipationRepository.php';
+require_once 'php/utils/ValidationUtils.php';
+require_once 'php/utils/PasswordUtils.php';
 
 use NoDebt\ParticipationRepository;
 use NoDebt\UserRepository;

@@ -1,6 +1,6 @@
 <?php
-require('php/UserRepository.php');
-require('php/MailSender.php');
+require('php/repository/UserRepository.php');
+require('php/domain/MailSender.php');
 use NoDebt\UserRepository;
 use NoDebt\PasswordUtils;
 use NoDebt\MailSender;

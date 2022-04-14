@@ -2,8 +2,8 @@
 include('inc\session.inc.php');
 ?>
 <?php
-require('php/ParticipationRepository.php');
-require('php/UserRepository.php');
+require('php/repository/ParticipationRepository.php');
+require('php/repository/UserRepository.php');
 
 use NoDebt\ParticipationRepository;
 use NoDebt\UserRepository;

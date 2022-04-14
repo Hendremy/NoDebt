@@ -2,7 +2,8 @@
 
 namespace NoDebt;
 
-require_once 'php/Expense.php';
+require_once 'php/domain/Expense.php';
+require_once 'php/repository/TagRepository.php';
 
 use DB\DBLink;
 use PDO;
@@ -45,6 +46,36 @@ class ExpenseRepository
             $spenderName = $stmt->fetch()[0];
         }
         return $spenderName;
+    }
+
+    public function insert($expense, &$message=''){
+        $db = null;
+        $insertOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $db->beginTransaction();
+            $stmt = $db->prepare("INSERT INTO ". self::TABLE_NAME ." (dateHeure, montant, libelle, uid, gid)"
+                ."VALUES (:paydate,:montant,:libelle,:uid, :gid);");
+            $stmt->bindValue(':paydate', $expense->paydate);
+            $stmt->bindValue(':montant', $expense->montant);
+            $stmt->bindValue(':libelle', $expense->libelle);
+            $stmt->bindValue(':uid', $expense->uid);
+            $stmt->bindValue(':gid', $expense->gid);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $did = $db->lastInsertId();
+                $tagsRepo = new TagRepository();
+                foreach ($expense->tagsTab as $tag){
+                    $tag->did = $did;
+                    if(!$tagsRepo->insertTag($db, $tag)) throw new PDOException();
+                }
+            }
+            if($db->commit()) $insertOk = true;
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+            if(isset($db)) $db->rollBack();
+        }
+        DBLink::disconnect($db);
+        return $insertOk;
     }
 
 

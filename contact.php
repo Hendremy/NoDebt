@@ -4,7 +4,7 @@ include('inc/session.inc.php');
 <!DOCTYPE html>
 <?php
 use NoDebt\MailSender;
-require './php/MailSender.php';
+require './php/domain/MailSender.php';
 const admin = 'r.hendrice@student.helmo.be';
 
 if(!isset($sendOk)) $sendOk = false;

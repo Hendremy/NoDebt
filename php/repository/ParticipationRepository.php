@@ -2,7 +2,7 @@
 
 namespace NoDebt;
 
-require_once 'php/Participant.php';
+require_once '../domain/Participant.php';
 use DB\DBLink;
 use PDO;
 use PDOException;

@@ -2,13 +2,13 @@
 include('inc/session.inc.php');
 ?>
 <?php
-require_once 'php/GroupRepository.php';
-require_once 'php/UserRepository.php';
-require_once 'php/ExpenseRepository.php';
-require_once 'php/ParticipationRepository.php';
-require_once 'php/ValidationUtils.php';
-require_once 'php/MailSender.php';
-require_once 'php/PasswordUtils.php';
+require_once 'php/repository/GroupRepository.php';
+require_once 'php/repository/UserRepository.php';
+require_once 'php/repository/ExpenseRepository.php';
+require_once 'php/repository/ParticipationRepository.php';
+require_once 'php/utils/ValidationUtils.php';
+require_once 'php/utils/PasswordUtils.php';
+require_once 'php/domain/MailSender.php';
 use NoDebt\GroupRepository;
 use NoDebt\ExpenseRepository;
 use NoDebt\MailSender;
@@ -80,8 +80,12 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     <main>
         <header>
             <h1><?php echo "$group->name créé par $group->owner_name"?></h1>
-            <a href="group01Edit.php">Editer le groupe</a>
-            <a href="group01Settling.php">Solder le groupe</a>
+            <form action="groupEdit.php" method="post">
+                <button type="submit" name="editBtn" id="editBtn">Editer le groupe</button>
+            </form>
+            <form action="group01Settling.php" method="post">
+                <button type="submit" name="settleBtn" id="settleBtn">Solder le groupe</button>
+            </form>
         </header>
         <section class="groupView">
             <header class="expenses">
@@ -134,7 +138,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <input type="hidden" name="gid" value="<?php echo $gid ?>"/>
                 <input type="hidden" name="groupName" value="<?php echo $group->name ?>"/>
                 <input type="hidden" name="groupCurr" value="<?php echo $group->currency ?>"/>
-                <button type="submit" name="addExpenseBtn">+ Ajouter une dépense</button>
+                <button type="submit" name="addExpenseBtn" id="addExpenseBtn">+ Ajouter une dépense</button>
             </form>
             <section class="expenses-total">
                 <p>Total : <?php echo $group->formatTotal() ?></p>

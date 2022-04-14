@@ -11,5 +11,7 @@ class Expense
     public $uid;
     public $gid;
     public $spender;
+    public $tagsString;
+    public $tagsTab;
 
 }

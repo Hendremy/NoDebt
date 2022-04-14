@@ -2,7 +2,7 @@
 
 namespace NoDebt;
 
-require 'CurrencyFormatter.php';
+require '../utils/CurrencyFormatter.php';
 
 class Group
 {

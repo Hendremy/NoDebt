@@ -6,8 +6,8 @@ if(isset($_SESSION['userId'])){
 }
 ?>
 <?php
-require_once ('./php/UserRepository.php');
-require_once ('./php/ParticipationRepository.php');
+require_once('./php/repository/UserRepository.php');
+require_once('./php/repository/ParticipationRepository.php');
 use NoDebt\UserRepository;
 
 if(isset($_POST['loginBtn'])){

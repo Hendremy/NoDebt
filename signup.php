@@ -1,5 +1,5 @@
 <?php
-require 'php/UserRepository.php';
+require 'php/repository/UserRepository.php';
 use NoDebt\UserRepository;
 const MAX_CHAR = 50;
 

@@ -48,6 +48,7 @@ class ValidationUtils
     }
 
     public function tagsAreValid($tags){
+        if(empty($tags)) return true;
         $tagsTab = explode(self::TAG_SEPARATOR, $tags);
         foreach ($tagsTab as $tag){
             if(!$this->tagIsValid($tag)) return false;
@@ -56,10 +57,11 @@ class ValidationUtils
     }
 
     public function tagIsValid($tag){
-        return isset($name) && !empty($name) && strlen($name) <= self::TAG_MAX_LENGTH;
+        return isset($tag) && !empty($tag) && strlen($tag) <= self::TAG_MAX_LENGTH;
     }
 
     public function extractTags($tags){
+        if(empty($tags)) return array();
         $tagsTab = explode(self::TAG_SEPARATOR, $tags);
         foreach ($tagsTab as &$tag){
             $tag = trim($this->validateString($tag));//Validation du tag + Nettoyage d'espace superflus
