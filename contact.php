@@ -53,7 +53,16 @@ if($sendOk){
             <label for="mailMessage">Message *</label>
             <textarea name="mailMessage" id="mailMessage" rows="20" cols="50" required><?php if(isset($mailMessage)) echo $mailMessage?></textarea>
             <button type="submit" class="submit" name="sendbutton">Envoyer</button>
-            <?php if(isset($resultMsg)) echo "<span>$resultMsg</span>";?>
+            <?php
+            if(isset($resultMsg) && isset($sendOk) && !empty($resultMsg)){
+                $alertMessage = $resultMsg;
+                if($sendOk){
+                    include'inc/alertSuccess.inc.php';
+                }else{
+                    include'inc/alertError.inc.php';
+                }
+            }
+            ?>
         </form>
     </main>
 </body>

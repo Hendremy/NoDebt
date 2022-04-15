@@ -12,7 +12,7 @@ if(isset($expense)):
             </form>
         </li>
         <li>
-            <form action="expense.php" method="post">
+            <form action="expenseEdit.php" method="post">
                 <input type="hidden" name="did" value="<?php echo $expense->did?>"/>
                 <input type="hidden" name="groupCurr" value="<?php if(isset($group))echo $group->name?>"/>
                 <button type="submit" name="editBtn"><img class="iconx32"  src="images/edit.png" alt="Editer"/></button>

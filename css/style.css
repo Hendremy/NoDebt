@@ -347,9 +347,7 @@ li {
 }
 
 .alert{
-    border: 2px solid #fc9934;
-    background-color: #1b1d26;
-    color: #fc9934;
+    border: 2px solid;
     font-family: Arial;
     border-radius: 5px;
     margin-top: 10px;
@@ -357,8 +355,26 @@ li {
     padding: 5px;
 }
 
-.alert::before{
+.error{
+     border-color: #fc9934;
+     background-color: #1b1d26;
+     color: #fc9934;
+ }
+
+.error::before{
     content:url("../images/warning.png");
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+.success{
+    border-color:#9fe864;
+    background-color: #1b1d26;
+    color: #9fe864;
+}
+
+.success::before{
+    content:url("../images/success.png");
     margin-right: 10px;
     margin-top: 15px;
 }

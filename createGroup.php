@@ -27,7 +27,7 @@ if(isset($_POST['createBtn'])){
         $message = '';
         if($gid = $groupRepo->insert($groupName, $currency, $ses_uid,$message)){
             $_SESSION['groups'] [] = $gid;
-            header("location: group.php/?gid=$gid");
+            header("location: group.php?gid=$gid");
         }else{
             $alertInsert = $message;
         }

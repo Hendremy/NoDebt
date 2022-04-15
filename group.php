@@ -18,11 +18,11 @@ use NoDebt\UserRepository;
 use NoDebt\ValidationUtils;
 
 if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
-    $gid = isset($_GET['gid']) ? intval($_GET['gid']) : $_COOKIE['gid'];
+    $gid = isset($_GET['gid']) ? intval($_GET['gid']) : intval($_COOKIE['gid']);
     if(isset($ses_groups) && !in_array($gid, $ses_groups)){//Si accès illégal à un groupe, retour à page des groupes
         header('location: myGroups.php');
     }
-    setcookie('gid',$gid, time() + (3600*24*30));//refresh du cookie + modification si param GET différent
+    setcookie('gid',$gid, time() + (3600*24*30), '/');//refresh du cookie + modification si param GET différent
     $actionSelf = htmlspecialchars($_SERVER['PHP_SELF']);
 
     $groupRepo = new GroupRepository();
@@ -55,7 +55,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                     ."\n\nConnectez-vous pour accepter l'invitation !";
             }
             $alertEmail = '';
-            if($mailer->sendMail(MailSender::noreply, $inviteEmail,$mailTopic,$mailBody,$alertEmail)){
+            if($inviteOk = $mailer->sendMail(MailSender::noreply, $inviteEmail,$mailTopic,$mailBody,$alertEmail)){
                 if(!$exists) $userRepo->generateUser($inviteEmail, $password);
                 $participRepo->insertInvitation($gid,$inviteEmail);
                 $inviteEmail = '';
@@ -132,7 +132,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 }
                 ?>
             </ul>
-            <form class="addButton" method="post" action="expense.php">
+            <form class="addButton" method="post" action="expenseAdd.php">
                 <input type="hidden" name="gid" value="<?php echo $gid ?>"/>
                 <input type="hidden" name="groupName" value="<?php echo $group->name ?>"/>
                 <input type="hidden" name="groupCurr" value="<?php echo $group->currency ?>"/>
@@ -149,7 +149,16 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <label for="inviteEmail">Inviter un participant par e-mail</label>
                 <input type="email" name="inviteEmail" id="inviteEmail" value="<?php if(isset($inviteEmail)) echo $inviteEmail ?>"/>
                 <button type="submit" name="inviteBtn" id="inviteBtn">Inviter</button>
-                <?php if(isset($alertEmail)) echo $alertEmail?>
+                <?php
+                if(isset($alertEmail) && isset($inviteOk)) {
+                    $alertMessage = $alertEmail;
+                    if($inviteOk){
+                        include 'inc/alertSuccess.inc.php';
+                    }else{
+                        include 'inc/alertError.inc.php';
+                    }
+                }
+                ?>
             </form>
             <ul class="participants-list">
                 <?php

@@ -17,24 +17,24 @@ use NoDebt\ValidationUtils;
 
 $actionSelf = htmlspecialchars($_SERVER['PHP_SELF']);
 
-if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
+if(isset($_POST['addExpenseBtn']) || isset($_POST['confirmBtn'])){
     $validator = new ValidationUtils();
     $currFmt = new CurrencyFormatter();
     $participRepo = new ParticipationRepository();
 
-    if(isset($_POST['editBtn'])){
-        $expenseRepo = new ExpenseRepository();
-        $did = intval($_POST['did']);
-        $expense = $expenseRepo->getExpenseById($did);
-    }else {
-        $expense = new Expense();
-        $expense->gid = intval($_POST['gid']);
-        $expense->did = intval($_POST['did']);
-    }
 
+    $gid = intval($_POST['gid']);
+    $groupName = $validator->validateString($_POST['groupName']);
     $currency = $validator->currencyIsValid($_POST['groupCurr']) ? $validator->validateString($_POST['groupCurr']) : 'EUR';
     $currSymb = $currFmt->getCurrencySymbol($currency);
-    $participants = $participRepo->getParticipants($expense->gid);
+    $participants = $participRepo->getParticipants($gid);
+
+    $expense = new Expense();
+    $expense->gid = $gid;
+
+    //Par défaut, utilisateur sélectionné & date = aujourd'hui
+    if(isset($ses_uid) && !isset($_POST['participant'])) $expense->uid = $ses_uid;
+    if(!isset($_POST['date'])) $expense->paydate = date('Y-m-d',time());
 
     if(isset($_POST['confirmBtn'])) {
         //Validation des champs
@@ -45,6 +45,7 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
             $expense->uid = -1;
             $alertParticipant = 'Participant sélectionné invalide';
             $fieldsOk = false;
+
         }
 
         if($validator->expenseAmountIsValid($_POST['amount'])){
@@ -72,9 +73,9 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
         }
 
         if($validator->tagsAreValid($_POST['tags'])){
-            $expense->tagsTab = $validator->extractTags($_POST['tags']);
-            foreach ($expense->tagsTab as $tagLibelle){
-                $expense->tagsTab[] = new Tag($tagLibelle, $expense->gid);
+            $tagsTab = $validator->extractTags($_POST['tags']);
+            foreach ($tagsTab as $tagLibelle){
+                $expense->tagsTab[] = new Tag($tagLibelle, $gid);
             }
             $expense->tagsString = $validator->validateString($_POST['tags']);
         }else{
@@ -86,11 +87,10 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
         if($fieldsOk){
             $message = '';
             $expRepo = new ExpenseRepository();
-            if($expRepo->update($expense, $message)){
-                //header('location: group.php');
-                $successUpdate = 'Modification enregistrées !';
+            if($expRepo->insert($expense, $message)){
+                header('location: group.php');
             }else{
-                $alertUpdate = $message;
+                $alertInsert = $message;
             }
         }
     }
@@ -102,7 +102,7 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>No Debt - Editer la dépense <?php echo $expense->libelle ?></title>
+    <title>No Debt - Ajouter une dépense au groupe <?php echo $groupName ?></title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" sizes="16x16" href="images/icon.png">
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
@@ -112,7 +112,7 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
 include("inc/header.inc.php");
 ?>
 <main>
-    <h1>Editer la dépense <?php echo $expense->libelle ?></h1>
+    <h1>Ajouter une dépense au groupe <?php echo $groupName ?></h1>
     <form class="field-list" action="<?php echo $actionSelf?>" method="post">
         <label for="participant">Participant *</label>
         <select name="participant" id="participant" required>
@@ -123,32 +123,23 @@ include("inc/header.inc.php");
             }
             ?>
         </select>
-        <?php if(isset($alertParticipant)) $alertMessage = $alertParticipant; include('inc/alertError.inc.php')?>
-
         <label for="expenseDate">Date (jj-mm-aaaa) *</label>
         <input type="date" name="date" id="expenseDate" required value="<?php if(isset($expense->paydate)) echo $expense->paydate?>"/>
-        <?php if(isset($alertDate)) $alertMessage = $alertDate; include('inc/alertError.inc.php')?>
-
-
+        <?php if(isset($alertDate)) echo "<span class='alert'>$alertDate</span>"?>
         <label for="amount">Montant (<?php echo $currSymb?>) *</label>
         <input type="number" name="amount" id="amount" required value="<?php if(isset($expense->montant)) echo $expense->montant?>"/>
-        <?php if(isset($alertAmount)) $alertMessage = $alertAmount; include('inc/alertError.inc.php')?>
-
+        <?php if(isset($alertAmount)) echo "<span class='alert'>$alertAmount</span>"?>
         <label for="label">Libellé (max 50 caractères) *</label>
         <input type="text" name="label" id="label" required value="<?php if(isset($expense->libelle)) echo $expense->libelle?>"/>
-        <?php if(isset($alertLabel)) $alertMessage = $alertLabel; include('inc/alertError.inc.php')?>
-
+        <?php if(isset($alertLabel)) echo "<span class='alert'>$alertLabel</span>"?>
         <label for="tags">Tags (séparés par une virgule ",")</label>
         <input type="text" id="tags" name="tags" value="<?php if(isset($expense->tagsString)) echo $expense->tagsString?>"/>
-        <?php if(isset($alertTags)) $alertMessage = $alertTags; include('inc/alertError.inc.php')?>
-
-        <input type="hidden" name="gid" value="<?php echo $expense->gid ?>" readonly>
-        <input type="hidden" name="did" value="<?php echo $expense->did ?>" readonly>
+        <?php if(isset($alertTags)) echo "<span class='alert'>$alertTags</span>"?>
+        <input type="hidden" name="gid" value="<?php echo $gid ?>" readonly>
+        <input type="hidden" name="groupName" value="<?php echo $groupName?>" readonly>
         <input type="hidden" name="groupCurr" value="<?php echo $currency?>" readonly>
-
-        <button type="submit" class="submit" name="confirmBtn">Enregistrer modifications</button>
-        <?php if(isset($alertUpdate)) $alertMessage = $alertUpdate; include('inc/alertError.inc.php')?>
-        <?php if(isset($successUpdate)) $alertMessage = $successUpdate; include('inc/alertSuccess.inc.php')?>
+        <button type="submit" class="submit" name="confirmBtn">Ajouter la dépense</button>
+        <?php if(isset($alertInsert)) echo "<span class='alert'>$alertInsert</span>"?>
     </form>
 </main>
 </body>
