@@ -4,6 +4,8 @@ namespace NoDebt;
 
 require_once 'php/domain/Expense.php';
 require_once 'php/repository/TagRepository.php';
+require_once 'php/repository/BillRepository.php';
+require_once 'php/repository/DBLink.php';
 
 use DB\DBLink;
 use PDO;
@@ -132,6 +134,29 @@ class ExpenseRepository
         }
         DBLink::disconnect($db);
         return $updateOk;
+    }
+
+    public function delete($did, &$message = ''){
+        $db = null;
+        $deleteOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $tagsRepo = new TagRepository();
+            $billRepo = new BillRepository();
+            $db->beginTransaction();
+            if($tagsRepo->resetTagsForExpense($db, $did) && $billRepo->deleteBillsForExpense($db, $did)){
+                $stmt = $db->prepare("DELETE FROM ".self::TABLE_NAME." WHERE did = :did");
+                $stmt->bindValue(':did', $did);
+                if($stmt->execute() && $stmt->rowCount() == 1){
+                    $deleteOk = true;
+                    $db->commit();
+                }
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $deleteOk;
     }
 
 

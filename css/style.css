@@ -395,3 +395,7 @@ li {
 .biggerBtn{
     font-size: 1.5em;
 }
+
+.center{
+    text-align: center;
+}

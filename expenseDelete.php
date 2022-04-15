@@ -9,9 +9,16 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     $validator = new ValidationUtils();
     $did = intval($_POST['did']);
     $label = $validator->validateString($_POST['label']);
+    $returnPage = isset($_COOKIE['gid']) ? 'group.php' : 'myGroups.php';
 
     if(isset($_POST['confirmDelete'])){
-
+        $expenseRepo = new ExpenseRepository();
+        $message = '';
+        if($expenseRepo->delete($did, $message)){
+            header('location: '.$returnPage);
+        }else{
+            $alert = $message;
+        }
     }
 }
 ?>
@@ -30,7 +37,7 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     ?>
     <main>
         <h1>Supprimer la dépense</h1>
-        <p>Confirmez-vous la suppression de la dépense <?php echo $label ?> ?</p>
+        <p class="center">Confirmez-vous la suppression de la dépense <?php echo $label ?> ?</p>
         <section class="deleteChoices">
         <ul class="choices">
             <li>
@@ -42,7 +49,7 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
             </li>
             <?php if(isset($alert)) $alertMessage = $alert; include'inc/alertError.inc.php'?>
             <li>
-                <form method="post" action="myGroups.php">
+                <form method="post" action="<?php echo isset($returnPage) ? $returnPage : 'myGroups.php'?>">
                     <button type="submit" class="decline" name="cancelDelete" id="cancelDeleteExpense">Annuler</button>
                 </form>
             </li>
