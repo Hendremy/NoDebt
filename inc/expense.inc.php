@@ -8,6 +8,7 @@ if(isset($expense)):
         <li>
             <form action="expenseBills.php" method="post">
                 <input type="hidden" name="did" value="<?php echo $expense->did?>"/>
+                <input type="hidden" name="label" value="<?php echo $expense->libelle?>"/>
                 <button type="submit" name="billsBtn"><img class="iconx32" src="images/receipt.png" alt="Factures"/></button>
             </form>
         </li>
