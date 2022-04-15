@@ -2,8 +2,8 @@
 include('inc\session.inc.php');
 ?>
 <?php
-require('php/repository/ParticipationRepository.php');
-require('php/repository/UserRepository.php');
+require_once('php/repository/ParticipationRepository.php');
+require_once('php/repository/UserRepository.php');
 
 use NoDebt\ParticipationRepository;
 use NoDebt\UserRepository;
@@ -47,13 +47,13 @@ if(isset($_POST['confirmDeleteAccount'])){
         <ul class="choices">
             <li>
                 <form method ="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-                    <button type="submit" class="accept" name="confirmDeleteAccount" id="confirmDeleteAccount">Oui, supprimer le compte</button>
+                    <button type="submit" class="accept" name="confirmDelete" id="confirmDeleteAccount">Confirmer</button>
                 </form>
             </li>
-            <?php if(isset($alert)) echo $alert?>
+            <?php if(isset($alert)) $alertMessage = $alert; include'inc/alertError.inc.php'?>
             <li>
                 <form method="post" action="editProfile.php">
-                    <button type="submit" class="decline" name="confirmDeleteAccount" id="cancelDeleteAccount">Non</button>
+                    <button type="submit" class="decline" name="cancelDelete" id="cancelDeleteAccount">Annuler</button>
                 </form>
             </li>
         </ul>

@@ -90,9 +90,9 @@ class ParticipationRepository
             $stmt = $db->prepare("SELECT CONCAT(us.firstname,' ',us.lastname) AS name, IFNULL(SUM(exp.montant),0) AS total"
                 ." FROM ". self::TABLE_NAME ." par"
                 ." JOIN ". UserRepository::TABLE_NAME ." us ON us.uid = par.uid"
-                ." LEFT JOIN ". ExpenseRepository::TABLE_NAME ." exp ON exp.uid = par.uid"
+                ." LEFT JOIN ". ExpenseRepository::TABLE_NAME ." exp ON exp.uid = par.uid AND exp.gid = par.gid"
                 ." WHERE par.gid = :gid AND par.estConfirme = TRUE"
-                ." GROUP BY par.uid");
+                ." GROUP BY par.gid, par.uid");
             $stmt->bindValue(':gid',$gid);
             if($stmt->execute() && $stmt->rowCount() > 0){
                 $expenses = $stmt->fetchAll(PDO::FETCH_CLASS,"NoDebt\Participant");

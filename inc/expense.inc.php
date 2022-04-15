@@ -20,8 +20,9 @@ if(isset($expense)):
         </li>
         <li>
             <form action="expenseDelete.php" method="post">
+                <input type="hidden" name="label" value="<?php echo $expense->libelle?>"/>
                 <input type="hidden" name="did" value="<?php echo $expense->did?>"/>
-                <button class="decline" type="submit" name="billsBtn"><img class="iconx32" src="images/delete.png" alt="Supprimer"/></button>
+                <button class="decline" type="submit" name="deleteBtn"><img class="iconx32" src="images/delete.png" alt="Supprimer"/></button>
             </form>
         </li>
     </ul>
