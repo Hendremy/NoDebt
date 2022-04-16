@@ -4,9 +4,7 @@ namespace NoDebt;
 
 class Bill
 {
-    private $scanFilePath;
-
-    public function __constructor($scanfilepath){
-        $this->scanFilePath = $scanfilepath;
-    }
+    public $fid;
+    public $did;
+    public $scanFilePath;
 }
