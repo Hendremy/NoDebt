@@ -53,7 +53,7 @@ if(isset($_POST['loginBtn'])){
             <label for="userPassword">Mot de passe *</label>
             <input type="password" name="userPassword" id="userPassword" required value="<?php if(isset($userPassword)) echo $userPassword?>"/>
             <button type="submit" name="loginBtn">Se connecter</button>
-            <?php if(isset($message)) echo "<span>$message</span>" ?>
+            <?php if(isset($message)) $alertMessage = $message; include'inc/alertError.inc.php' ?>
         </form>
         <section class="auth-links">
             <a href="forgottenPassword.php">Mot de passe oublié ?</a>
