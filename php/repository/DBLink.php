@@ -15,7 +15,7 @@ class DBLink {
 
     public static function connectToDb(){
         $link = new PDO('mysql:host=' . MYHOST . ';dbname=' . MYDB . ';charset=UTF8', MYUSER, MYPASS);
-        $link->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+        $link->setAttribute(PDO::ATTR_CASE, PDO::CASE_NATURAL);
         $link->exec("set names utf8");
         $link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $link;

@@ -400,6 +400,7 @@ li {
     text-align: center;
 }
 
-.bill{
-
+.bill-scan{
+    max-width: 40%;
+    max-height: 500px;
 }

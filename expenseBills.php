@@ -8,21 +8,31 @@ include'inc/session.inc.php';
 <?php
 require_once 'php/repository/ExpenseRepository.php';
 require_once 'php/repository/BillRepository.php';
+require_once 'php/storage/UploadStorage.php';
 
-if(isset($_GET['did'])){
-    $did = intval($_GET['did']);
+if(isset($_POST['did'])){
+    $did = intval($_POST['did']);
     $expenseRepo = new ExpenseRepository();
     $billRepo = new BillRepository();
-    $expense = $expenseRepo->getExpenseById($did);
-    $bills = $billRepo->getBillsForExpense($did);
+
 
     if(isset($_POST['addBill'])){
-
+        $fileStorage = new UploadStorage();
+        $message = '';
+        if(isset($_FILES['bill']) && $fileStorage->receiveFile($_FILES['bill'], $message)){//Si erreur, gérer cas d'erreur
+            $succesFile = $message;
+        }else{//Si fichier correct
+            $alertFile = $message;
+        }
     }
 
     if(isset($_POST['deleteBill'])){
-
+        $fid = intval($_POST['fid']);
+        $billRepo->deleteBill($fid);
     }
+
+    $expense = $expenseRepo->getExpenseById($did);
+    $bills = $billRepo->getBillsForExpense($did);
 }
 ?>
 <!DOCTYPE html>
@@ -43,7 +53,8 @@ if(isset($_GET['did'])){
         <h2>Ajouter une facture</h2>
         <form class="field-list" action="expenseBills.php" method="post" enctype="multipart/form-data">
             <label for="bill">Scan de facture</label>
-            <input type="file" name="bill" id="bill" accept=".pdf,.jpg,.png"/>
+            <input type="hidden" name="MAX_FILE_SIZE" value="10M" >
+            <input type="file" name="bill" id="bill" accept="image/*,.pdf,.jpg,.png"/>
             <button type="submit" class="submit" name="addBill">Ajouter une facture</button>
         </form>
         <h2>Factures (<?php echo count($bills) ?>)</h2>

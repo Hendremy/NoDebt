@@ -27,7 +27,7 @@ class ExpenseRepository
             CONCAT(us.firstname,' ', us.lastname) AS spender FROM ". self::TABLE_NAME ." exp "
                 ." JOIN ". UserRepository::TABLE_NAME ." us ON exp.uid = us.uid"
                 ." WHERE gid = :gid"
-                ." ORDER BY dateheure DESC " . $limit);
+                ." ORDER BY dateHeure DESC " . $limit);
             $stmt->bindValue(':gid', $gid);
             if($stmt->execute() && $stmt->rowCount() > 0){
                 $expenses = $stmt->fetchAll(PDO::FETCH_CLASS,"NoDebt\Expense");

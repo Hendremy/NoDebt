@@ -1,5 +1,5 @@
 <?php
-include('inc\session.inc.php');
+include('inc/session.inc.php');
 ?>
 <?php
 require_once 'php/repository/UserRepository.php';
