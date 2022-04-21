@@ -74,4 +74,23 @@ class BillRepository
         return $deleteOk;
     }
 
+    public function insert($bill,&$message=''){
+        $db = null;
+        $insertOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("INSERT INTO ". self::TABLE_NAME. " (scan, did)"
+                ." VALUES (:filename,:did)");
+            $stmt->bindValue(':filename', $bill->scanFilePath);
+            $stmt->bindValue(':did', $bill->did);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $insertOk = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $insertOk;
+    }
+
 }

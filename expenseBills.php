@@ -1,7 +1,9 @@
 <?php
 
+use NoDebt\Bill;
 use NoDebt\BillRepository;
 use NoDebt\ExpenseRepository;
+use NoDebt\UploadStorage;
 
 include'inc/session.inc.php';
 ?>
@@ -9,29 +11,31 @@ include'inc/session.inc.php';
 require_once 'php/repository/ExpenseRepository.php';
 require_once 'php/repository/BillRepository.php';
 require_once 'php/storage/UploadStorage.php';
+require_once 'php/domain/Bill.php';
 
 if(isset($_POST['did'])){
     $did = intval($_POST['did']);
     $expenseRepo = new ExpenseRepository();
     $billRepo = new BillRepository();
 
+    $expense = $expenseRepo->getExpenseById($did);
 
     if(isset($_POST['addBill'])){
         $fileStorage = new UploadStorage();
         $message = '';
-        if(isset($_FILES['bill']) && $fileStorage->receiveFile($_FILES['bill'], $message)){//Si erreur, gérer cas d'erreur
+        $destination = $expense->libelle. $expense->did . '_'. time();
+        $file = $_FILES['bill'];
+        if(isset($file) && $fileStorage->receiveFile($file,$destination, $message)){//Si fichier correct
+            $bill = new Bill();
+            $bill->did = $expense->did;
+            $bill->scanFilePath = $destination;
+            $billRepo->insert($bill);
             $succesFile = $message;
-        }else{//Si fichier correct
+        }else{//Si erreur, gérer cas d'erreur
             $alertFile = $message;
         }
     }
 
-    if(isset($_POST['deleteBill'])){
-        $fid = intval($_POST['fid']);
-        $billRepo->deleteBill($fid);
-    }
-
-    $expense = $expenseRepo->getExpenseById($did);
     $bills = $billRepo->getBillsForExpense($did);
 }
 ?>
@@ -53,9 +57,19 @@ if(isset($_POST['did'])){
         <h2>Ajouter une facture</h2>
         <form class="field-list" action="expenseBills.php" method="post" enctype="multipart/form-data">
             <label for="bill">Scan de facture</label>
-            <input type="hidden" name="MAX_FILE_SIZE" value="10M" >
-            <input type="file" name="bill" id="bill" accept="image/*,.pdf,.jpg,.png"/>
+            <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo UploadStorage::MAX_FILE_SIZE ?>>" />
+            <input type="file" name="bill" id="bill" accept="image/*,.gif,.jpg,.png"/>
+            <input type="hidden" name="did" value="<?php echo $expense->did?>"/>
             <button type="submit" class="submit" name="addBill">Ajouter une facture</button>
+            <?php
+            if(isset($alertFile)) {
+                $alertMessage = $alertFile;
+                include('inc/alertError.inc.php');
+            }else if(isset($succesFile)){
+                $alertMessage = $succesFile;
+                include ('inc/alertSuccess.inc.php');
+            }
+            ?>
         </form>
         <h2>Factures (<?php echo count($bills) ?>)</h2>
         <ul class="bills-list">
