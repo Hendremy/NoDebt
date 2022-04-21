@@ -6,6 +6,7 @@ require_once 'php/repository/BillRepository.php';
 use NoDebt\BillRepository;
 use NoDebt\ValidationUtils;
 use NoDebt\ExpenseRepository;
+use DB\DBLink;
 
 if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     $validator = new ValidationUtils();
@@ -45,7 +46,6 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
         <ul class="choices">
             <li>
                 <form method ="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-                    <input type="hidden" name="label" value="<?php echo $label?>"/>
                     <input type="hidden" name="did" value="<?php echo $fid?>"/>
                     <button type="submit" class="accept" name="confirmDelete" id="confirmDeleteExpense">Confirmer</button>
                 </form>

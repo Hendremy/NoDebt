@@ -5,6 +5,10 @@ namespace NoDebt;
 use DB\DBLink;
 use PDO;
 use PDOException;
+use NoDebt\Bill;
+require_once 'php/domain/Bill.php';
+require_once 'php/repository/DBLink.php';
+
 
 class BillRepository
 {
@@ -27,7 +31,7 @@ class BillRepository
                 ." WHERE did = :did");
             $stmt->bindValue(':did', $did);
             if($stmt->execute() && $stmt->rowCount() > 0){
-                $bills = $stmt->fetchAll(PDO::FETCH_CLASS,"NoDebt/Bill");
+                $bills = $stmt->fetchAll(PDO::FETCH_CLASS,"NoDebt\Bill");
             }
         }catch(PDOException $e){
             $message = self::DB_ERROR_MESSAGE;
@@ -46,7 +50,7 @@ class BillRepository
                 ." WHERE fid = :fid");
             $stmt->bindValue(':fid',$fid);
             if($stmt->execute() && $stmt->rowCount() == 1){
-                $bill = $stmt->fetchObject('NoDebt/Bill');
+                $bill = $stmt->fetchObject('NoDebt\Bill');
             }
         }catch(PDOException $e){
             $message = self::DB_ERROR_MESSAGE;

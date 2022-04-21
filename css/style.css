@@ -301,10 +301,6 @@ ul.search{
     flex-direction: column;
 }
 
-ul.bills-list{
-    display: flex;
-    flex-flow: row wrap;
-}
 
 li {
     margin: 0 10px 0 10px;
@@ -400,7 +396,24 @@ li {
     text-align: center;
 }
 
-.bill-scan{
+ul.bills-list{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+}
+
+ul.bills-list li{
     max-width: 40%;
-    max-height: 500px;
+    border: 2px solid rgb(151, 109, 230);
+
+    display:flex;
+    flex-flow: column wrap;
+    align-items: center;
+
+    margin:20px;
+}
+
+.bill-scan{
+    max-width: 100%;
+    max-height: 100%;
 }

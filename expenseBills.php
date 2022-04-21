@@ -17,18 +17,17 @@ if(isset($_POST['did'])){
     $did = intval($_POST['did']);
     $expenseRepo = new ExpenseRepository();
     $billRepo = new BillRepository();
+    $fileStorage = new UploadStorage();
 
     $expense = $expenseRepo->getExpenseById($did);
 
     if(isset($_POST['addBill'])){
-        $fileStorage = new UploadStorage();
         $message = '';
-        $destination = $expense->libelle. $expense->did . '_'. time();
         $file = $_FILES['bill'];
-        if(isset($file) && $fileStorage->receiveFile($file,$destination, $message)){//Si fichier correct
+        if(isset($file) && $filename = $fileStorage->receiveFile($file, $expense, $message)){//Si fichier correct
             $bill = new Bill();
             $bill->did = $expense->did;
-            $bill->scanFilePath = $destination;
+            $bill->scanFilePath = $filename;
             $billRepo->insert($bill);
             $succesFile = $message;
         }else{//Si erreur, gérer cas d'erreur
@@ -60,7 +59,7 @@ if(isset($_POST['did'])){
             <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo UploadStorage::MAX_FILE_SIZE ?>>" />
             <input type="file" name="bill" id="bill" accept="image/*,.gif,.jpg,.png"/>
             <input type="hidden" name="did" value="<?php echo $expense->did?>"/>
-            <button type="submit" class="submit" name="addBill">Ajouter une facture</button>
+            <button type="submit" class="submit" name="addBill">+ Ajouter une facture</button>
             <?php
             if(isset($alertFile)) {
                 $alertMessage = $alertFile;
