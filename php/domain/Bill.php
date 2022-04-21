@@ -6,5 +6,5 @@ class Bill
 {
     public $fid;
     public $did;
-    public $scanFilePath;
+    public $filename;
 }

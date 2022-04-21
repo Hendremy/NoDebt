@@ -402,7 +402,7 @@ ul.bills-list{
     align-items: flex-start;
 }
 
-ul.bills-list li{
+.bill-li{
     max-width: 40%;
     border: 2px solid rgb(151, 109, 230);
 

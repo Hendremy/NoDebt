@@ -13,8 +13,8 @@ require_once 'php/repository/BillRepository.php';
 require_once 'php/storage/UploadStorage.php';
 require_once 'php/domain/Bill.php';
 
-if(isset($_POST['did'])){
-    $did = intval($_POST['did']);
+if(isset($_REQUEST['did'])){
+    $did = intval($_REQUEST['did']);
     $expenseRepo = new ExpenseRepository();
     $billRepo = new BillRepository();
     $fileStorage = new UploadStorage();
@@ -27,7 +27,7 @@ if(isset($_POST['did'])){
         if(isset($file) && $filename = $fileStorage->receiveFile($file, $expense, $message)){//Si fichier correct
             $bill = new Bill();
             $bill->did = $expense->did;
-            $bill->scanFilePath = $filename;
+            $bill->filename = $filename;
             $billRepo->insert($bill);
             $succesFile = $message;
         }else{//Si erreur, gérer cas d'erreur

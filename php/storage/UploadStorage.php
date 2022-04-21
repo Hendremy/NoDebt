@@ -24,6 +24,10 @@ class UploadStorage
         return $size <= self::MAX_FILE_SIZE;
     }
 
+    public function delete($filename){
+        return unlink($this->getAbsolutePath($filename));
+    }
+
 
     public function receiveFile($file, $expense, &$message = ''){
         $fileReceived = false;

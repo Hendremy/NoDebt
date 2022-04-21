@@ -2,8 +2,10 @@
 
 require_once 'php/utils/ValidationUtils.php';
 require_once 'php/repository/BillRepository.php';
+require_once 'php/storage/UploadStorage.php';
 
 use NoDebt\BillRepository;
+use NoDebt\UploadStorage;
 use NoDebt\ValidationUtils;
 use NoDebt\ExpenseRepository;
 use DB\DBLink;
@@ -11,14 +13,15 @@ use DB\DBLink;
 if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     $validator = new ValidationUtils();
     $billRepo = new BillRepository();
+    $uploadStor = new UploadStorage();
     $fid = intval($_POST['fid']);
     $bill = $billRepo->getBill($fid);
 
-    $returnPage = isset($_POST['did']) ? 'group.php' : 'myGroups.php';
+    $returnPage = isset($_POST['fid']) ? "expenseBills.php?did=$bill->did" : 'myGroups.php';
 
     if(isset($_POST['confirmDelete'])){
         $message = '';
-        if($billRepo->delete($fid, $message) /*&& deleteFrom local files*/){
+        if($billRepo->delete($fid, $message) && $uploadStor->delete($bill->filename)){
             header('location: '.$returnPage);
         }else{
             $alert = $message;
@@ -30,7 +33,7 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
 <html lang="fr">
 <head>
     <meta charset="utf-8">
-    <title>No Debt - Supprimer la dépense</title>
+    <title>No Debt - Supprimer la facture</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" sizes="16x16" href="images/icon.png">
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
@@ -40,13 +43,18 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     include("inc/header.inc.php");
     ?>
     <main>
-        <h1>Supprimer la dépense</h1>
+        <h1>Supprimer la facture</h1>
         <p class="center">Confirmez-vous la suppression de cette facture ?</p>
+        <?php if(isset($bill)) :?>
+        <figure class="bill-li">
+            <img class="bill-scan" src="<?php if(isset($uploadStor)) echo $uploadStor->getRelativePath($bill->filename)?>" alt="scan facture"/>
+        </figure>
+        <?php endif?>
         <section class="deleteChoices">
         <ul class="choices">
             <li>
                 <form method ="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-                    <input type="hidden" name="did" value="<?php echo $fid?>"/>
+                    <input type="hidden" name="fid" value="<?php echo $bill->fid?>"/>
                     <button type="submit" class="accept" name="confirmDelete" id="confirmDeleteExpense">Confirmer</button>
                 </form>
             </li>

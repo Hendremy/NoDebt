@@ -26,7 +26,7 @@ class BillRepository
         $bills = array();
         try{
             $db = DBLink::connectToDb();
-            $stmt = $db->prepare("SELECT fid, scan as scanFilePath, did"
+            $stmt = $db->prepare("SELECT fid, scan as filename, did"
                 ." FROM ".self::TABLE_NAME
                 ." WHERE did = :did");
             $stmt->bindValue(':did', $did);
@@ -45,7 +45,7 @@ class BillRepository
         $bill = null;
         try{
             $db = DBLink::connectToDb();
-            $stmt = $db->prepare("SELECT fid, scan as scanFilePath, did"
+            $stmt = $db->prepare("SELECT fid, scan as filename, did"
                 ." FROM ".self::TABLE_NAME
                 ." WHERE fid = :fid");
             $stmt->bindValue(':fid',$fid);
@@ -85,7 +85,7 @@ class BillRepository
             $db = DBLink::connectToDb();
             $stmt = $db->prepare("INSERT INTO ". self::TABLE_NAME. " (scan, did)"
                 ." VALUES (:filename,:did)");
-            $stmt->bindValue(':filename', $bill->scanFilePath);
+            $stmt->bindValue(':filename', $bill->filename);
             $stmt->bindValue(':did', $bill->did);
             if($stmt->execute() && $stmt->rowCount() == 1){
                 $insertOk = true;
