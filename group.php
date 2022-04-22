@@ -9,11 +9,13 @@ require_once 'php/repository/ParticipationRepository.php';
 require_once 'php/utils/ValidationUtils.php';
 require_once 'php/utils/PasswordUtils.php';
 require_once 'php/domain/MailSender.php';
+require_once 'php/domain/SimpleExpenseFilter.php';
 use NoDebt\GroupRepository;
 use NoDebt\ExpenseRepository;
 use NoDebt\MailSender;
 use NoDebt\ParticipationRepository;
 use NoDebt\PasswordUtils;
+use NoDebt\SimpleExpenseFilter;
 use NoDebt\UserRepository;
 use NoDebt\ValidationUtils;
 
@@ -28,15 +30,16 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $groupRepo = new GroupRepository();
     $expenseRepo = new ExpenseRepository();
     $participRepo = new ParticipationRepository();
+    $validator = new ValidationUtils();
+
     $group = $groupRepo->getGeneralInfo($gid);
     $expenses = $expenseRepo->getExpenses($gid);
     $participants = $participRepo->getParticipantsTotals($gid);
     $averageExp = count($participants) != 0 ? $group->total / count($participants) : $group->total;
 
     if(isset($_POST['inviteBtn'])){
-        $validator = new ValidationUtils();
         $inviteEmail = $validator->validateString($_POST['inviteEmail']);
-        if($validator->emailIsValid($inviteEmail)){
+        if($validator->emailIsValid($inviteEmail)){//TODO: Refactoriser dans une classe InviteSender
             $mailer = new MailSender();
             $mailTopic = 'NoDebt - Invitation à rejoindre un groupe';
             $inviterName = isset($ses_lastname) && isset($ses_firstName) ? "$ses_firstName $ses_lastname" : 'un ami';
@@ -61,6 +64,10 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 $inviteEmail = '';
             }
         }
+    }else if(isset($_POST['searchBtn'])){
+        $searchWord = $validator->validateString($_POST['searchWord']);
+        $expenseFilter = new SimpleExpenseFilter($searchWord);
+        $expenses = $expenseFilter->simpleFilter($expenses);
     }
 }
 ?>
@@ -81,9 +88,11 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         <header>
             <h1><?php echo "$group->name créé par $group->owner_name"?></h1>
             <form action="groupEdit.php" method="post">
+                <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>
                 <button type="submit" name="editBtn" id="editBtn">Editer le groupe</button>
             </form>
             <form action="group01Settling.php" method="post">
+                <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>
                 <button type="submit" name="settleBtn" id="settleBtn">Solder le groupe</button>
             </form>
         </header>
@@ -92,9 +101,9 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <h2>Dépenses</h2>
                 <ul class="search">
                     <li>
-                        <form name="simple-search-expense" class="search">
+                        <form name="simple-search-expense" class="search" method="post" action="<?php echo $actionSelf?>">
                             <label for="search">Rechercher une dépense </label>
-                            <input type="text" id="search" name="search" placeholder="Rechercher..."/>
+                            <input type="text" id="search" name="searchWord" placeholder="Rechercher..."/>
                             <button type="submit" name="searchBtn"><img class="iconx24" src="images/search.png" alt="Rechercher"/></button>
                         </form>
                     </li>
@@ -125,12 +134,18 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 </ul>
             </header>
             <ul class="expense-list">
+                <?php if(count($expenses) > 0) :?>
                 <?php
                 foreach($expenses as $expense){
                     $expense->montant = $group->formatAmount($expense->montant);
                     include('inc/expense.inc.php');
                 }
                 ?>
+                <?php else:?>
+                <li>
+                    <span>Aucune dépense trouvée</span>
+                </li>
+                <?php endif?>
             </ul>
             <form class="addButton" method="post" action="expenseAdd.php">
                 <input type="hidden" name="gid" value="<?php echo $gid ?>"/>

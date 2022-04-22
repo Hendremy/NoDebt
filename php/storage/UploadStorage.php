@@ -7,7 +7,6 @@ class UploadStorage
     const UPLOADS_DIR = '/uploads';
     const MAX_FILE_SIZE = 10000000;//10 mégaoctets
     //const MAX_IMAGE_SIZE = ?
-    const SUPPORTED_EXTENSIONS = array('jpg','png','gif');
 
     public $dirPath;
 
@@ -17,7 +16,7 @@ class UploadStorage
     }
 
     private function extensionIsSupported($extension){
-        return in_array($extension, self::SUPPORTED_EXTENSIONS);
+        return in_array(strtolower($extension), array('jpg','png','gif'));
     }
 
     private function fileSizeValid($size){

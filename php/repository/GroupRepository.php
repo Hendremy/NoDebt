@@ -72,6 +72,24 @@ class GroupRepository
         return $group;
     }
 
-
-
+    public function update($group, &$message=''){
+        $db = null;
+        $updateOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("UPDATE ".self::TABLE_NAME
+                ." SET nom = :name, devise = :currency"
+                ." WHERE gid = :gid");
+            $stmt->bindValue(':name', $group->name);
+            $stmt->bindValue(':currency', $group->currency);
+            $stmt->bindValue(':gid', $group->gid);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $updateOk = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $updateOk;
+    }
 }

@@ -45,11 +45,6 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     <main>
         <h1>Supprimer la facture</h1>
         <p class="center">Confirmez-vous la suppression de cette facture ?</p>
-        <?php if(isset($bill)) :?>
-        <figure class="bill-li">
-            <img class="bill-scan" src="<?php if(isset($uploadStor)) echo $uploadStor->getRelativePath($bill->filename)?>" alt="scan facture"/>
-        </figure>
-        <?php endif?>
         <section class="deleteChoices">
         <ul class="choices">
             <li>
@@ -66,6 +61,11 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
             </li>
         </ul>
         </section>
+        <?php if(isset($bill)) :?>
+            <figure class="bill-li">
+                <img class="bill-scan" src="<?php if(isset($uploadStor)) echo $uploadStor->getRelativePath($bill->filename)?>" alt="scan facture"/>
+            </figure>
+        <?php endif?>
     </main>
 </body>
 </html>
