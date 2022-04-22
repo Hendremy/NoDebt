@@ -103,7 +103,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                     <li>
                         <form name="simple-search-expense" class="search" method="post" action="<?php echo $actionSelf?>">
                             <label for="search">Rechercher une dépense </label>
-                            <input type="text" id="search" name="searchWord" placeholder="Rechercher..."/>
+                            <input type="text" id="search" name="searchWord" placeholder="Rechercher..." <?php if(isset($searchWord)) echo "value='$searchWord'"?>/>
                             <button type="submit" name="searchBtn"><img class="iconx24" src="images/search.png" alt="Rechercher"/></button>
                         </form>
                     </li>
@@ -114,15 +114,15 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                                 <label for="name">Libellé</label>
                                 <input type="text" name="name" id="name"/>
                                 <fieldset name="amountSpan">
-                                    <label for="minAmount">Montant (€): Entre</label>
+                                    <label for="minAmount">Montant: de </label>
                                     <input type="number" name="minAmount" id="minAmount"/>
-                                    <label for="maxAmount"> et </label>
+                                    <label for="maxAmount"> à </label>
                                     <input type="number" name="maxAmount" id="maxAmount"/>
                                 </fieldset>
                                 <fieldset name="dateSpan">
-                                    <label for="startDate">Date: Entre</label>
+                                    <label for="startDate">Date: de</label>
                                     <input type="date" name="startDate" id="startDate"/>
-                                    <label for="endDate"> et </label>
+                                    <label for="endDate"> à </label>
                                     <input type="date" name="endDate" id="endDate"/>
                                 </fieldset>
                                 <label for="tags">Tags :</label>
