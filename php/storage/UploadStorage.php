@@ -27,7 +27,6 @@ class UploadStorage
         return unlink($this->getAbsolutePath($filename));
     }
 
-
     public function receiveFile($file, $expense, &$message = ''){
         $fileReceived = false;
         if($file['error'] > 0){
