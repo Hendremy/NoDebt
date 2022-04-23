@@ -18,7 +18,7 @@ class AdvExpenseFilter
         $this->maxAmount = $maxAmount;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
-        $this->tags = explode(',',$tags);
+        $this->tags = empty($tags) ? array() : explode(',',$tags);
     }
 
     public function filter($expenses){
