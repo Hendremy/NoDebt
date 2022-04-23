@@ -77,7 +77,8 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         $maxAmount = floatval($_POST['maxAmount']);
         $startDate = $validator->validateDate($_POST['startDate']);
         $endDate = $validator->validateDate($_POST['endDate']);
-        $expenseFilter = new AdvExpenseFilter($label,$minAmount,$maxAmount,$startDate,$endDate);
+        $tags = $validator->validateString($_POST['tags']);
+        $expenseFilter = new AdvExpenseFilter($label,$minAmount,$maxAmount,$startDate,$endDate,$tags);
         $expenses = $expenseFilter->filter($expenses);
     }
 }
@@ -122,7 +123,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                         <details <?php if(isset($_POST['advSearchBtn'])) echo 'open' ?>>
                             <summary>Recherche avancée</summary>
                             <form name="advanced-search-expense" class="search" method="post" action="<?php echo $actionSelf?>">
-                                <label for="name">Libellé</label>
+                                <label for="label">Libellé</label>
                                 <input type="text" name="label" id="label" value="<?php if(isset($label)) echo $label ?>"/>
                                 <fieldset name="amountSpan">
                                     <label for="minAmount">Montant: de </label>
@@ -137,7 +138,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                                     <input type="date" name="endDate" id="endDate" value="<?php if(isset($endDate)) echo $endDate ?>"/>
                                 </fieldset>
                                 <label for="tags">Tags :</label>
-                                <input type="text" name="tags" id="tags"/>
+                                <input type="text" name="tags" id="tags" value="<?php if(isset($tags)) echo $tags ?>"/>
                                 <button type="submit" name="advSearchBtn"><img class="iconx24" src="images/search.png" alt="Rechercher"/></button>
                             </form>
                         </details>

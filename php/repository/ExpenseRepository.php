@@ -31,6 +31,10 @@ class ExpenseRepository
             $stmt->bindValue(':gid', $gid);
             if($stmt->execute() && $stmt->rowCount() > 0){
                 $expenses = $stmt->fetchAll(PDO::FETCH_CLASS,"NoDebt\Expense");
+                $tagRepo = new TagRepository();
+                foreach ($expenses as $expense){
+                    $expense->tagsTab = $tagRepo->getTagsForId($db, $expense->did);
+                }
             }
         }catch(PDOException $e){
 
