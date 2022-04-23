@@ -10,6 +10,9 @@ require_once 'php/utils/ValidationUtils.php';
 require_once 'php/utils/PasswordUtils.php';
 require_once 'php/domain/MailSender.php';
 require_once 'php/domain/SimpleExpenseFilter.php';
+require_once 'php/domain/AdvExpenseFilter.php';
+
+use NoDebt\AdvExpenseFilter;
 use NoDebt\GroupRepository;
 use NoDebt\ExpenseRepository;
 use NoDebt\MailSender;
@@ -67,7 +70,15 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     }else if(isset($_POST['searchBtn'])){
         $searchWord = $validator->validateString($_POST['searchWord']);
         $expenseFilter = new SimpleExpenseFilter($searchWord);
-        $expenses = $expenseFilter->simpleFilter($expenses);
+        $expenses = $expenseFilter->filter($expenses);
+    }else if(isset($_POST['advSearchBtn'])){
+        $label = $validator->validateString($_POST['label']);
+        $minAmount = floatval($_POST['minAmount']);
+        $maxAmount = floatval($_POST['maxAmount']);
+        $startDate = $validator->validateDate($_POST['startDate']);
+        $endDate = $validator->validateDate($_POST['endDate']);
+        $expenseFilter = new AdvExpenseFilter($label,$minAmount,$maxAmount,$startDate,$endDate);
+        $expenses = $expenseFilter->filter($expenses);
     }
 }
 ?>
@@ -108,22 +119,22 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                         </form>
                     </li>
                     <li>
-                        <details>
+                        <details <?php if(isset($_POST['advSearchBtn'])) echo 'open' ?>>
                             <summary>Recherche avancée</summary>
-                            <form name="advanced-search-expense" class="search">
+                            <form name="advanced-search-expense" class="search" method="post" action="<?php echo $actionSelf?>">
                                 <label for="name">Libellé</label>
-                                <input type="text" name="name" id="name"/>
+                                <input type="text" name="label" id="label" value="<?php if(isset($label)) echo $label ?>"/>
                                 <fieldset name="amountSpan">
                                     <label for="minAmount">Montant: de </label>
-                                    <input type="number" name="minAmount" id="minAmount"/>
+                                    <input type="number" name="minAmount" id="minAmount" value="<?php if(isset($minAmount)) echo $minAmount ?>"/>
                                     <label for="maxAmount"> à </label>
-                                    <input type="number" name="maxAmount" id="maxAmount"/>
+                                    <input type="number" name="maxAmount" id="maxAmount" value="<?php if(isset($maxAmount)) echo $maxAmount ?>"/>
                                 </fieldset>
                                 <fieldset name="dateSpan">
                                     <label for="startDate">Date: de</label>
-                                    <input type="date" name="startDate" id="startDate"/>
+                                    <input type="date" name="startDate" id="startDate" value="<?php if(isset($startDate)) echo $startDate ?>"/>
                                     <label for="endDate"> à </label>
-                                    <input type="date" name="endDate" id="endDate"/>
+                                    <input type="date" name="endDate" id="endDate" value="<?php if(isset($endDate)) echo $endDate ?>"/>
                                 </fieldset>
                                 <label for="tags">Tags :</label>
                                 <input type="text" name="tags" id="tags"/>

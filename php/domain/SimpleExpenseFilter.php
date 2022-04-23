@@ -9,12 +9,12 @@ class SimpleExpenseFilter
     public function __construct($searchWord){
         $this->searchWord = $searchWord;
     }
-    public function simpleFilter($expenses){
+    public function filter($expenses){
         if(empty($this->searchWord)) return $expenses;
         return array_filter($expenses, array($this,'expenseContainsWord'));
     }
 
-    public function expenseContainsWord($expense){
+    private function expenseContainsWord($expense){
         $wordPos = strpos(strtolower($expense->libelle), strtolower($this->searchWord));
         return $wordPos === 0 || $wordPos != false;
     }
