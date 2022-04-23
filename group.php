@@ -72,6 +72,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         $expenseFilter = new SimpleExpenseFilter($searchWord);
         $expenses = $expenseFilter->filter($expenses);
     }else if(isset($_POST['advSearchBtn'])){
+        //TODO: Vérifier validité des champs
         $label = $validator->validateString($_POST['label']);
         $minAmount = floatval($_POST['minAmount']);
         $maxAmount = floatval($_POST['maxAmount']);
