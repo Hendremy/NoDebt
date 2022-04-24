@@ -11,6 +11,8 @@ class Group
     public $owner_name;
     public $currency;
     public $total;
+    public $expenses;
+    public $participants;
 
     public function getCurrencySymbol(){
         $fmt = new CurrencyFormatter();

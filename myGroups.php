@@ -25,7 +25,7 @@ include('inc/session.inc.php');
                 <?php
                 foreach($ses_invites as $inviteId){
                     $_GET['inviteId'] = $inviteId;
-                    include("inc/groupInviteTemplate.php");
+                    include("inc/groupInvite.inc.php");
                 }
                 ?>
             </ul>
@@ -37,7 +37,7 @@ include('inc/session.inc.php');
                 <?php
                 if(isset($ses_groups)){
                     foreach($ses_groups as $groupId){
-                        include("inc/groupPreviewTemplate.php");
+                        include("inc/groupPreview.inc.php");
                     }
                 }
                 ?>

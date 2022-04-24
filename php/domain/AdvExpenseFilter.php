@@ -59,8 +59,9 @@ class AdvExpenseFilter
     }
 
     private function tagsFilter($expense){
+        $expTags = array_map('strtolower',$expense->tagsTab);
         foreach ($this->tags as $tag){
-            if(in_array($tag,$expense->tagsTab)){
+            if(in_array(strtolower($tag),$expTags)){
                 return true;
             }
         }

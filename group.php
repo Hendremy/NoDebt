@@ -38,9 +38,9 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $validator = new ValidationUtils();
 
     $group = $groupRepo->getGeneralInfo($gid);
-    $expenses = $expenseRepo->getExpenses($gid);
-    $participants = $participRepo->getParticipantsTotals($gid);
-    $averageExp = count($participants) != 0 ? $group->total / count($participants) : $group->total;
+    $group->expenses = $expenseRepo->getExpenses($gid);
+    $group->participants = $participRepo->getParticipantsTotals($gid);
+    $averageExp = count($group->participants) != 0 ? $group->total / count($group->participants) : $group->total;
 
     if(isset($_POST['inviteBtn'])){
         $inviteEmail = $validator->validateString($_POST['inviteEmail']);
@@ -72,7 +72,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     }else if(isset($_POST['searchBtn'])){
         $searchWord = $validator->validateString($_POST['searchWord']);
         $expenseFilter = new SimpleExpenseFilter($searchWord);
-        $expenses = $expenseFilter->filter($expenses);
+        $group->expenses = $expenseFilter->filter($group->expenses);
     }else if(isset($_POST['advSearchBtn'])){
         //TODO: Vérifier validité des champs
         $label = $validator->validateString($_POST['label']);
@@ -82,7 +82,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         $endDate = $validator->validateDate($_POST['endDate']);
         $tags = $validator->validateString($_POST['tags']);
         $expenseFilter = new AdvExpenseFilter($label,$minAmount,$maxAmount,$startDate,$endDate,$tags);
-        $expenses = $expenseFilter->filter($expenses);
+        $group->expenses = $expenseFilter->filter($group->expenses);
     }
 }
 ?>
@@ -106,10 +106,12 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>
                 <button type="submit" name="editBtn" id="editBtn">Editer le groupe</button>
             </form>
-            <form action="group01Settling.php" method="post">
+            <?php if($group->total > 0 && count($group->participants) > 1 /*&& différences à la moyenne != 0*/):?>
+            <form action="groupSettling.php" method="post">
                 <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>
                 <button type="submit" name="settleBtn" id="settleBtn">Solder le groupe</button>
             </form>
+            <?php endif?>
         </header>
         <section class="groupView">
             <header class="expenses">
@@ -149,9 +151,9 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 </ul>
             </header>
             <ul class="expense-list">
-                <?php if(count($expenses) > 0) :?>
+                <?php if(count($group->expenses) > 0) :?>
                 <?php
-                foreach($expenses as $expense){
+                foreach($group->expenses as $expense){
                     $expense->montant = $group->formatAmount($expense->montant);
                     include('inc/expense.inc.php');
                 }
@@ -174,7 +176,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
             </section>
         </section>
         <section class="participants">
-            <h2>Participants (<?php echo count($participants)?>)</h2>
+            <h2>Participants (<?php echo count($group->participants)?>)</h2>
             <form name="invite-participant" method="post" action="<?php echo $actionSelf?>">
                 <label for="inviteEmail">Inviter un participant par e-mail</label>
                 <input type="email" name="inviteEmail" id="inviteEmail" value="<?php if(isset($inviteEmail)) echo $inviteEmail ?>"/>
@@ -189,13 +191,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 }
                 ?>
             </form>
-            <ul class="participants-list">
-                <?php
-                foreach ($participants as $participant){
-                    include('inc/participantTemplate.php');
-                }
-                ?>
-            </ul>
+            <?php include 'inc/groupParticipants.inc.php'?>
         </section>
     </main>
 </body>

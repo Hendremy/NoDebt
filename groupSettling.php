@@ -1,3 +1,29 @@
+<?php
+include 'inc/session.inc.php';
+?>
+<?php
+include_once 'php/repository/GroupRepository.php';
+include_once 'php/repository/ParticipationRepository.php';
+include_once 'php/repository/ExpenseRepository.php';
+include_once 'php/utils/ValidationUtils.php';
+
+use NoDebt\GroupRepository;
+use NoDebt\ParticipationRepository;
+use NoDebt\ExpenseRepository;
+
+if(isset($_POST['gid'])){
+    $gid = intval($_POST['gid']);
+
+    $groupRepo = new GroupRepository();
+    $expenseRepo = new ExpenseRepository();
+    $participRepo = new ParticipationRepository();
+
+    $group = $groupRepo->getGeneralInfo($gid);
+    $group->expenses = $expenseRepo->getExpenses($gid);
+    $group->participants = $participRepo->getParticipantsTotals($gid);
+    $averageExp = count($group->participants) != 0 ? $group->total / count($group->participants) : $group->total;
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -58,10 +84,8 @@
             </footer>
         </section>
         <section class="participants">
-            <h2>Participants (4)</h2>
-            <?php
-            include("inc/group01Participants.inc.php");
-            ?>
+            <h2>Participants (<?php echo count($group->participants)?>)</h2>
+            <?php include 'inc/groupParticipants.inc.php'?>
         </section>
     </main>
 </body>

@@ -15,7 +15,7 @@
         <header>
         <h1>Roadtrip Allemagne créé par Machin Bidule</h1>
         <!--<a href="group01Delete.php">Supprimer le groupe</a> actif si tous les virements ont été confirmés-->
-        <a href="group01Settling.php">Annuler solde</a><!-- actif car tous les virements n'ont pas été confirmés-->
+        <a href="groupSettling.php">Annuler solde</a><!-- actif car tous les virements n'ont pas été confirmés-->
         </header>
         <section class="groupPreview payments">
             <header>
