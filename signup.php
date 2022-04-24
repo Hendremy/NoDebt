@@ -1,5 +1,8 @@
 <?php
 require 'php/repository/UserRepository.php';
+require_once ('php/utils/Alert.php');
+
+use NoDebt\Alert;
 use NoDebt\UserRepository;
 const MAX_CHAR = 50;
 
@@ -62,14 +65,14 @@ if(isset($_POST['sendbutton'])){
             <input type="text" name="lastName" id="lastName" required value="<?php if(isset($lastName)) echo $lastName?>"/>
             <label for="userEmail">Adresse e-mail *</label>
             <input type="email" name="userEmail" id="userEmail" required value="<?php if(isset($userEmail)) echo $userEmail?>"/>
-            <?php if(isset($emailMessage)) echo "<span class='error-message'>$emailMessage</span>"?>
+            <?php if(isset($emailMessage)) Alert::error($emailMessage)?>
             <label for="userPassword">Mot de passe *</label>
             <input type="password" name="userPassword" id="userPassword" required value="<?php if(isset($userPassword)) echo $userPassword?>"/>
             <label for="userPasswordRep">Répetez le mot de passe *</label>
             <input type="password" name="userPasswordRep" id="userPasswordRep" required value="<?php if(isset($userPasswordRep)) echo $userPasswordRep?>"/>
-            <?php if(isset($passwordMessage)) echo "<span class='error-message'>$passwordMessage</span>"?>
+            <?php if(isset($passwordMessage)) Alert::error($passwordMessage)?>
             <button type="submit" class="submit" name="sendbutton">S'inscrire</button>
-            <?php if(isset($message)) echo $message?>
+            <?php if(isset($message)) Alert::error($message)?>
         </form>
     </main>
 </body>

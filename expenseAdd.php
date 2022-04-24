@@ -8,6 +8,9 @@ require_once 'php/repository/ParticipationRepository.php';
 require_once 'php/repository/ExpenseRepository.php';
 require_once 'php/domain/Expense.php';
 require_once 'php/domain/Tag.php';
+require_once ('php/utils/Alert.php');
+
+use NoDebt\Alert;
 use NoDebt\CurrencyFormatter;
 use NoDebt\Expense;
 use NoDebt\ExpenseRepository;
@@ -125,21 +128,21 @@ include("inc/header.inc.php");
         </select>
         <label for="expenseDate">Date (jj-mm-aaaa) *</label>
         <input type="date" name="date" id="expenseDate" required value="<?php if(isset($expense->paydate)) echo $expense->paydate?>"/>
-        <?php if(isset($alertDate)) echo "<span class='alert'>$alertDate</span>"?>
+        <?php if(isset($alertDate)) Alert::error($alertDate)?>
         <label for="amount">Montant (<?php echo $currSymb?>) *</label>
         <input type="number" name="amount" id="amount" required value="<?php if(isset($expense->montant)) echo $expense->montant?>"/>
-        <?php if(isset($alertAmount)) echo "<span class='alert'>$alertAmount</span>"?>
+        <?php if(isset($alertAmount)) Alert::error($alertAmount)?>
         <label for="label">Libellé (max 50 caractères) *</label>
         <input type="text" name="label" id="label" required value="<?php if(isset($expense->libelle)) echo $expense->libelle?>"/>
-        <?php if(isset($alertLabel)) echo "<span class='alert'>$alertLabel</span>"?>
+        <?php if(isset($alertLabel)) Alert::error($alertLabel)?>
         <label for="tags">Tags (séparés par une virgule ",")</label>
         <input type="text" id="tags" name="tags" value="<?php if(isset($expense->tagsString)) echo $expense->tagsString?>"/>
-        <?php if(isset($alertTags)) echo "<span class='alert'>$alertTags</span>"?>
+        <?php if(isset($alertTags))  Alert::error($alertTags)?>
         <input type="hidden" name="gid" value="<?php echo $gid ?>" readonly>
         <input type="hidden" name="groupName" value="<?php echo $groupName?>" readonly>
         <input type="hidden" name="groupCurr" value="<?php echo $currency?>" readonly>
         <button type="submit" class="submit" name="confirmBtn">Ajouter la dépense</button>
-        <?php if(isset($alertInsert)) echo "<span class='alert'>$alertInsert</span>"?>
+        <?php if(isset($alertInsert)) Alert::error($alertInsert)?>
     </form>
 </main>
 </body>

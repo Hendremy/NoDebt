@@ -6,7 +6,9 @@ require_once 'php/repository/UserRepository.php';
 require_once 'php/repository/ParticipationRepository.php';
 require_once 'php/utils/ValidationUtils.php';
 require_once 'php/utils/PasswordUtils.php';
+require_once ('php/utils/Alert.php');
 
+use NoDebt\Alert;
 use NoDebt\ParticipationRepository;
 use NoDebt\UserRepository;
 use NoDebt\ValidationUtils;
@@ -87,24 +89,40 @@ if(isset($_POST['infoBtn'])){
         <form class="field-list" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
             <label for="userEmail">Adresse e-mail</label>
             <input type="email" name="userEmail" id="userEmail" value="<?php if(isset($email)) echo $email?>"/>
-            <?php if(isset($alertEmail)) echo $alertEmail?>
+            <?php if(isset($alertEmail)) Alert::error($alertEmail)?>
             <label for="firstName">Prénom</label>
             <input type="text" name="firstName" id="firstName" value="<?php if(isset($firstName)) echo $firstName?>"/>
-            <?php if(isset($alertFirstName)) echo $alertFirstName?>
+            <?php if(isset($alertFirstName)) Alert::error($alertFirstName)?>
             <label for="lastName">Nom</label>
             <input type="text" name="lastName" id="lastName" value="<?php if(isset($lastName)) echo $lastName?>"/>
-            <?php if(isset($alertLastName)) echo $alertLastName?>
+            <?php if(isset($alertLastName)) Alert::error($alertLastName)?>
             <button type="submit" class="submit" name="infoBtn">Valider modifications</button>
-            <?php if(isset($updateResult)) echo $updateResult ?>
+            <?php
+            if(isset($updateResult)) {
+                if($updateOk){
+                    Alert::success($updateResult);
+                } else{
+                    Alert::error($updateResult);
+                }
+            }
+            ?>
         </form>
         <form class="field-list" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
             <label for="newUserPassword">Nouveau mot de passe</label>
             <input type="password" name="newUserPassword" id="newUserPassword" value="<?php if(isset($password)) echo $password?>"/>
             <label for="newUserPasswordRep">Répetez le mot de passe</label>
             <input type="password" name="newUserPasswordRep" id="newUserPasswordRep" value="<?php if(isset($passwordRep)) echo $passwordRep?>"/>
-            <?php if(isset($alertPassword)) echo "<span class='alert'>$alertPassword</span>"?>
+            <?php if(isset($alertPassword)) Alert::error($alertPassword)?>
             <button type="submit" class="submit" name="passwordBtn">Valider modifications</button>
-            <?php if(isset($passUpdateMessage)) echo $passUpdateMessage ?>
+            <?php
+            if(isset($passUpdateMessage)) {
+                if($passUpdateOk){
+                    Alert::success($passUpdateMessage);
+                } else{
+                    Alert::error($passUpdateMessage);
+                }
+            }
+            ?>
         </form>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
             <button type="submit" class="delete decline" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>

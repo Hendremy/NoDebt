@@ -1,5 +1,6 @@
 <?php
 
+use NoDebt\Alert;
 use NoDebt\Bill;
 use NoDebt\BillRepository;
 use NoDebt\ExpenseRepository;
@@ -12,6 +13,7 @@ require_once 'php/repository/ExpenseRepository.php';
 require_once 'php/repository/BillRepository.php';
 require_once 'php/storage/UploadStorage.php';
 require_once 'php/domain/Bill.php';
+require_once ('php/utils/Alert.php');
 
 if(isset($_REQUEST['did'])){
     $did = intval($_REQUEST['did']);
@@ -62,11 +64,9 @@ if(isset($_REQUEST['did'])){
             <button type="submit" class="submit" name="addBill">+ Ajouter une facture</button>
             <?php
             if(isset($alertFile)) {
-                $alertMessage = $alertFile;
-                include('inc/alertError.inc.php');
+                Alert::error($alertFile);
             }else if(isset($succesFile)){
-                $alertMessage = $succesFile;
-                include ('inc/alertSuccess.inc.php');
+                Alert::success($succesFile);
             }
             ?>
         </form>

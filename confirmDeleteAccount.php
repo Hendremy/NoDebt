@@ -4,7 +4,9 @@ include('inc\session.inc.php');
 <?php
 require_once('php/repository/ParticipationRepository.php');
 require_once('php/repository/UserRepository.php');
+require_once ('php/utils/Alert.php');
 
+use NoDebt\Alert;
 use NoDebt\ParticipationRepository;
 use NoDebt\UserRepository;
 if(isset($ses_uid)){
@@ -50,7 +52,7 @@ if(isset($_POST['confirmDeleteAccount'])){
                     <button type="submit" class="accept" name="confirmDelete" id="confirmDeleteAccount">Confirmer</button>
                 </form>
             </li>
-            <?php if(isset($alert)) $alertMessage = $alert; include'inc/alertError.inc.php'?>
+            <?php if(isset($alert)) Alert::error($alert)?>
             <li>
                 <form method="post" action="editProfile.php">
                     <button type="submit" class="decline" name="cancelDelete" id="cancelDeleteAccount">Annuler</button>

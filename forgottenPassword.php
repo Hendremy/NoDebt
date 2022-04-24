@@ -1,6 +1,9 @@
 <?php
 require('php/repository/UserRepository.php');
 require('php/domain/MailSender.php');
+require_once ('php/utils/Alert.php');
+
+use NoDebt\Alert;
 use NoDebt\UserRepository;
 use NoDebt\PasswordUtils;
 use NoDebt\MailSender;
@@ -50,7 +53,15 @@ if(isset($_POST['resetPassBtn'])){
             <label for="userEmail">Encodez votre adresse e-mail pour recevoir un nouveau mot de passe</label>
             <input type="email" name="userEmail" id="userEmail" required value="<?php if(isset($userEmail)) echo $userEmail?>"/>
             <button type="submit" name="resetPassBtn">Envoyer</button>
-            <?php if (isset($message)) echo $message?>
+            <?php
+            if(isset($message)){
+                if($sendOk){
+                    Alert::success($message);
+                }else{
+                    Alert::error($message);
+                }
+            }
+            ?>
         </form>
     </main>
 </body>

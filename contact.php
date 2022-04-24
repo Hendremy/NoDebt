@@ -3,8 +3,12 @@ include('inc/session.inc.php');
 ?>
 <!DOCTYPE html>
 <?php
+
+use NoDebt\Alert;
 use NoDebt\MailSender;
-require './php/domain/MailSender.php';
+require_once 'php/domain/MailSender.php';
+require_once ('php/utils/Alert.php');
+
 const admin = 'r.hendrice@student.helmo.be';
 
 if(!isset($sendOk)) $sendOk = false;
@@ -55,11 +59,10 @@ if($sendOk){
             <button type="submit" class="submit" name="sendbutton">Envoyer</button>
             <?php
             if(isset($resultMsg) && isset($sendOk) && !empty($resultMsg)){
-                $alertMessage = $resultMsg;
                 if($sendOk){
-                    include'inc/alertSuccess.inc.php';
+                    Alert::success($resultMsg);
                 }else{
-                    include'inc/alertError.inc.php';
+                    Alert::error($resultMsg);
                 }
             }
             ?>

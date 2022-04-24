@@ -4,7 +4,9 @@ require_once 'php/utils/ValidationUtils.php';
 require_once 'php/repository/ExpenseRepository.php';
 require_once 'php/repository/BillRepository.php';
 require_once 'php/storage/UploadStorage.php';
+require_once ('php/utils/Alert.php');
 
+use NoDebt\Alert;
 use NoDebt\BillRepository;
 use NoDebt\UploadStorage;
 use NoDebt\ValidationUtils;
@@ -56,7 +58,7 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
                     <button type="submit" class="accept" name="confirmDelete" id="confirmDeleteExpense">Confirmer</button>
                 </form>
             </li>
-            <?php if(isset($alert)) $alertMessage = $alert; include'inc/alertError.inc.php'?>
+            <?php if(isset($alert)) Alert::error($alert)?>
             <li>
                 <form method="post" action="<?php echo isset($returnPage) ? $returnPage : 'myGroups.php'?>">
                     <button type="submit" class="decline" name="cancelDelete" id="cancelDeleteExpense">Annuler</button>

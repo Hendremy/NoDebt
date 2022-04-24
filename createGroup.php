@@ -4,6 +4,9 @@ include('inc/session.inc.php');
 <?php
 require_once 'php/utils/ValidationUtils.php';
 require_once 'php/repository/GroupRepository.php';
+require_once ('php/utils/Alert.php');
+
+use NoDebt\Alert;
 use NoDebt\GroupRepository;
 use NoDebt\ValidationUtils;
 if(isset($_POST['createBtn'])){
@@ -52,7 +55,7 @@ if(isset($_POST['createBtn'])){
         <form class="field-list" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
             <label for="name">Nom du groupe</label>
             <input type="text" name="name" id="name" required value="<?php if(isset($groupName)) echo $groupName?>"/>
-            <?php if(isset($alertName)) echo "<span class='alert'>$alertName</span>"?>
+            <?php if(isset($alertName)) Alert::error($alertName);?>
             <label for="currency">Devise</label>
             <select name="currency" id="currency" required>
                 <option value="EUR" <?php echo isset($currency) ? $currency == 'EUR' ? 'selected':'' : 'selected' ?>>Euros - &euro;</option>
@@ -60,9 +63,9 @@ if(isset($_POST['createBtn'])){
                 <option value="JPY" <?php if(isset($currency) && $currency =='JPY') echo 'selected' ?>>Yen - &yen;</option>
                 <option value="GBP" <?php if(isset($currency) && $currency =='GBP') echo 'selected' ?>>Livres Sterling - &pound;</option>
             </select>
-            <?php if(isset($alertCurrency)) echo "<span class='alert'>$alertCurrency</span>"?>
+            <?php if(isset($alertCurrency)) Alert::error($alertCurrency)?>
             <button type="submit" class="submit" name="createBtn">Créer groupe</button>
-            <?php if(isset($alertInsert)) echo "<span class='alert'>$alertInsert</span>"?>
+            <?php if(isset($alertInsert)) Alert::error($alertInsert);?>
         </form>
     </main>
 </body>

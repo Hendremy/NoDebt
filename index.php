@@ -8,6 +8,9 @@ if(isset($_SESSION['userId'])){
 <?php
 require_once('./php/repository/UserRepository.php');
 require_once('./php/repository/ParticipationRepository.php');
+require_once ('php/utils/Alert.php');
+
+use NoDebt\Alert;
 use NoDebt\UserRepository;
 
 if(isset($_POST['loginBtn'])){
@@ -53,7 +56,7 @@ if(isset($_POST['loginBtn'])){
             <label for="userPassword">Mot de passe *</label>
             <input type="password" name="userPassword" id="userPassword" required value="<?php if(isset($userPassword)) echo $userPassword?>"/>
             <button type="submit" name="loginBtn">Se connecter</button>
-            <?php if(isset($message)) $alertMessage = $message; include'inc/alertError.inc.php' ?>
+            <?php if(isset($message)) Alert::error($message) ?>
         </form>
         <section class="auth-links">
             <a href="forgottenPassword.php">Mot de passe oublié ?</a>

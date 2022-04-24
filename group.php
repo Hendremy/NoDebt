@@ -11,8 +11,10 @@ require_once 'php/utils/PasswordUtils.php';
 require_once 'php/domain/MailSender.php';
 require_once 'php/domain/SimpleExpenseFilter.php';
 require_once 'php/domain/AdvExpenseFilter.php';
+require_once ('php/utils/Alert.php');
 
 use NoDebt\AdvExpenseFilter;
+use NoDebt\Alert;
 use NoDebt\GroupRepository;
 use NoDebt\ExpenseRepository;
 use NoDebt\MailSender;
@@ -179,11 +181,10 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <button type="submit" name="inviteBtn" id="inviteBtn">Inviter</button>
                 <?php
                 if(isset($alertEmail) && isset($inviteOk)) {
-                    $alertMessage = $alertEmail;
                     if($inviteOk){
-                        include 'inc/alertSuccess.inc.php';
+                        Alert::success($alertEmail);
                     }else{
-                        include 'inc/alertError.inc.php';
+                        Alert::error($alertEmail);
                     }
                 }
                 ?>

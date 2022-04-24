@@ -8,6 +8,9 @@ require_once 'php/repository/ParticipationRepository.php';
 require_once 'php/repository/ExpenseRepository.php';
 require_once 'php/domain/Expense.php';
 require_once 'php/domain/Tag.php';
+require_once ('php/utils/Alert.php');
+
+use NoDebt\Alert;
 use NoDebt\CurrencyFormatter;
 use NoDebt\Expense;
 use NoDebt\ExpenseRepository;
@@ -123,32 +126,32 @@ include("inc/header.inc.php");
             }
             ?>
         </select>
-        <?php if(isset($alertParticipant)) $alertMessage = $alertParticipant; include('inc/alertError.inc.php')?>
+        <?php if(isset($alertParticipant)) Alert::error($alertParticipant)?>
 
         <label for="expenseDate">Date (jj-mm-aaaa) *</label>
         <input type="date" name="date" id="expenseDate" required value="<?php if(isset($expense->paydate)) echo $expense->paydate?>"/>
-        <?php if(isset($alertDate)) $alertMessage = $alertDate; include('inc/alertError.inc.php')?>
+        <?php if(isset($alertDate)) Alert::error($alertDate)?>
 
 
         <label for="amount">Montant (<?php echo $currSymb?>) *</label>
         <input type="number" name="amount" id="amount" required value="<?php if(isset($expense->montant)) echo $expense->montant?>"/>
-        <?php if(isset($alertAmount)) $alertMessage = $alertAmount; include('inc/alertError.inc.php')?>
+        <?php if(isset($alertAmount)) Alert::error($alertAmount)?>
 
         <label for="label">Libellé (max 50 caractères) *</label>
         <input type="text" name="label" id="label" required value="<?php if(isset($expense->libelle)) echo $expense->libelle?>"/>
-        <?php if(isset($alertLabel)) $alertMessage = $alertLabel; include('inc/alertError.inc.php')?>
+        <?php if(isset($alertLabel)) Alert::error($alertLabel)?>
 
         <label for="tags">Tags (séparés par une virgule ",")</label>
         <input type="text" id="tags" name="tags" value="<?php if(isset($expense->tagsString)) echo $expense->tagsString?>"/>
-        <?php if(isset($alertTags)) $alertMessage = $alertTags; include('inc/alertError.inc.php')?>
+        <?php if(isset($alertTags)) Alert::error($alertTags)?>
 
         <input type="hidden" name="gid" value="<?php echo $expense->gid ?>" readonly>
         <input type="hidden" name="did" value="<?php echo $expense->did ?>" readonly>
         <input type="hidden" name="groupCurr" value="<?php echo $currency?>" readonly>
 
         <button type="submit" class="submit" name="confirmBtn">Enregistrer modifications</button>
-        <?php if(isset($alertUpdate)) $alertMessage = $alertUpdate; include('inc/alertError.inc.php')?>
-        <?php if(isset($successUpdate)) $alertMessage = $successUpdate; include('inc/alertSuccess.inc.php')?>
+        <?php if(isset($alertUpdate)) Alert::error($alertUpdate);?>
+        <?php if(isset($successUpdate)) Alert::success($successUpdate);?>
     </form>
 </main>
 </body>
