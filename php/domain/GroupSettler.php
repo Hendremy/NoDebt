@@ -29,7 +29,7 @@ class GroupSettler
         //Calcul des virements
         $payments = array();
 
-        while(count($debtors) > 0 || count($creditors) > 0){//Tant qu'il y a des comptes à régler
+        while(count($debtors) > 0 && count($creditors) > 0){//Tant qu'il y a des comptes à régler
             $amount = null;
             $creditor = null;
             $debtor = null;
@@ -43,19 +43,15 @@ class GroupSettler
             }else{//Sinon, recherche du plus grand créditeur & plus grand débiteur
                 $creditor = $this->findTopCreditor($creditors);
                 $debtor = $this->findTopDebtor($debtors);
-                $amount = min($creditor->groupTotalDiff,$debtor->groupTotalDiff);
+                $amount = min($creditor->groupTotalDiff,abs($debtor->groupTotalDiff));
             }
-            $payment = new Payment($debtor->uid, $creditor->uid, $amount);
+            $payment = new Payment($debtor->name, $debtor->uid, $creditor->name, $creditor->uid, $amount);
             //Mise à jour des montants
             $debtor->groupTotalDiff += $payment->amount;
             $creditor->groupTotalDiff -= $payment->amount;
             //Ajout du virement au tableau
             $payments[] = $payment;
 
-            echo '<br>Eeeeee <br>';
-            var_dump($creditor);
-            echo '<br>';
-            var_dump($debtor);
             //On enlève les participants pour qui leur compte est réglé
             $debtors = $this->clear($debtors);
             $creditors = $this->clear($creditors);

@@ -50,9 +50,16 @@ if(isset($_POST['gid'])){
             <header>
                 <h2>Virements</h2>
             </header>
-            <?php echo var_dump($payments)?>
+            <ul class="expense-list">
+                <?php
+                foreach ($payments as $payment){
+                    $payment->amount = $group->formatAmount($payment->amount);
+                    include 'inc/payment.inc.php';
+                }
+                ?>
+            </ul>
             <?php
-            include("inc/group01ExpensesTotal.inc.php");
+            include("inc/groupExpensesTotal.inc.php");
             ?>
             <footer class="settleChoices choices">
                 <form action="group01Settled.php">

@@ -170,10 +170,9 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <input type="hidden" name="groupCurr" value="<?php echo $group->currency ?>"/>
                 <button class="biggerBtn" type="submit" name="addExpenseBtn" id="addExpenseBtn">+ Ajouter une dépense</button>
             </form>
-            <section class="expenses-total">
-                <p>Total : <?php echo $group->formatTotal() ?></p>
-                <p>Moyenne : <?php echo $group->formatAmount($averageExp)?></p>
-            </section>
+            <?php
+            include("inc/groupExpensesTotal.inc.php");
+            ?>
         </section>
         <section class="participants">
             <h2>Participants (<?php echo count($group->participants)?>)</h2>
