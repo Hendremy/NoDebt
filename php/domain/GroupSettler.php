@@ -2,6 +2,8 @@
 
 namespace NoDebt;
 
+require_once 'php/domain/Payment.php';
+
 class GroupSettler
 {
     private $group;
@@ -21,14 +23,14 @@ class GroupSettler
         // débiteur -> diff à la moyenne négative (doivent de l'argent)
         // créditeur -> diff à la moyenne positive (reçoivent de l'argent)
         // si diff à la moyenne = 0, compte réglé
-        $debtors = array_filter($this->group->participants, array($this, 'debtorFilter'));
-        $creditors = array_filter($this->group->participants, array($this,'creditorFilter'));
+        $debtors = array_values(array_filter($this->group->participants, array($this, 'debtorFilter')));
+        $creditors = array_values(array_filter($this->group->participants, array($this,'creditorFilter')));
 
         //Calcul des virements
         $payments = array();
 
-        while(count($debtors) > 0 && count($creditors) > 0){//Tant qu'il y a des comptes à régler
-            $payment = null;
+        while(count($debtors) > 0 || count($creditors) > 0){//Tant qu'il y a des comptes à régler
+            $amount = null;
             $creditor = null;
             $debtor = null;
             //Recherche d'un montant débiteur égal à un montant créditeur
@@ -37,15 +39,23 @@ class GroupSettler
             if($oppositeAmounts){
                 $creditor = $oppositeAmounts['cred'];
                 $debtor = $oppositeAmounts['debt'];
-                $payment = new Payment($debtor->uid, $creditor->uid, $creditor->groupTotalDiff);
-            }else{//Sinon, recherche d'un créditeur & débiteur
-
+                $amount = $creditor->groupTotalDiff;
+            }else{//Sinon, recherche du plus grand créditeur & plus grand débiteur
+                $creditor = $this->findTopCreditor($creditors);
+                $debtor = $this->findTopDebtor($debtors);
+                $amount = min($creditor->groupTotalDiff,$debtor->groupTotalDiff);
             }
+            $payment = new Payment($debtor->uid, $creditor->uid, $amount);
             //Mise à jour des montants
             $debtor->groupTotalDiff += $payment->amount;
             $creditor->groupTotalDiff -= $payment->amount;
             //Ajout du virement au tableau
             $payments[] = $payment;
+
+            echo '<br>Eeeeee <br>';
+            var_dump($creditor);
+            echo '<br>';
+            var_dump($debtor);
             //On enlève les participants pour qui leur compte est réglé
             $debtors = $this->clear($debtors);
             $creditors = $this->clear($creditors);
@@ -62,10 +72,10 @@ class GroupSettler
     }
 
     private function clear($participants){
-        return array_filter($participants, array($this,'diffIsNotZero'));
+        return array_filter($participants, array($this,'accountSettled'));
     }
 
-    private function diffIsNotZero($participant){
+    private function accountSettled($participant){
         return $participant->groupTotalDiff != 0;
     }
 
@@ -78,5 +88,25 @@ class GroupSettler
             }
         }
         return false;
+    }
+
+    private function findTopCreditor($creditors){
+        $max = $creditors[0];
+        foreach($creditors as $creditor){
+            if($creditor->groupTotalDiff > $max->groupTotalDiff){
+                $max = $creditor;
+            }
+        }
+        return $max;
+    }
+
+    private function findTopDebtor($debtors){
+        $min = $debtors[0];
+        foreach($debtors as $debtor){
+            if($debtor->groupTotalDiff < $min->groupTotalDiff){
+                $min = $debtor;
+            }
+        }
+        return $min;
     }
 }
