@@ -11,6 +11,7 @@ class Group
     public $owner_name;
     public $currency;
     public $total;
+    public $avgExp;
     public $expenses;
     public $participants;
 

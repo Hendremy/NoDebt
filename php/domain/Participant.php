@@ -6,5 +6,6 @@ class Participant
 {
     public $name;
     public $total;
+    public $groupTotalDiff;
 
 }

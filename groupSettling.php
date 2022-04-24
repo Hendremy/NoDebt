@@ -2,14 +2,15 @@
 include 'inc/session.inc.php';
 ?>
 <?php
-include_once 'php/repository/GroupRepository.php';
-include_once 'php/repository/ParticipationRepository.php';
-include_once 'php/repository/ExpenseRepository.php';
-include_once 'php/utils/ValidationUtils.php';
+require_once 'php/repository/GroupRepository.php';
+require_once 'php/repository/ParticipationRepository.php';
+require_once 'php/repository/ExpenseRepository.php';
+require_once 'php/utils/ValidationUtils.php';
 
 use NoDebt\GroupRepository;
 use NoDebt\ParticipationRepository;
 use NoDebt\ExpenseRepository;
+use NoDebt\GroupSettler;
 
 if(isset($_POST['gid'])){
     $gid = intval($_POST['gid']);
@@ -22,6 +23,9 @@ if(isset($_POST['gid'])){
     $group->expenses = $expenseRepo->getExpenses($gid);
     $group->participants = $participRepo->getParticipantsTotals($gid);
     $averageExp = count($group->participants) != 0 ? $group->total / count($group->participants) : $group->total;
+
+    $groupSettler = new GroupSettler($group);
+    $payments = $groupSettler->settleGroup();
 }
 ?>
 <!DOCTYPE html>

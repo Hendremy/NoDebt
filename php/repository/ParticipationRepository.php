@@ -111,6 +111,7 @@ class ParticipationRepository
             $db = DBLink::connectToDb();
             $stmt = $db->prepare("INSERT INTO ". self::TABLE_NAME ."(gid, uid) VALUES (:gid,"
                 . "(SELECT uid FROM ". UserRepository::TABLE_NAME ." WHERE email = :email))");
+            $stmt->bindValue(':gid',$gid);
             $stmt->bindValue(':email',$email);
             if($stmt->execute() && $stmt->rowCount() == 1){
                 $insertOk = true;
