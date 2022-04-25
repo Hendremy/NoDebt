@@ -44,7 +44,10 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $group->expenses = $expenseRepo->getExpenses($gid);
     $group->participants = $participRepo->getParticipantsTotals($gid);
     $averageExp = count($group->participants) != 0 ? $group->total / count($group->participants) : $group->total;
-    $payments = $paymentRepo->getPaymentsForGroup($group->gid);
+    $message ='';
+    $payments = $paymentRepo->getPaymentsForGroup($group->gid,$message);
+    var_dump($payments);
+    echo $message;
     $isSettled = count($payments) > 0;
 
     if(isset($_POST['inviteBtn'])){
@@ -107,14 +110,19 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     <main>
         <header>
             <h1><?php echo "$group->name créé par $group->owner_name"?></h1>
+            <?php if($isSettled):?>
+                <a href="groupDelete.php">Supprimer le groupe</a><!-- actif si tous les virements ont été confirmés-->
+                <a href="groupSettling.php">Annuler solde</a><!-- actif car tous les virements n'ont pas été confirmés-->
+            <?php else:?>
             <form action="groupEdit.php" method="post">
                 <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>
                 <button type="submit" name="editBtn" id="editBtn">Editer le groupe</button>
             </form>
-            <?php if($group->total > 0 && count($group->participants) > 1 /*&& différences à la moyenne != 0*/):?>
-            <form action="groupSettling.php" method="post">
-                <button type="submit" name="settleBtn" id="settleBtn">Solder le groupe</button>
-            </form>
+                <?php if($group->total > 0 && count($group->participants) > 1 /*&& différences à la moyenne != 0*/):?>
+                <form action="groupSettling.php" method="post">
+                    <button type="submit" name="settleBtn" id="settleBtn">Solder le groupe</button>
+                </form>
+                <?php endif?>
             <?php endif?>
         </header>
         <section class="groupView">
@@ -168,12 +176,14 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 </li>
                 <?php endif?>
             </ul>
+            <?php if(!$isSettled) :?>
             <form class="addButton" method="post" action="expenseAdd.php">
                 <input type="hidden" name="gid" value="<?php echo $gid ?>"/>
                 <input type="hidden" name="groupName" value="<?php echo $group->name ?>"/>
                 <input type="hidden" name="groupCurr" value="<?php echo $group->currency ?>"/>
                 <button class="biggerBtn" type="submit" name="addExpenseBtn" id="addExpenseBtn">+ Ajouter une dépense</button>
             </form>
+            <?php endif?>
             <?php
             include("inc/groupExpensesTotal.inc.php");
             ?>

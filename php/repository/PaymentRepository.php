@@ -2,6 +2,7 @@
 
 namespace NoDebt;
 
+require_once 'php/domain/Payment.php';
 use DB\DBLink;
 use PDO;
 use PDOException;
@@ -30,7 +31,7 @@ class PaymentRepository
             $db->commit();
         }catch(PDOException $e){
             $db->rollBack();
-            $message = $e->getMessage();
+            $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($db);
         return $insertOk;
@@ -41,18 +42,20 @@ class PaymentRepository
         $payments = array();
         try{
             $db = DBLink::connectToDb();
-            $stmt = $db->prepare("SELECT debtorId, CONCAT(debt.firstname,' ',debt.lastname) as debtor, "
-                ."creditorId, CONCAT(cred.firsntmae,' ',cred.lastname) as creditor, amount, dateHeure, isConfirmed"
+            $stmt = $db->prepare("SELECT pay.gid, CONCAT(debt.firstname,' ',debt.lastname) as debtor, pay.debtorId,"
+                ." CONCAT(cred.firstname,' ',cred.lastname) as creditor, pay.creditorId, pay.amount, pay.dateHeure, pay.isConfirmed"
                 ." FROM ".self::TABLE_NAME ." pay "
-                ." JOIN " . UserRepository::TABLE_NAME ." debt ON debt.uid = pay.verseId"
-                ." JOIN " . UserRepository::TABLE_NAME ." cred ON cred.uid = pay.recoitId"
-                ." WHERE groupId = :gid");
+                ." JOIN " . UserRepository::TABLE_NAME ." debt ON debt.uid = pay.debtorId"
+                ." JOIN " . UserRepository::TABLE_NAME ." cred ON cred.uid = pay.creditorId"
+                ." WHERE gid = :gid");
             $stmt->bindValue(':gid', $gid);
-            if($stmt->execute() && $stmt->rowCount() > 0){
-                $payments = $stmt->fetchAll(PDO::FETCH_CLASS, "NoDebt\Payment");
+            if($stmt->execute()){
+                $payments = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "NoDebt\Payment");
+                //$payments[] = $stmt->fetch();
             }
         }catch(PDOException $e){
-            $message = self::DB_ERROR_MESSAGE;
+            //$message = self::DB_ERROR_MESSAGE;
+            $message = $e->getMessage();
         }
         DBLink::disconnect($db);
         return $payments;
