@@ -45,7 +45,7 @@ class GroupSettler
                 $debtor = $this->findTopDebtor($debtors);
                 $amount = min($creditor->groupTotalDiff,abs($debtor->groupTotalDiff));
             }
-            $payment = new Payment($debtor->name, $debtor->uid, $creditor->name, $creditor->uid, $amount);
+            $payment = new Payment($this->group->gid, $debtor->name, $debtor->uid, $creditor->name, $creditor->uid, $amount);
             //Mise à jour des montants
             $debtor->groupTotalDiff += $payment->amount;
             $creditor->groupTotalDiff -= $payment->amount;

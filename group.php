@@ -6,6 +6,7 @@ require_once 'php/repository/GroupRepository.php';
 require_once 'php/repository/UserRepository.php';
 require_once 'php/repository/ExpenseRepository.php';
 require_once 'php/repository/ParticipationRepository.php';
+require_once 'php/repository/PaymentRepository.php';
 require_once 'php/utils/ValidationUtils.php';
 require_once 'php/utils/PasswordUtils.php';
 require_once 'php/domain/MailSender.php';
@@ -20,6 +21,7 @@ use NoDebt\ExpenseRepository;
 use NoDebt\MailSender;
 use NoDebt\ParticipationRepository;
 use NoDebt\PasswordUtils;
+use NoDebt\PaymentRepository;
 use NoDebt\SimpleExpenseFilter;
 use NoDebt\UserRepository;
 use NoDebt\ValidationUtils;
@@ -35,12 +37,15 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $groupRepo = new GroupRepository();
     $expenseRepo = new ExpenseRepository();
     $participRepo = new ParticipationRepository();
+    $paymentRepo = new PaymentRepository();
     $validator = new ValidationUtils();
 
     $group = $groupRepo->getGeneralInfo($gid);
     $group->expenses = $expenseRepo->getExpenses($gid);
     $group->participants = $participRepo->getParticipantsTotals($gid);
     $averageExp = count($group->participants) != 0 ? $group->total / count($group->participants) : $group->total;
+    $payments = $paymentRepo->getPaymentsForGroup($group->gid);
+    $isSettled = count($payments) > 0;
 
     if(isset($_POST['inviteBtn'])){
         $inviteEmail = $validator->validateString($_POST['inviteEmail']);
@@ -108,7 +113,6 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
             </form>
             <?php if($group->total > 0 && count($group->participants) > 1 /*&& différences à la moyenne != 0*/):?>
             <form action="groupSettling.php" method="post">
-                <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>
                 <button type="submit" name="settleBtn" id="settleBtn">Solder le groupe</button>
             </form>
             <?php endif?>
