@@ -123,7 +123,9 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <?php endif?>
             <?php endif?>
         </header>
+        <?php if($isSettled) :?>
         <section>
+            <h2 class="center">Virements</h2>
             <ul class="payments">
                 <?php
                 foreach ($payments as $payment){
@@ -132,6 +134,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 ?>
             </ul>
         </section>
+        <?php endif?>
         <section class="groupView">
             <header class="expenses">
                 <h2>Dépenses</h2>
