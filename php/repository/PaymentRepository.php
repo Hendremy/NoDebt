@@ -50,12 +50,11 @@ class PaymentRepository
                 ." WHERE gid = :gid");
             $stmt->bindValue(':gid', $gid);
             if($stmt->execute()){
-                $payments = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "NoDebt\Payment");
-                //$payments[] = $stmt->fetch();
+                $payments = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, "NoDebt\Payment"
+                    ,array('gid','debtor','debtorId','creditor','creditorId','amount','dateHeure','isConfirmed'));
             }
         }catch(PDOException $e){
-            //$message = self::DB_ERROR_MESSAGE;
-            $message = $e->getMessage();
+            $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($db);
         return $payments;

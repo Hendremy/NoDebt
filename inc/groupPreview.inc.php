@@ -2,16 +2,20 @@
 
 require_once 'php/repository/GroupRepository.php';
 require_once 'php/repository/ExpenseRepository.php';
+require_once 'php/repository/PaymentRepository.php';
 use NoDebt\ExpenseRepository;
 use NoDebt\GroupRepository;
+use NoDebt\PaymentRepository;
 
 if(isset($groupId)){
     $groupId = intval($groupId);
     $groupRepo = new GroupRepository();
     $expenseRepo = new ExpenseRepository();
+    $paymentRepo = new PaymentRepository();
 
     $group = $groupRepo->getGeneralInfo($groupId);
     $expensesPreview = $expenseRepo->getExpenses($groupId,3);
+    $isSettled = count($paymentRepo->getPaymentsForGroup($group->gid)) > 0;
 }
 ?>
 <li class="groupPreview">

@@ -4,6 +4,7 @@ if(isset($expense)):
 <li class="expense">
     <span class="expense-detail"><?php echo $expense->spender?></span><span class="expense-detail"><?php echo $expense->libelle?></span>
     <span class="expense-detail"><?php echo $expense->montant?></span><span class="expense-detail"><?php echo $expense->paydate ?></span>
+    <?php if(!$isSettled):?>
     <ul class="choices">
         <li>
             <form action="expenseBills.php" method="post">
@@ -27,5 +28,6 @@ if(isset($expense)):
             </form>
         </li>
     </ul>
+    <?php endif?>
 </li>
 <?php endif?>

@@ -46,8 +46,6 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $averageExp = count($group->participants) != 0 ? $group->total / count($group->participants) : $group->total;
     $message ='';
     $payments = $paymentRepo->getPaymentsForGroup($group->gid,$message);
-    var_dump($payments);
-    echo $message;
     $isSettled = count($payments) > 0;
 
     if(isset($_POST['inviteBtn'])){
@@ -125,6 +123,15 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 <?php endif?>
             <?php endif?>
         </header>
+        <section>
+            <ul class="payments">
+                <?php
+                foreach ($payments as $payment){
+                    include 'inc/payment.inc.php';
+                }
+                ?>
+            </ul>
+        </section>
         <section class="groupView">
             <header class="expenses">
                 <h2>Dépenses</h2>
@@ -190,6 +197,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         </section>
         <section class="participants">
             <h2>Participants (<?php echo count($group->participants)?>)</h2>
+            <?php if(!$isSettled):?>
             <form name="invite-participant" method="post" action="<?php echo $actionSelf?>">
                 <label for="inviteEmail">Inviter un participant par e-mail</label>
                 <input type="email" name="inviteEmail" id="inviteEmail" value="<?php if(isset($inviteEmail)) echo $inviteEmail ?>"/>
@@ -204,6 +212,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 }
                 ?>
             </form>
+            <?php endif?>
             <?php include 'inc/groupParticipants.inc.php'?>
         </section>
     </main>
