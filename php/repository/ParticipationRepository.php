@@ -122,4 +122,23 @@ class ParticipationRepository
         DBLink::disconnect($db);
         return $insertOk;
     }
+
+    public function acceptInvite($gid, $uid, &$message =''){
+        $db = null;
+        $updateOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("UPDATE ".self::TABLE_NAME." SET estConfirme = TRUE"
+                ." WHERE gid = :gid AND uid = :uid");
+            $stmt->bindValue(':gid',$gid);
+            $stmt->bindValue(':uid',$uid);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $updateOk = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $updateOk;
+    }
 }
