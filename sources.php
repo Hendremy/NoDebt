@@ -37,6 +37,12 @@ include 'inc/session.inc.php';
             <li>
                 success.png: <a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by Kiranshastry - Flaticon</a>
             </li>
+            <li>
+                accept.png: <a href="https://www.flaticon.com/free-icons/tick" title="tick icons">Tick icons created by Freepik - Flaticon</a>
+            </li>
+            <li>
+                refuse.png: <a href="https://www.flaticon.com/free-icons/close" title="close icons">Close icons created by Fuzzee - Flaticon</a>
+            </li>
         </ul>
     </main>
     <?php

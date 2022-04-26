@@ -55,7 +55,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         if($validator->emailIsValid($inviteEmail)){//TODO: Refactoriser dans une classe InviteSender
             $mailer = new MailSender();
             $mailTopic = 'NoDebt - Invitation à rejoindre un groupe';
-            $inviterName = isset($ses_lastname) && isset($ses_firstName) ? "$ses_firstName $ses_lastname" : 'un ami';
+            $inviterName = isset($ses_lastName) && isset($ses_firstName) ? "$ses_firstName $ses_lastName" : 'un ami';
 
             $userRepo = new UserRepository();
             if($exists = $userRepo->alreadyExists($inviteEmail)){

@@ -24,7 +24,6 @@ include('inc/session.inc.php');
             <ul id="invites">
                 <?php
                 foreach($ses_invites as $inviteId){
-                    $_GET['inviteId'] = $inviteId;
                     include("inc/groupInvite.inc.php");
                 }
                 ?>
@@ -33,6 +32,7 @@ include('inc/session.inc.php');
         <?php endif ?>
         <section class="groupList">
             <h2>Mes groupes</h2>
+            <?php if(isset($ses_groups) && count($ses_groups) > 0) :?>
             <ul id="groups">
                 <?php
                 if(isset($ses_groups)){
@@ -42,6 +42,9 @@ include('inc/session.inc.php');
                 }
                 ?>
             </ul>
+            <?php else:?>
+            <span>Vous ne participez à aucun groupe</span>
+            <?php endif?>
         </section>
     </main>
 </body>
