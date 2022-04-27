@@ -15,10 +15,10 @@ class ParticipationRepository
 
     public function userHasActiveParticipations($uid, &$message){
         $hasActiveParticipations = true;
-        $bd = null;
+        $db = null;
         try{
-            $bd = DBLink::connectToDb();
-            $stmt = $bd->prepare("SELECT * FROM ". self::TABLE_NAME ." 
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("SELECT * FROM ". self::TABLE_NAME ." 
             WHERE uid = :uid AND estConfirme = TRUE");
             $stmt->bindValue('uid', $uid);
             if($stmt->execute() && $stmt->rowCount() == 0){

@@ -1,6 +1,17 @@
 <?php
 include('inc/session.inc.php');
 ?>
+<?php
+
+require_once 'php/repository/GroupRepository.php';
+
+use NoDebt\GroupRepository;
+
+$partRepo = new GroupRepository();
+$invites = $partRepo->getUserGroups($ses_uid, false);
+$groups = $partRepo->getUserGroups($ses_uid, true);
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -21,7 +32,7 @@ include('inc/session.inc.php');
             <h2>Mes invitations</h2>
             <ul id="invites">
                 <?php
-                foreach($ses_invites as $inviteId){
+                foreach($invites as $invite){
                     include("inc/groupInvite.inc.php");
                 }
                 ?>
@@ -33,10 +44,8 @@ include('inc/session.inc.php');
             <?php if(isset($ses_groups) && count($ses_groups) > 0) :?>
             <ul id="groups">
                 <?php
-                if(isset($ses_groups)){
-                    foreach($ses_groups as $groupId){
-                        include("inc/groupPreview.inc.php");
-                    }
+                foreach($groups as $group){
+                    include("inc/groupPreview.inc.php");
                 }
                 ?>
             </ul>

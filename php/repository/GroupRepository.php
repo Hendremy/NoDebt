@@ -5,8 +5,10 @@ namespace NoDebt;
 use DB\DBLink;
 use PDO;
 use PDOException;
+use NoDebt\ExpenseRepository;
 
 require_once 'ParticipationRepository.php';
+require_once 'ExpenseRepository.php';
 require_once 'DBLink.php';
 require_once 'php/domain/Group.php';
 
@@ -109,5 +111,31 @@ class GroupRepository
         }
         DBLink::disconnect($db);
         return $deleteOk;
+    }
+
+    public function getUserGroups($uid, $participates, &$message =''){
+        $invites = null;
+        $db = null;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("SELECT gr.gid, gr.nom  AS name, gr.devise AS currency,"
+                ." CONCAT(owner.firstname,' ', owner.lastname) AS owner_name,"
+                ." IFNULL(SUM(dep.montant),0) AS total"
+                ." FROM ". GroupRepository::TABLE_NAME ." gr"
+                ." JOIN ". UserRepository::TABLE_NAME ." owner on gr.own_uid = owner.uid"
+                ." LEFT JOIN ". ExpenseRepository::TABLE_NAME ." dep on dep.gid = gr.gid"
+                ." JOIN " . ParticipationRepository::TABLE_NAME." par on par.gid = gr.gid"
+                ." WHERE par.uid = :uid AND par.estConfirme = :participates"
+                ." GROUP BY gr.gid;");
+            $stmt->bindValue(':uid', $uid);
+            $stmt->bindValue(':participates',$participates);
+            if($stmt->execute() && $stmt->rowCount() > 0){
+                $invites = $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE,"NoDebt\Group");
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $invites;
     }
 }
