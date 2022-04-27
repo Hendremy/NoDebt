@@ -33,6 +33,7 @@ class GroupSettler
             $amount = null;
             $creditor = null;
             $debtor = null;
+
             //Recherche d'un montant débiteur égal à un montant créditeur
             $oppositeAmounts = $this->findOppositeAmounts($debtors, $creditors);
             //Si trouvé, on ajoute directement le virement
@@ -87,7 +88,7 @@ class GroupSettler
     }
 
     private function findTopCreditor($creditors){
-        $max = $creditors[0];
+        $max = current($creditors);
         foreach($creditors as $creditor){
             if($creditor->groupTotalDiff > $max->groupTotalDiff){
                 $max = $creditor;
@@ -97,7 +98,7 @@ class GroupSettler
     }
 
     private function findTopDebtor($debtors){
-        $min = $debtors[0];
+        $min = current($debtors);
         foreach($debtors as $debtor){
             if($debtor->groupTotalDiff < $min->groupTotalDiff){
                 $min = $debtor;

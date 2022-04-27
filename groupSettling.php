@@ -26,8 +26,8 @@ if(isset($_COOKIE['gid'])){
     $participRepo = new ParticipationRepository();
 
     $group = $groupRepo->getGeneralInfo($gid);
-    $group->expenses = $expenseRepo->getExpenses($gid);
-    $group->participants = $participRepo->getParticipantsTotals($gid);
+    $group->expenses = $expenseRepo->getExpenses($group->gid);
+    $group->participants = $participRepo->getParticipantsTotals($group->gid);
     $averageExp = count($group->participants) != 0 ? $group->total / count($group->participants) : $group->total;
 
     $groupSettler = new GroupSettler($group);
