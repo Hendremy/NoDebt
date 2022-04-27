@@ -59,4 +59,70 @@ class PaymentRepository
         DBLink::disconnect($db);
         return $payments;
     }
+
+    public function confirmPayment($gid, $credId, $debtId, &$message=''){
+        $db = null;
+        $confirmOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("UPDATE ".self::TABLE_NAME
+                ." SET isConfirmed = TRUE, dateHeure = NOW()"
+                ." WHERE gid = :gid AND creditorId = :credId AND debtorId = :debtId");
+            $stmt->bindValue(':gid',$gid);
+            $stmt->bindValue(':credId',$credId);
+            $stmt->bindValue(':debtId',$debtId);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $confirmOk = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $confirmOk;
+    }
+
+    public function allPaymentsDone($gid, &$message =''){//Aucun non confirmé
+        return $this->getPaymentsCount($gid, false, $message) == 0;
+    }
+
+    public function allPaymentsPending($gid, &$message=''){//Aucun confirmé
+        return $this->getPaymentsCount($gid, true, $message) == 0;
+    }
+
+    private function getPaymentsCount($gid, $isConfirmed, &$message = ''){
+        $db = null;
+        $paymentsCount = -1;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("SELECT * FROM ".self::TABLE_NAME.
+                " WHERE gid = :gid AND isConfirmed = :isConfirmed");
+            $stmt->bindValue(':gid',$gid);
+            $stmt->bindValue(':isConfirmed',$isConfirmed);
+            if($stmt->execute()){
+                $paymentsCount = $stmt->rowCount();
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $paymentsCount;
+    }
+
+    public function deleteGroupPayments($gid, &$message=''){
+        $db = null;
+        $deleteOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("DELETE FROM ".self::TABLE_NAME.
+                " WHERE gid = :gid");
+            $stmt->bindValue(':gid',$gid);
+            if($stmt->execute()){
+                $deleteOk = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $deleteOk;
+    }
 }

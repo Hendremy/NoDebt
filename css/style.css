@@ -16,7 +16,7 @@
 body {
     font-family: OpenDyslexic;
     color: #ffffff;
-    background-color: #1b1d26;
+    background-color: #141414;
     margin: 0;
 }
 
@@ -80,7 +80,7 @@ a {
     transition: all 0.4s ease 0s;
 }
 
-a:hover, input:focus, select:focus, textarea:focus{
+a:hover:not(.nodebt), input:focus, select:focus, textarea:focus{
     color: #ffde00;
     box-shadow: 0 10px 25px 0 rgba(255, 213, 0, 0.29);
 }
@@ -149,8 +149,8 @@ div.confirm-invite-peek button{
 
 div.confirm-invite-peek button:hover{
     color: #DE3BB2;
-    background-color: #1b1d26;
-    border-color:#1b1d26;
+    background-color: #181818;
+    border-color:#181818;
     box-shadow: none;
 }
 
@@ -161,9 +161,9 @@ div.confirm-invite-peek button.decline{
 }
 
 div.confirm-invite-peek button.decline:hover{
-    color: #1b1d26;
+    color: #181818;
     background-color: #DE3BB2;
-    border-color:#1b1d26;
+    border-color:#181818;
     box-shadow: none;
 }
 
@@ -194,7 +194,7 @@ header.invitationChoice {
 }
 
 .groupPreview > header{
-    background-color: #333542;
+    background-color: #181818;
     border-radius: 23px 23px 0 0;
 }
 
@@ -216,14 +216,14 @@ header.invitationChoice {
 
 .choices{
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     list-style: none;
     margin: 0;
 }
 
 .settleChoices, .deleteChoices{
-    font-size: 3em;
+    font-size: 1.5em;
 }
 
 button{
@@ -232,28 +232,27 @@ button{
     border-radius: 10px;
     margin-left: 5px;
     margin-right: 5px;
-    color: #1b1d26;
+    color: #181818;
     background-color: #DE3BB2;
     transition: all 0.3s ease 0s;
 }
 
 button:hover{
-    color: #1b1d26;
+    color: #181818;
     background-color: #ffde00;
     border-color:#ffde00;
     box-shadow: 0 10px 25px 0 rgba(255, 213, 0, 0.29);
-    filter: hue-rotate(45deg);
 }
 
 button.decline {
     color: #DE3BB2;
     border-color: #DE3BB2;
-    background-color: #1b1d26;
+    background-color: #181818;
 }
 
 button.decline:hover{
     color: #ffde00;
-    background-color: #1b1d26 ;
+    background-color: #181818 ;
     border-color:#ffde00;
     box-shadow: 0 10px 25px 0 rgba(255, 213, 0, 0.29);
 }
@@ -261,9 +260,11 @@ button.decline:hover{
 .expense{
     display: flex;
     justify-content: space-between;
+    align-content: center;
     align-self: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 2px dotted rgb(151, 109, 230);
 }
 
 .expense-detail{
@@ -298,7 +299,7 @@ ul.nav-links{
 }
 
 ul.search{
-    width: 100%;
+    width: auto;
     display: flex;
     flex-direction: column;
 }
@@ -425,4 +426,27 @@ ul.bills-list{
     display:flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.payments{
+    border: 2px dashed rgb(151, 109, 230);
+}
+
+.groupExpenses{
+    border: 2px solid #dbbeff;
+    border-radius: 25px;
+    background-color: #161616;
+    box-shadow: 0 10px 25px 0 rgba(162, 85, 255, 0.26);
+}
+
+.expenses-total{
+    border-top: 2px solid rgb(151, 109, 230);
+}
+
+.neg-diff{
+    color: #fc3459;
+}
+
+.pos-diff{
+    color: #9fe864;
 }

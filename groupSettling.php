@@ -76,7 +76,7 @@ if(isset($_COOKIE['gid'])){
             <?php
             include("inc/groupExpensesTotal.inc.php");
             ?>
-            <footer class="settleChoices choices">
+            <footer class="biggerBtn choices">
                 <form action="<?php echo $actionSelf?>" method="post">
                     <button class="accept" name="confirmBtn" id="confirmSettle" type="submit">Confirmer solde</button>
                 </form>

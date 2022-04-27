@@ -11,7 +11,11 @@
     <nav class="profile-nav">
         <ul class="nav-links">
             <li><a href="editProfile.php"><?php echo isset($ses_lastName) && isset ($ses_firstName) ? $ses_firstName.' '.$ses_lastName : 'Profil' ?></a></li>
-            <li><a href="disconnect.php">Se déconnecter</a></li>
+            <li>
+                <form action="disconnect.php" method="post">
+                    <button name="logout"><img src="images/logout.png" class="iconx32" alt="Déconnexion"/></button>
+                </form>
+            </li>
         </ul>
     </nav>
 </header>

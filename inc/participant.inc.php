@@ -7,15 +7,15 @@ if(isset($participant) && isset($averageExp) && isset($group)){
     $diffString = $group->formatAmount($diff);
     $diffEcho = "<span>$diffString</span>";
     if($diff > 0){
-        $diffEcho = "<span class='pos-diff'>+$diffString</span>";
+        $diffEcho = "<span class='pos-diff'>&#9650; $diffString</span>";
     }else if($diff < 0){
-        $diffEcho = "<span class='neg-diff'>$diffString</span>";
+        $diffEcho = "<span class='neg-diff'>&#9660; $diffString</span>";
     }
 
 }
 ?>
 <li class="participant">
     <span><?php echo $name ?></span>
-    <p>Dépense totale : <span><?php echo $totalString ?></span></p>
-    <p>Différence à la moyenne : <?php echo $diffEcho ?></p>
+    <p>Total : <span><?php echo $totalString ?></span></p>
+    <p>Différence : <?php echo $diffEcho ?></p>
 </li>

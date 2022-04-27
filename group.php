@@ -29,6 +29,7 @@ use NoDebt\ValidationUtils;
 if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $gid = isset($_GET['gid']) ? intval($_GET['gid']) : intval($_COOKIE['gid']);
     if(isset($ses_groups) && !in_array($gid, $ses_groups)){//Si accès illégal à un groupe, retour à page des groupes
+        setcookie('gid', "", time()-3600, "/");//Destruction du cookie au cas où cookie modifié par l'utilisateur
         header('location: myGroups.php');
     }
     setcookie('gid',$gid, time() + (3600*24*30), '/');//refresh du cookie + modification si param GET différent
@@ -40,6 +41,20 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $paymentRepo = new PaymentRepository();
     $validator = new ValidationUtils();
 
+    if(isset($_POST['confirmPayment'])){
+        $gid = intval($_POST['gid']);
+        $credId = intval($_POST['credId']);
+        $debtId = intval($_POST['debtId']);
+        $message = '';
+        if(!$paymentRepo->confirmPayment($gid, $credId, $debtId,$message)){
+            $alertPayConfirm = $message;
+        }
+    }
+
+    /*if(isset($_POST['error'])){
+      pour réceptionner un message d'erreur venant d'une autre page
+    }*/
+
     $group = $groupRepo->getGeneralInfo($gid);
     $group->expenses = $expenseRepo->getExpenses($gid);
     $group->participants = $participRepo->getParticipantsTotals($gid);
@@ -47,6 +62,10 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
     $message ='';
     $payments = $paymentRepo->getPaymentsForGroup($group->gid,$message);
     $isSettled = count($payments) > 0;
+    if($isSettled){
+        $canDelete = $paymentRepo->allPaymentsDone($gid);
+        $canRevert = $paymentRepo->allPaymentsPending($gid);
+    }
 
     if(isset($_POST['inviteBtn'])){
         $inviteEmail = $validator->validateString($_POST['inviteEmail']);
@@ -109,8 +128,17 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         <header>
             <h1><?php echo "$group->name créé par $group->owner_name"?></h1>
             <?php if($isSettled):?>
-                <a href="groupDelete.php">Supprimer le groupe</a><!-- actif si tous les virements ont été confirmés-->
-                <a href="groupSettling.php">Annuler solde</a><!-- actif car tous les virements n'ont pas été confirmés-->
+                <?php if($canDelete) :?>
+                <form action="groupDelete.php" method="post">
+                    <input type="hidden" name="groupName" value="<?php echo $group->name?>"/>
+                    <button type="submit" name="deleteGroup">Supprimer le groupe</button><!-- actif si tous les virements ont été confirmés-->
+                </form>
+                <?php endif?>
+                <?php if($canRevert):?>
+                <form action="groupUnsettle.php" method="post">
+                    <button type="submit" name="unsettleGroup">Annuler solde</button><!-- actif si tous les virements n'ont pas été confirmés-->
+                </form>
+                <?php endif?>
             <?php else:?>
             <form action="groupEdit.php" method="post">
                 <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>
@@ -133,9 +161,11 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                 }
                 ?>
             </ul>
+            <?php if($canDelete) Alert::success('Tous les virements ont été confirmés, vous pouvez à présent supprimer le groupe !');?>
+            <?php if(isset($alertPayConfirm)) Alert::error($alertPayConfirm);?>
         </section>
         <?php endif?>
-        <section class="groupView">
+        <section class="groupView groupExpenses">
             <header class="expenses">
                 <h2>Dépenses</h2>
                 <ul class="search">

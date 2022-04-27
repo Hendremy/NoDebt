@@ -1,7 +1,5 @@
 <?php
 include('inc/session.inc.php');
-
-//TODO: Render des invitations
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -92,4 +92,22 @@ class GroupRepository
         DBLink::disconnect($db);
         return $updateOk;
     }
+
+    public function delete($gid, &$message=''){
+        $db = null;
+        $deleteOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("DELETE FROM ".self::TABLE_NAME
+                ." WHERE gid = :gid");
+            $stmt->bindValue(':gid',$gid);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $deleteOk = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $deleteOk;
+    }
 }
