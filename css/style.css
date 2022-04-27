@@ -242,6 +242,7 @@ button:hover{
     background-color: #ffde00;
     border-color:#ffde00;
     box-shadow: 0 10px 25px 0 rgba(255, 213, 0, 0.29);
+    filter: hue-rotate(45deg);
 }
 
 button.decline {
