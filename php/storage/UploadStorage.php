@@ -4,15 +4,16 @@ namespace NoDebt;
 
 class UploadStorage
 {
-    const UPLOADS_DIR = '/uploads';
+    const UPLOADS_DIR = "./uploads";
     const MAX_FILE_SIZE = 10000000;//10 mégaoctets
-    //const MAX_IMAGE_SIZE = ?
+    //const MAX_IMAGE_SIZE = ? => Pas nécessaire d'avoir une taille d'image max, la taille max d'une image
+    // est instaurée par css, tant que fichier assez léger, c'est bon
 
     public $dirPath;
 
     public function __construct()
     {
-        $this->dirPath = $_SERVER['DOCUMENT_ROOT'].self::UPLOADS_DIR.'/';
+        $this->dirPath = self::UPLOADS_DIR.'/';
     }
 
     private function extensionIsSupported($extension){
