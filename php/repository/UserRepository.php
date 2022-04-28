@@ -70,12 +70,12 @@ class UserRepository
             $stmt->bindValue(':email', $email);
             if($stmt->execute() && $stmt->rowCount() == 1){
                 $updateOk = true;
-                $message .= 'Mot de passe modifié avec succès';
+                $message = 'Mot de passe modifié avec succès';
             }else{
-                $message .= 'Erreur dans l\'update';
+                $message = 'Erreur dans l\'update';
             }
         }catch(PDOException $e){
-            $message .= self::DB_ERROR_MESSAGE;
+            $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($db);
         return $updateOk;

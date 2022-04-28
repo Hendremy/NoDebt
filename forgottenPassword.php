@@ -20,7 +20,7 @@ if(isset($_POST['resetPassBtn'])){
             $password = $passUtils->generatePassword();
             $message = '';
             $mailSender = new MailSender();
-            $mailTopic = 'Nodebt - Réinitialisation de mot de passe';
+            $mailTopic = 'NoDebt - Réinitialisation de mot de passe';
             $mailBody = "Voici votre nouveau mot de passe suite à votre demande de réinitalisation :\n\n$password";
             $sendOk = $mailSender->sendMail(noreply, $userEmail, $mailTopic, $mailBody, $message);
             if ($sendOk) {

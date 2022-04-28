@@ -82,6 +82,29 @@ class ParticipationRepository
         return $participantMap;
     }
 
+    public function getParticipantsEmails($gid, &$message =''){
+        $db = null;
+        $participantsEmails = array();
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("SELECT us.email"
+                . " FROM ". self::TABLE_NAME." par "
+                . " JOIN " . UserRepository::TABLE_NAME ." us ON us.uid = par.uid"
+                . " WHERE gid = :gid AND estConfirme = TRUE;");
+            $stmt->bindValue(':gid',$gid);
+            if($stmt->execute() && $stmt->rowCount() > 0){
+                $participants = $stmt->fetchAll();
+                foreach($participants as $participant){
+                    $participantsEmails[] = $participant['email'];
+                }
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $participantsEmails;
+    }
+
     public function getParticipantsTotals($gid, &$message=''){
         $db = null;
         $expenses = array();
@@ -140,5 +163,24 @@ class ParticipationRepository
         }
         DBLink::disconnect($db);
         return $updateOk;
+    }
+
+    public function refuseInvite($gid, $uid, &$message =''){
+        $db = null;
+        $deleteOK = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("DELETE FROM ".self::TABLE_NAME
+                ." WHERE gid = :gid AND uid = :uid AND estConfirme = false");
+            $stmt->bindValue(':gid',$gid);
+            $stmt->bindValue(':uid',$uid);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $deleteOK = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $deleteOK;
     }
 }
