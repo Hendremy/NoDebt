@@ -78,6 +78,7 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
             $expense->tagsTab = $validator->extractTags($_POST['tags']);
             foreach ($expense->tagsTab as $index =>$tagLibelle){
                 $expense->tagsTab[$index] = new Tag($tagLibelle, $expense->gid);
+                $expense->tagsTab[$index]->did = $expense->did;
             }
             $expense->tagsString = $validator->validateString($_POST['tags']);
         }else{

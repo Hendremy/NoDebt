@@ -125,7 +125,7 @@ class ExpenseRepository
                 if(!$tagsRepo->resetTagsForExpense($db, $expense->did)) throw new PDOException();
                 foreach ($expense->tagsTab as $tag){
                     if($tagsRepo->tagExists($db, $tag)){
-                        if(!$tagsRepo->associateTag($db, $expense->did, $expense->gid, $tag)) throw new PDOException();
+                        if(!$tagsRepo->associateTag($db, $tag)) throw new PDOException();
                     }else{
                         if(!$tagsRepo->insertTag($db, $tag)) throw new PDOException();
                     }
@@ -133,7 +133,7 @@ class ExpenseRepository
             }
             if($db->commit()) $updateOk = true;
         }catch(PDOException $e){
-            $message .= self::DB_ERROR_MESSAGE;
+            $message = self::DB_ERROR_MESSAGE;
             if(isset($db)) $db->rollBack();
         }
         DBLink::disconnect($db);

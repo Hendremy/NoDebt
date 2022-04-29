@@ -50,24 +50,25 @@ class TagRepository
         return $stmt->execute();
     }
 
-    public function tagExists($db, $tid){
+    public function tagExists($db, $tag){
         $exists = null;
-        $stmt = $db->prepare("SELECT * FROM ". self::TABLE_NAME. " WHERE tid = :tid");
-        $stmt->bindValue(':tid', $tid);
+        $stmt = $db->prepare("SELECT * FROM ". self::TABLE_NAME. " WHERE gid = :gid AND tag = :tag");
+        $stmt->bindValue(':gid',$tag->gid);
+        $stmt->bindValue(':tag',$tag->tag);
         if($stmt->execute()){
             $exists = $stmt->rowCount() == 1;
         }
         return $exists;
     }
 
-    public function associateTag($db, $did, $gid, $tag){
+    public function associateTag($db, $tag){
         $assocOk = false;
         $stmt = $db->prepare("INSERT INTO ". self::ASSOC_TABLE_NAME . " (did, tid)"
             ." VALUES (:did, 
             (SELECT tid FROM ".self::TABLE_NAME ." WHERE tag = :tag AND gid = :gid))");
-        $stmt->bindValue(':did', $did);
-        $stmt->bindValue(':gid', $gid);
-        $stmt->bindValue(':tag', $tag);
+        $stmt->bindValue(':did', $tag->did);
+        $stmt->bindValue(':gid', $tag->gid);
+        $stmt->bindValue(':tag', $tag->tag);
         if($stmt->execute() && $stmt->rowCount() == 1){
             $assocOk = true;
         }
