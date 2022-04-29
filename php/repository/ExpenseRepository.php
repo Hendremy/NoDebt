@@ -122,12 +122,13 @@ class ExpenseRepository
             $stmt->bindValue(':did', $expense->did);
             if($stmt->execute() && $stmt->rowCount() == 1){
                 $tagsRepo = new TagRepository();
-                if(!$tagsRepo->resetTagsForExpense($db, $expense->did)) throw new PDOException();
-                foreach ($expense->tagsTab as $tag){
-                    if($tagsRepo->tagExists($db, $tag)){
-                        if(!$tagsRepo->associateTag($db, $tag)) throw new PDOException();
-                    }else{
-                        if(!$tagsRepo->insertTag($db, $tag)) throw new PDOException();
+                if($tagsRepo->resetTagsForExpense($db, $expense->did)) {
+                    foreach ($expense->tagsTab as $tag){
+                        if($tagsRepo->tagExists($db, $tag)){
+                            $tagsRepo->associateTag($db, $tag);
+                        }else{
+                            $tagsRepo->insertTag($db, $tag);
+                        }
                     }
                 }
             }
