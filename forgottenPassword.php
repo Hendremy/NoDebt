@@ -62,5 +62,8 @@ if(isset($_POST['resetPassBtn'])){
             ?>
         </form>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

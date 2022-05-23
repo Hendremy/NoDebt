@@ -69,7 +69,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
 
     if(isset($_POST['inviteBtn'])){
         $inviteEmail = $validator->validateString($_POST['inviteEmail']);
-        if($validator->emailIsValid($inviteEmail)){//TODO: Refactoriser dans une classe InviteSender
+        if($validator->emailIsValid($inviteEmail)){
             $mailer = new MailSender();
             $mailTopic = 'NoDebt - Invitation à rejoindre un groupe';
             $inviterName = isset($ses_lastName) && isset($ses_firstName) ? "$ses_firstName $ses_lastName" : 'un ami';
@@ -99,7 +99,6 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
         $expenseFilter = new SimpleExpenseFilter($searchWord);
         $group->expenses = $expenseFilter->filter($group->expenses);
     }else if(isset($_POST['advSearchBtn'])){
-        //TODO: Vérifier validité des champs
         $label = $validator->validateString($_POST['label']);
         $minAmount = floatval($_POST['minAmount']);
         $maxAmount = floatval($_POST['maxAmount']);
@@ -249,5 +248,8 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
             <?php include 'inc/groupParticipants.inc.php'?>
         </section>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

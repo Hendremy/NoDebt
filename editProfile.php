@@ -129,5 +129,8 @@ if(isset($_POST['infoBtn'])){
             <?php if(isset($alertDelete)) Alert::error($alertDelete);?>
         </form>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

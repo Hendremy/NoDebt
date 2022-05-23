@@ -54,5 +54,8 @@ $groups = $partRepo->getUserGroups($ses_uid, true);
             <?php endif?>
         </section>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

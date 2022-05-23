@@ -91,5 +91,8 @@ if(isset($_COOKIE['gid'])){
             <?php include 'inc/groupParticipants.inc.php'?>
         </section>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

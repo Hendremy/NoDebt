@@ -63,5 +63,8 @@ if(isset($_POST['loginBtn'])){
             <a href="signup.php">Inscrivez-vous !</a>
         </section>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

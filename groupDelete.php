@@ -66,5 +66,8 @@ if(isset($_POST['deleteGroup']) || isset($_POST['confirmBtn'])){
         </section>
         <?php if(isset($alertDelete)) Alert::error($alertDelete)?>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

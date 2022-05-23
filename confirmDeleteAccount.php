@@ -61,5 +61,8 @@ if(isset($_POST['confirmDelete'])){
         </ul>
         </section>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

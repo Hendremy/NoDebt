@@ -118,5 +118,8 @@ if(isset($_POST['inviteRefuse'])){
             <h2>Participants (<?php echo count($group->participants)?>)</h2>
             <?php include 'inc/groupParticipants.inc.php'?>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

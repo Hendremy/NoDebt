@@ -8,15 +8,6 @@ class CurrencyFormatter
 {
     const locale = 'fr_FR';
 
-    /*TODO: Décommenter cette partie de code pour le déploiement Dartagnan (money_format pas disponible sur windows)
-    et voir pour les symboles yen & pounds pq ne s'affiche pas
-     * /
-    /*public function formatCurrency($amount, $currency){
-        $amout = floatval($amount);
-        setLocale(LC_MONETARY, $this->getCurrencyLocale($currency));
-        return money_format('%n',$amount);
-    }*/
-
     public function formatCurrency($amount, $currency){
         $amount = floatval($amount);
         $symbol = $this->getCurrencySymbol($currency);

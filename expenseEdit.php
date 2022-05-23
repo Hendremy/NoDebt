@@ -112,48 +112,51 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
     <meta name="description" content="No Debt - Gérez facilement vos dépenses de groupe">
 </head>
 <body>
-<?php
-include("inc/header.inc.php");
-?>
-<main>
-    <h1>Editer la dépense <?php echo $expense->libelle ?></h1>
-    <form class="field-list" action="<?php echo $actionSelf?>" method="post">
-        <label for="participant">Participant *</label>
-        <select name="participant" id="participant" required>
-            <?php
-            foreach($participants as $id => $name){
-                $selected = $id == $expense->uid ? 'selected' : '';
-                echo "<option value='$id' $selected>$name</option>";
-            }
-            ?>
-        </select>
-        <?php if(isset($alertParticipant)) Alert::error($alertParticipant)?>
+    <?php
+    include("inc/header.inc.php");
+    ?>
+    <main>
+        <h1>Editer la dépense <?php echo $expense->libelle ?></h1>
+        <form class="field-list" action="<?php echo $actionSelf?>" method="post">
+            <label for="participant">Participant *</label>
+            <select name="participant" id="participant" required>
+                <?php
+                foreach($participants as $id => $name){
+                    $selected = $id == $expense->uid ? 'selected' : '';
+                    echo "<option value='$id' $selected>$name</option>";
+                }
+                ?>
+            </select>
+            <?php if(isset($alertParticipant)) Alert::error($alertParticipant)?>
 
-        <label for="expenseDate">Date (jj-mm-aaaa) *</label>
-        <input type="date" name="date" id="expenseDate" required value="<?php if(isset($expense->paydate)) echo $expense->paydate?>"/>
-        <?php if(isset($alertDate)) Alert::error($alertDate)?>
+            <label for="expenseDate">Date (jj-mm-aaaa) *</label>
+            <input type="date" name="date" id="expenseDate" required value="<?php if(isset($expense->paydate)) echo $expense->paydate?>"/>
+            <?php if(isset($alertDate)) Alert::error($alertDate)?>
 
 
-        <label for="amount">Montant (<?php echo $currSymb?>) *</label>
-        <input type="number" name="amount" id="amount" required value="<?php if(isset($expense->montant)) echo $expense->montant?>"/>
-        <?php if(isset($alertAmount)) Alert::error($alertAmount)?>
+            <label for="amount">Montant (<?php echo $currSymb?>) *</label>
+            <input type="number" name="amount" id="amount" required value="<?php if(isset($expense->montant)) echo $expense->montant?>"/>
+            <?php if(isset($alertAmount)) Alert::error($alertAmount)?>
 
-        <label for="label">Libellé (max 50 caractères) *</label>
-        <input type="text" name="label" id="label" required value="<?php if(isset($expense->libelle)) echo $expense->libelle?>"/>
-        <?php if(isset($alertLabel)) Alert::error($alertLabel)?>
+            <label for="label">Libellé (max 50 caractères) *</label>
+            <input type="text" name="label" id="label" required value="<?php if(isset($expense->libelle)) echo $expense->libelle?>"/>
+            <?php if(isset($alertLabel)) Alert::error($alertLabel)?>
 
-        <label for="tags">Tags (séparés par une virgule ",")</label>
-        <input type="text" id="tags" name="tags" value="<?php if(isset($expense->tagsString)) echo $expense->tagsString?>"/>
-        <?php if(isset($alertTags)) Alert::error($alertTags)?>
+            <label for="tags">Tags (séparés par une virgule ",")</label>
+            <input type="text" id="tags" name="tags" value="<?php if(isset($expense->tagsString)) echo $expense->tagsString?>"/>
+            <?php if(isset($alertTags)) Alert::error($alertTags)?>
 
-        <input type="hidden" name="gid" value="<?php echo $expense->gid ?>" readonly>
-        <input type="hidden" name="did" value="<?php echo $expense->did ?>" readonly>
-        <input type="hidden" name="groupCurr" value="<?php echo $currency?>" readonly>
+            <input type="hidden" name="gid" value="<?php echo $expense->gid ?>" readonly>
+            <input type="hidden" name="did" value="<?php echo $expense->did ?>" readonly>
+            <input type="hidden" name="groupCurr" value="<?php echo $currency?>" readonly>
 
-        <button type="submit" class="submit" name="confirmBtn">Enregistrer modifications</button>
-        <?php if(isset($alertUpdate)) Alert::error($alertUpdate);?>
-        <?php if(isset($successUpdate)) Alert::success($successUpdate);?>
-    </form>
-</main>
+            <button type="submit" class="submit" name="confirmBtn">Enregistrer modifications</button>
+            <?php if(isset($alertUpdate)) Alert::error($alertUpdate);?>
+            <?php if(isset($successUpdate)) Alert::success($successUpdate);?>
+        </form>
+    </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>
