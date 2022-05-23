@@ -10,7 +10,6 @@ use NoDebt\MailSender;
 use NoDebt\UserRepository;
 const MAX_CHAR = 50;
 
-//TODO: Réactivation du compte quand inscription avec e-mail existant
 if(isset($_POST['signupBtn'])){
     $userEmail = isset($_POST['userEmail']) ? substr(htmlspecialchars($_POST['userEmail']),0,MAX_CHAR) : '';
     $userPassword = isset($_POST['userPassword']) ? substr(htmlspecialchars($_POST['userPassword']),0, MAX_CHAR) : '';
