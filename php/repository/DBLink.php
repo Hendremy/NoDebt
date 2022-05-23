@@ -10,7 +10,6 @@ use PDO;
  */
 class DBLink {
 
-    //TODO: Remplacer les constantes des repository du même nom
     const DB_ERROR_MESSAGE ='Erreur: Veuillez réessayer ultérieurement';
 
     public static function connectToDb(){
