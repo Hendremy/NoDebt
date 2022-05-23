@@ -61,5 +61,8 @@ if(isset($_POST['confirmDeleteAccount'])){
         </ul>
         </section>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

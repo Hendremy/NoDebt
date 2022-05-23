@@ -69,5 +69,8 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
             </figure>
         <?php endif?>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

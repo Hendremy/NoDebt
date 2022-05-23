@@ -68,5 +68,8 @@ if(isset($_POST['createBtn'])){
             <?php if(isset($alertInsert)) Alert::error($alertInsert);?>
         </form>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

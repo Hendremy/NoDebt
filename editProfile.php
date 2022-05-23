@@ -128,5 +128,8 @@ if(isset($_POST['infoBtn'])){
             <button type="submit" class="delete decline" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
         </form>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

@@ -75,5 +75,8 @@ if(isset($_POST['sendbutton'])){
             <?php if(isset($message)) Alert::error($message)?>
         </form>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>

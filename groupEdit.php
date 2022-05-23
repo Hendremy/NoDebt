@@ -73,5 +73,8 @@ if(isset($_REQUEST['gid'])){
             <?php if(isset($alertUpdate)) Alert::error($alertUpdate)?>
         </form>
     </main>
+    <?php
+    include 'inc/footer.inc.php';
+    ?>
 </body>
 </html>
