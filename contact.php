@@ -9,8 +9,6 @@ use NoDebt\MailSender;
 require_once 'php/domain/MailSender.php';
 require_once ('php/utils/Alert.php');
 
-const admin = 'r.hendrice@student.helmo.be';
-
 if(!isset($sendOk)) $sendOk = false;
 
 $fromEmail = !empty($_POST['userEmail']) ? htmlentities($_POST['userEmail']) : '';
@@ -20,7 +18,7 @@ $mailMessage = !empty($_POST['mailMessage']) ? htmlentities($_POST['mailMessage'
 if (isset($_POST["sendbutton"])) {
     $resultMsg = '';
     $mailSender = new MailSender();
-    $sendOk = $mailSender->sendMail($fromEmail, admin, $mailTopic, $mailMessage, $resultMsg);
+    $sendOk = $mailSender->sendMailWithCC($fromEmail, MailSender::admin, $mailTopic, $mailMessage, $fromEmail, $resultMsg);
 }
 
 if($sendOk){

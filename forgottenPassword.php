@@ -26,12 +26,12 @@ if(isset($_POST['resetPassBtn'])){
             if ($sendOk) {
                 $userRepo->updatePasswordForEmail($userEmail, $password, $message);
             }
-        } else {
-            $message = 'L\'adresse e-mail n\'est liée à aucun compte';
         }
     }else{
-        $message = 'Adresse e-mail invalide';
+        $alertEmail = 'Adresse e-mail invalide';
     }
+        //Sécurité: ne pas préciser si l'adresse e-mail existe déjà
+        $alertSuccess = 'Un mot de passe vous a été envoyé si le compte existe';
 }
 ?>
 <!DOCTYPE html>
@@ -54,12 +54,10 @@ if(isset($_POST['resetPassBtn'])){
             <input type="email" name="userEmail" id="userEmail" required value="<?php if(isset($userEmail)) echo $userEmail?>"/>
             <button type="submit" name="resetPassBtn">Envoyer</button>
             <?php
-            if(isset($message)){
-                if($sendOk){
-                    Alert::success($message);
-                }else{
-                    Alert::error($message);
-                }
+            if(isset($alertEmail)){
+                Alert::error($alertEmail);
+            }else if(isset($alertSuccess)){
+                Alert::success($alertSuccess);
             }
             ?>
         </form>

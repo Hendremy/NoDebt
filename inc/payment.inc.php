@@ -1,7 +1,7 @@
 <?php if(isset($payment) && isset($group)):?>
 <li class="expense">
-    <span class="expense-detail"><?php echo $payment->debtor?></span><span>donne</span><span class="expense-detail"><?php echo $group->formatAmount($payment->amount)?></span>
-    <span>à</span><span class="expense-detail"><?php echo $payment->creditor?></span>
+    <span class="expense-detail"><?php echo $payment->debtor?></span><span>donne  </span><span class="expense-detail"><?php echo $group->formatAmount($payment->amount)?></span>
+    <span>à  </span><span class="expense-detail"><?php echo $payment->creditor?></span>
     <?php if(isset($isSettled)):?>
         <?php if(intval($payment->isConfirmed)):?>
             <span>Confirmé le <?php echo $payment->dateHeure?></span>

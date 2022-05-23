@@ -123,15 +123,16 @@ class UserRepository
         return $user;
     }
 
-    public function getUserId($userEmail, $userPassword, &$message = ''){
+    public function getUserId($userEmail, $userPassword, $isActive = false ,&$message = ''){
         $userId = 0;
         $userPassword = $this->hashPassword($userPassword);
         try{
             $bd = DBLink::connectToDb();
             $stmt = $bd->prepare ("SELECT uid FROM ". self::TABLE_NAME
-                ." WHERE email = :email AND hashpass = :hashpass");
+                ." WHERE email = :email AND hashpass = :hashpass AND isActive = :isActive");
             $stmt->bindValue(':email', $userEmail);
             $stmt->bindValue(':hashpass', $userPassword);
+            $stmt->bindValue(':isActive', $isActive);
             if($stmt->execute() && $stmt->rowCount() == 1){
                 $userId = $stmt->fetch()[0];
             }
@@ -142,22 +143,27 @@ class UserRepository
         return $userId;
     }
 
-    public function deleteUser($uid, &$message=''){
+    public function getActiveUserId($userEmail, $userPassword, &$message=''){
+        return $this->getUserId($userEmail, $userPassword,true, $message);
+    }
+
+    public function killUser($uid, &$message=''){
         $bd = null;
-        $deleteOk = false;
+        $killOk = false;
         try{
             $bd = DBLink::connectToDb();
-            $stmt = $bd->prepare('DELETE FROM '. self::TABLE_NAME .
-                ' WHERE uid = :uid;' );
+            $stmt = $bd->prepare('UPDATE '. self::TABLE_NAME
+                .' SET isActive = FALSE'
+                .' WHERE uid = :uid;');
             $stmt->bindValue(':uid', $uid);
             if($stmt->execute() && $stmt->rowCount() == 1){
-                $deleteOk = true;
+                $killOk = true;
             }
         }catch(Exception $e){
             $message = self::DB_ERROR_MESSAGE;
         }
         DBLink::disconnect($bd);
-        return $deleteOk;
+        return $killOk;
     }
 
     public function generateUser($email,$password, &$message = ''){
@@ -167,6 +173,43 @@ class UserRepository
     private function hashPassword($password){
         $passUtils = new PasswordUtils();
         return $passUtils->hashPassword($password);
+    }
+
+    public function userIsInactive($email, &$message = ''){
+        $db = null;
+        $userIsInactive = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare('SELECT * FROM '.self::TABLE_NAME
+                .' WHERE email = :email AND isActive = false');
+            $stmt->bindValue(':email', $email);
+            if($stmt->execute()){
+                $userIsInactive = $stmt->rowCount() == 1;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $userIsInactive;
+    }
+
+    public function reviveAccount($userId, &$message=''){
+        $db = null;
+        $reviveOk = false;
+        try{
+            $db = DBLink::connectToDb();
+            $stmt = $db->prepare("UPDATE ".self::TABLE_NAME
+                ." SET isActive = TRUE"
+                ." WHERE uid = :uid");
+            $stmt->bindValue(':uid',$userId);
+            if($stmt->execute() && $stmt->rowCount() == 1){
+                $reviveOk = true;
+            }
+        }catch(PDOException $e){
+            $message = self::DB_ERROR_MESSAGE;
+        }
+        DBLink::disconnect($db);
+        return $reviveOk;
     }
 
 

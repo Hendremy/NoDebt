@@ -1,5 +1,5 @@
 <?php
-include('inc\session.inc.php');
+include('inc/session.inc.php');
 ?>
 <?php
 require_once('php/repository/ParticipationRepository.php');
@@ -16,15 +16,15 @@ if(isset($ses_uid)){
         header('location: myGroups.php');
     }
 }
-if(isset($_POST['confirmDeleteAccount'])){
+if(isset($_POST['confirmDelete'])){
     $userRepo = new UserRepository();
     if(isset($ses_uid)) {
         $message ='';
-        $deleteOk = $userRepo->deleteUser($ses_uid, $message);
+        $deleteOk = $userRepo->killUser($ses_uid, $message);
         if($deleteOk){
             header('location: disconnect.php');
         }else{
-            $alert = 'Erreur: Veuillez réessayer ultérieurement';
+            $alert = $message;
         }
     }
 }
@@ -44,7 +44,7 @@ if(isset($_POST['confirmDeleteAccount'])){
     ?>
     <main>
         <h1>Supprimer le profil</h1>
-        <p>Confirmez-vous la suppression de votre compte ?</p>
+        <p class="center">Confirmez-vous la suppression de votre compte ?</p>
         <section class="deleteChoices">
         <ul class="choices">
             <li>

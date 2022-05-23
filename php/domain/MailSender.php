@@ -10,9 +10,14 @@ require './PHPMailer/src/Exception.php';
 class MailSender{
 
     const noreply = 'no-reply@helmo.be';
+    const admin = 'r.hendrice@student.helmo.be';
 
     public function sendMail($from, $to, $subject, $body, &$resultMsg='')
     {
+        return $this->sendMailWithCC($from, $to, $subject, $body, null, $resultMsg);
+    }
+
+    public function sendMailWithCC($from, $to, $subject, $body, $cc, &$resultMsg=''){
         $mail = new PHPMailer(true);
         try {
             $mail->CharSet = 'UTF-8';
@@ -22,6 +27,9 @@ class MailSender{
             $mail->isHTML(false);
             $mail->Subject = $subject;
             $mail->Body = $body;
+            if(isset($cc)){
+                $mail->addCC($cc);
+            }
             $mail->send();
             $resultMsg = 'E-mail envoyé';
             return true;

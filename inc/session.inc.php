@@ -27,6 +27,6 @@ if (isset($_SESSION['userId'])){
     $path = $_SERVER['PHP_SELF'];
     $file = basename ($path);
     if ($file !== 'index.php' && $file !== 'contact.php' && $file !== 'signup.php'
-    && $file !== 'fogottenPassword.php' && $file !== 'sources.php') header('location: index.php');
+    && $file !== 'fogottenPassword.php' && $file !== 'accountRevive.php' && $file !== 'sources.php') header('location: index.php');
 }
 ?>

@@ -126,6 +126,7 @@ if(isset($_POST['infoBtn'])){
         </form>
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
             <button type="submit" class="delete decline" name="deleteAccount" id="deleteAccount">Supprimer le profil</button>
+            <?php if(isset($alertDelete)) Alert::error($alertDelete);?>
         </form>
     </main>
 </body>

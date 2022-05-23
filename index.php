@@ -19,7 +19,7 @@ if(isset($_POST['loginBtn'])){
 
     $userRepo = new UserRepository();
     $message = '';
-    $userId = $userRepo->getUserId($userEmail, $userPassword, $message);
+    $userId = $userRepo->getActiveUserId($userEmail, $userPassword, $message);
 
     if(isset($userId) && $userId > 0){
         session_start();

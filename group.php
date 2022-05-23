@@ -180,7 +180,7 @@ if(isset($_GET['gid']) || isset($_COOKIE['gid'])){
                         <details <?php if(isset($_POST['advSearchBtn'])) echo 'open' ?>>
                             <summary>Recherche avancée</summary>
                             <form name="advanced-search-expense" class="search" method="post" action="<?php echo $actionSelf?>">
-                                <label for="label">Libellé</label>
+                                <label for="label">Libellé: </label>
                                 <input type="text" name="label" id="label" value="<?php if(isset($label)) echo $label ?>"/>
                                 <fieldset name="amountSpan">
                                     <label for="minAmount">Montant: de </label>
