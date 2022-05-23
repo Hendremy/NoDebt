@@ -116,6 +116,7 @@ if(isset($_POST['editBtn']) || isset($_POST['confirmBtn'])){
     include("inc/header.inc.php");
     ?>
     <main>
+        <?php include('inc/groupGoback.inc.php')?>
         <h1>Editer la dépense <?php echo $expense->libelle ?></h1>
         <form class="field-list" action="<?php echo $actionSelf?>" method="post">
             <label for="participant">Participant *</label>

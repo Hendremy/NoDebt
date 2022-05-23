@@ -58,6 +58,7 @@ if(isset($_COOKIE['gid'])){
     include("inc/header.inc.php");
     ?>
     <main>
+        <?php include('inc/groupGoback.inc.php')?>
         <header>
             <h1><?php echo $group->name ?> - Solder</h1>
         </header>

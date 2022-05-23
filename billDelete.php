@@ -45,6 +45,7 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     include("inc/header.inc.php");
     ?>
     <main>
+        <?php include('inc/groupGoback.inc.php')?>
         <h1>Supprimer la facture</h1>
         <p class="center">Confirmez-vous la suppression de cette facture ?</p>
         <section class="deleteChoices">

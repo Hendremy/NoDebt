@@ -51,6 +51,7 @@ if(isset($_POST['deleteGroup']) || isset($_POST['confirmBtn'])){
     include("inc/header.inc.php");
     ?>
     <main>
+        <?php include('inc/groupGoback.inc.php')?>
         <header>
             <h1>Supprimer le groupe <?php echo $groupName?></h1>
         </header>

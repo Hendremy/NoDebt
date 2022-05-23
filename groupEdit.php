@@ -55,6 +55,7 @@ if(isset($_REQUEST['gid'])){
     include("inc/header.inc.php");
     ?>
     <main>
+        <?php include('inc/groupGoback.inc.php')?>
         <h1>Editer le groupe <?php echo $group->name?></h1>
         <form class="field-list" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
             <input type="hidden" name="gid" value="<?php echo $group->gid?>"/>

@@ -54,6 +54,7 @@ if(isset($_REQUEST['did'])){
     include("inc/header.inc.php");
     ?>
     <main>
+        <?php include('inc/groupGoback.inc.php')?>
         <h1>Dépense <?php echo $expense->libelle ?> - Factures</h1>
         <h2>Ajouter une facture</h2>
         <form class="field-list" action="expenseBills.php" method="post" enctype="multipart/form-data">

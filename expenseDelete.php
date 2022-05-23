@@ -48,6 +48,7 @@ if(isset($_POST['deleteBtn']) || isset($_POST['confirmDelete'])){
     include("inc/header.inc.php");
     ?>
     <main>
+        <?php include('inc/groupGoback.inc.php')?>
         <h1>Supprimer la dépense</h1>
         <p class="center">Confirmez-vous la suppression de la dépense <?php echo $expense->libelle ?> ?</p>
         <section class="deleteChoices">

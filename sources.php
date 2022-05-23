@@ -46,6 +46,9 @@ include 'inc/session.inc.php';
             <li>
                 logout.png: <a href="https://www.flaticon.com/free-icons/logout" title="logout icons">Logout icons created by Afian Rochmah Afif - Flaticon</a>
             </li>
+            <li>
+                backarrow.png: <a href="https://www.flaticon.com/free-icons/back" title="back icons">Back icons created by Roundicons - Flaticon</a>
+            </li>
         </ul>
     </main>
     <?php
